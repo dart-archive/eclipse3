@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <projectDescription>
-	<name>com.google.dart.engine.services_test</name>
+	<name>com.google.dart.thirdparty_test</name>
 	<comment></comment>
 	<projects>
 	</projects>
@@ -25,4 +25,21 @@
 		<nature>org.eclipse.pde.PluginNature</nature>
 		<nature>org.eclipse.jdt.core.javanature</nature>
 	</natures>
+	<linkedResources>
+		<link>
+			<name>lib/fest</name>
+			<type>2</type>
+			<locationURI>DART_TRUNK/third_party/fest</locationURI>
+		</link>
+		<link>
+			<name>lib/hamcrest</name>
+			<type>2</type>
+			<locationURI>DART_TRUNK/third_party/hamcrest</locationURI>
+		</link>
+		<link>
+			<name>lib/mockito</name>
+			<type>2</type>
+			<locationURI>DART_TRUNK/third_party/mockito</locationURI>
+		</link>
+	</linkedResources>
 </projectDescription>

@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <projectDescription>
-	<name>com.google.dart.engine.services_test</name>
+	<name>com.google.dart.compiler.js_test</name>
 	<comment></comment>
 	<projects>
 	</projects>
@@ -25,4 +25,11 @@
 		<nature>org.eclipse.pde.PluginNature</nature>
 		<nature>org.eclipse.jdt.core.javanature</nature>
 	</natures>
+	<linkedResources>
+		<link>
+			<name>javatests</name>
+			<type>2</type>
+			<locationURI>DART_TRUNK/compiler/javatests</locationURI>
+		</link>
+	</linkedResources>
 </projectDescription>
