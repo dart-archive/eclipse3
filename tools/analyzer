@@ -13,7 +13,7 @@ fi
 
 DART_ROOT="$(cd "${CUR_DIR}/../.." ; pwd -P)"
 SDK_DIR="$(cd "${DART_ROOT}/sdk" ; pwd -P)"
-PKG_ANALYZER="$DART_ROOT/pkg/analyzer_experimental/bin/analyzer.dart"
+PKG_ANALYZER="$DART_ROOT/pkg/analyzer/bin/analyzer.dart"
 
 if [[ `uname` == 'Darwin' ]]; then
   BUILD_DIR="$DART_ROOT/xcodebuild/$DART_CONFIGURATION"
