@@ -115,7 +115,7 @@ build system.  The PDE build system has to run under Eclipse.
         <property name="build.revision" value="000" />
         <property name="dart.version_revision" value="${dart.version}_${build.revision}" />
 
-        <dirname file="${build.source}" property="build.source.root"/>
+        <property name="build.source.root" location="${build.source}" />
 
         <property name="build.thirdparty" location="${build.source.root}/third_party" />
 
@@ -173,7 +173,7 @@ build system.  The PDE build system has to run under Eclipse.
 		<delete dir="${android.out.dir}"/>
 		
 		<copy todir="${android.out.dir}">
-			<fileset dir="${build.source.root}/editor/android">
+			<fileset dir="${build.source.root}/android">
 				<include name="*.apk"/>
 			</fileset>
 		</copy>	
@@ -252,7 +252,7 @@ build system.  The PDE build system has to run under Eclipse.
 
         <!-- The path to dart/editor/ -->
         <property name="build.source" location="../../.." />
-        <dirname property="build.source.root" file="${build.source}" />
+        <property name="build.source.root" location="${build.source}" />
 
         <echoProperty propertyname="build.source" />
         <echoProperty propertyname="build.source.root" />
