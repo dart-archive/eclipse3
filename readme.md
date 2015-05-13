@@ -2,6 +2,8 @@
 
 Eclipse plugins and Dart Editor
 
+[![Build Status](https://travis-ci.org/dart-lang/eclipse3.svg)](https://travis-ci.org/dart-lang/eclipse3)
+
 ## Getting and installing the Dart plugin
 
 In Eclipse, choose *Help > Install new software…* and add this URL:
