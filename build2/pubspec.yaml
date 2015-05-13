@@ -1,0 +1,7 @@
+name: build
+version: 0.0.1
+description: Build for Dart integration into Eclipse
+environment:
+  sdk: '>=1.0.0 <2.0.0'
+dev_dependencies:
+  grinder: '>=0.7.0 <0.8.0'

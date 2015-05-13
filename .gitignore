@@ -7,5 +7,6 @@
 /plugin_engine_sources.txt
 /plugin_engine_sources.xml
 com.instantiations.coverage.ui_Audit.prefs
+dart-sdk/
 third_party
 

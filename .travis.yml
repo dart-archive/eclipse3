@@ -1,0 +1,4 @@
+language: java
+sudo: false
+script: ./build2/travis.sh
+

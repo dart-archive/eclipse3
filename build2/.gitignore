@@ -1,0 +1,7 @@
+.buildlog
+.DS_Store
+.idea
+.pub/
+dart-sdk/
+packages
+pubspec.lock
