@@ -11,6 +11,7 @@ vars = {
   "apache_ant_rev" : "@19997",
   "apache_compress_rev" : "@19997",
   "apache_http_rev" : "@37872",
+  "args4j_rev" : "@19997",
   "commons-io_rev" : "@19997",
   "commons-lang_rev" : "@33092",
   "eclipse_rev" : "@38742",
@@ -36,6 +37,8 @@ deps = {
       Var("third_party") + "/apache_compress" + Var("apache_compress_rev"),
   "eclipse3/third_party/apache_http":
       Var("third_party") + "/apache_http" + Var("apache_http_rev"),
+  "eclipse3/third_party/args4j":
+      Var("third_party") + "/args4j" + Var("args4j_rev"),
   "eclipse3/third_party/commons-io":
       Var("third_party") + "/commons-io" + Var("commons-io_rev"),
   "eclipse3/third_party/commons-lang":
