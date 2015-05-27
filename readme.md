@@ -12,6 +12,10 @@ In Eclipse, choose *Help > Install new software…* and add this URL:
 http://www.dartlang.org/eclipse/update/channels/stable/
 ```
 
+Also, see the
+[user contributed guide](http://dartrad.blogspot.com/2015/05/build-your-own-dart-editor.html)
+to getting the Eclipse plugins set up.
+
 ## Providing feedback
 
 Please file issues and feedback using the Github issue
