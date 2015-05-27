@@ -15,9 +15,9 @@ http://www.dartlang.org/eclipse/update/channels/stable/
 ## Providing feedback
 
 Please file issues and feedback using the Github issue
-[tracker](ttps://github.com/dart-lang/eclipse3/issues).
+[tracker](https://github.com/dart-lang/eclipse3/issues).
 
-## Building the plugins
+## Building
 
 To check it out:
 
@@ -47,6 +47,8 @@ To build editor:
 cd tools/features/com.google.dart.tools.deploy.feature_releng
 java -jar $ANTJAR -f build_rcp.xml -Declipse.home=$E3HOME
 ```
+
+* Also see [Build your own Dart Editor with the Eclipse Dart Plugin](http://dartrad.blogspot.com/2015/05/build-your-own-dart-editor.html)
 
 To commit:
 
