@@ -215,7 +215,8 @@ public class PubPackageManager {
               jsonArray.put(packages);
             }
           } catch (JSONException e) {
-            DartCore.logError(e);
+            DartCore.logError("Failed to process '" + line + "' on page " + page + " from "
+                + connection.getURL(), e);
           }
         }
       } finally {
