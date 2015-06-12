@@ -300,6 +300,22 @@ public class DartServerProposal implements ICompletionProposal, ICompletionPropo
         return;
       }
       /*
+       * If the user did not type enter, then check for an exact match before inserting
+       * what we feel is the most relevant suggestion.
+       * This prevents the blind typing problem where an unwanted suggestion is inserted
+       */
+      boolean isTriggerEnter = trigger == '\0' || trigger == '\n';
+      if (!isTriggerEnter) {
+        String text = doc.get(replacementOffset, replacementLength);
+        if (!text.equals(getCompletionSelector())) {
+          DartServerProposal proposal = collector.getExactMatch(text);
+          if (proposal != null) {
+            proposal.apply(viewer, trigger, stateMask, replacementOffset);
+            return;
+          }
+        }
+      }
+      /*
        * Simplistic argument list completion... strip parens and continue
        */
       // TODO (danrubel) improve argument list completion
@@ -315,7 +331,6 @@ public class DartServerProposal implements ICompletionProposal, ICompletionPropo
       /*
        * Check if linked mode for arguments is needed
        */
-      boolean isTriggerEnter = trigger == '\0' || trigger == '\n';
       if (hasArgumentList && (isTriggerEnter || trigger == '(')) {
         // If Enter or '(' (when blind typing), then use linked mode.
       } else {
@@ -418,6 +433,20 @@ public class DartServerProposal implements ICompletionProposal, ICompletionPropo
       }
     }
     return text[0];
+  }
+
+  /**
+   * Return the completion text minus arguments if any
+   * 
+   * @return the completion selector
+   */
+  public String getCompletionSelector() {
+    String selector = getCompletion();
+    int index = selector.indexOf('(');
+    if (index != -1) {
+      selector = selector.substring(0, index);
+    }
+    return selector;
   }
 
   @Override

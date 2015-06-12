@@ -111,6 +111,23 @@ public class DartServerProposalCollector {
   }
 
   /**
+   * Return the suggestion exactly matching the specified text or {@code null} if none found.
+   * 
+   * @param text the text to be matched (not {@code null})
+   * @return the suggestion or {@code null}
+   */
+  public DartServerProposal getExactMatch(String text) {
+    for (ICompletionProposal p : proposals) {
+      if (p instanceof DartServerProposal) {
+        if (text.equals(((DartServerProposal) p).getCompletionSelector())) {
+          return (DartServerProposal) p;
+        }
+      }
+    }
+    return null;
+  }
+
+  /**
    * Return the proposals or {@code null} if {@link #computeAndSortProposals()} has not been called
    * or was called but returned {@code false}.
    */
