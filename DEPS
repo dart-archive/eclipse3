@@ -4,7 +4,7 @@
 
 vars = {
   # The svn location to pull out dependencies from
-  "third_party": "https://dart.googlecode.com/svn/third_party",
+  "third_party": "http://dart.googlecode.com/svn/third_party",
 
   # Revisions of /third_party/* dependencies.
   "android_adb_rev" : "@36744",
