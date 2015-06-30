@@ -196,6 +196,17 @@ public class DirectoryBasedDartSdk implements DartSdk {
   private static final String PUB_EXECUTABLE_NAME = "pub"; //$NON-NLS-1$
 
   /**
+   * The name of the directory within the SDK directory that contains libraries metadata.
+   */
+  private static final String SDK_LIB_METADATA_DIR = "sdk_library_metadata"; //$NON-NLS-1$
+
+  /**
+   * The name of the directory within the SDK library metadata directory that contains
+   * 'libraries.dart'.
+   */
+  private static final String SDK_LIB_METADATA_LIB_DIR = "lib"; //$NON-NLS-1$
+
+  /**
    * The name of the file within the SDK directory that contains the version number of the SDK.
    */
   private static final String VERSION_FILE_NAME = "version"; //$NON-NLS-1$
@@ -572,7 +583,10 @@ public class DirectoryBasedDartSdk implements DartSdk {
    * @return the initialized library map
    */
   protected LibraryMap initialLibraryMap(boolean useDart2jsPaths) {
-    File librariesFile = new File(new File(getLibraryDirectory(), INTERNAL_DIR), LIBRARIES_FILE);
+    //dart-sdk/lib/_internal/sdk_library_metadata/lib
+    File librariesFile = new File(new File(new File(
+        new File(getLibraryDirectory(), INTERNAL_DIR),
+        SDK_LIB_METADATA_DIR), SDK_LIB_METADATA_LIB_DIR), LIBRARIES_FILE);
     try {
       String contents = FileUtilities.getContents(librariesFile);
       return new SdkLibrariesReader(useDart2jsPaths).readFromFile(librariesFile, contents);
