@@ -583,10 +583,14 @@ public class DirectoryBasedDartSdk implements DartSdk {
    * @return the initialized library map
    */
   protected LibraryMap initialLibraryMap(boolean useDart2jsPaths) {
-    //dart-sdk/lib/_internal/sdk_library_metadata/lib
+
     File librariesFile = new File(new File(new File(
         new File(getLibraryDirectory(), INTERNAL_DIR),
         SDK_LIB_METADATA_DIR), SDK_LIB_METADATA_LIB_DIR), LIBRARIES_FILE);
+    if (!librariesFile.exists()) {
+      // Fall back to pre SDK reorg location.
+      librariesFile = getLegacyLibrariesFile();
+    }
     try {
       String contents = FileUtilities.getContents(librariesFile);
       return new SdkLibrariesReader(useDart2jsPaths).readFromFile(librariesFile, contents);
@@ -596,6 +600,13 @@ public class DirectoryBasedDartSdk implements DartSdk {
           exception);
       return new LibraryMap();
     }
+  }
+
+  /**
+   * Get the libraries file location, pre SDK-shuffle.
+   */
+  File getLegacyLibrariesFile() {
+    return new File(new File(getLibraryDirectory(), INTERNAL_DIR), LIBRARIES_FILE);
   }
 
   /**
