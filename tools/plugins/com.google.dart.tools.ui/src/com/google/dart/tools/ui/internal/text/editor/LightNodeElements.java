@@ -40,12 +40,12 @@ import com.google.dart.engine.ast.VariableDeclarationList;
 import com.google.dart.engine.ast.VariableDeclarationStatement;
 import com.google.dart.engine.ast.visitor.RecursiveAstVisitor;
 import com.google.dart.engine.element.Element;
-import com.google.dart.server.generated.types.Outline;
 import com.google.dart.tools.ui.DartElementImageDescriptor;
 import com.google.dart.tools.ui.DartPluginImages;
 import com.google.dart.tools.ui.DartToolsPlugin;
 import com.google.dart.tools.ui.internal.viewsupport.ImageDescriptorRegistry;
 
+import org.dartlang.analysis.server.protocol.Outline;
 import org.eclipse.core.resources.IFile;
 import org.eclipse.jface.resource.ImageDescriptor;
 import org.eclipse.jface.viewers.DelegatingStyledCellLabelProvider;

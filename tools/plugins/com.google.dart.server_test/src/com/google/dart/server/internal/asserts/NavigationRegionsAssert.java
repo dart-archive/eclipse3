@@ -15,11 +15,11 @@
 package com.google.dart.server.internal.asserts;
 
 import com.google.dart.engine.source.Source;
-import com.google.dart.server.generated.types.NavigationRegion;
 
 import junit.framework.Assert;
 
 import org.apache.commons.lang3.StringUtils;
+import org.dartlang.analysis.server.protocol.NavigationRegion;
 
 import static org.fest.assertions.Assertions.assertThat;
 import static org.junit.Assert.assertTrue;

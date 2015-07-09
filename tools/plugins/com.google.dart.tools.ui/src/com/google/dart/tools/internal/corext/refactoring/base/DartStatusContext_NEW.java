@@ -15,9 +15,9 @@ package com.google.dart.tools.internal.corext.refactoring.base;
 
 import com.google.common.base.Charsets;
 import com.google.common.io.Files;
-import com.google.dart.server.generated.types.Location;
 import com.google.dart.tools.ui.internal.refactoring.WorkbenchSourceAdapter_NEW;
 
+import org.dartlang.analysis.server.protocol.Location;
 import org.eclipse.core.runtime.Assert;
 import org.eclipse.core.runtime.IAdaptable;
 import org.eclipse.jface.text.IRegion;

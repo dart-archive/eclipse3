@@ -14,17 +14,18 @@
 package com.google.dart.server.internal.remote.utilities;
 
 import com.google.common.annotations.VisibleForTesting;
-import com.google.dart.server.generated.types.AddContentOverlay;
-import com.google.dart.server.generated.types.AnalysisError;
-import com.google.dart.server.generated.types.AnalysisOptions;
-import com.google.dart.server.generated.types.ChangeContentOverlay;
-import com.google.dart.server.generated.types.Location;
-import com.google.dart.server.generated.types.RefactoringOptions;
-import com.google.dart.server.generated.types.RemoveContentOverlay;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonPrimitive;
+
+import org.dartlang.analysis.server.protocol.AddContentOverlay;
+import org.dartlang.analysis.server.protocol.AnalysisError;
+import org.dartlang.analysis.server.protocol.AnalysisOptions;
+import org.dartlang.analysis.server.protocol.ChangeContentOverlay;
+import org.dartlang.analysis.server.protocol.Location;
+import org.dartlang.analysis.server.protocol.RefactoringOptions;
+import org.dartlang.analysis.server.protocol.RemoveContentOverlay;
 
 import java.util.List;
 import java.util.Map;
@@ -40,6 +41,7 @@ public class RequestUtilities {
   private static final String FILE = "file";
   private static final String ID = "id";
   private static final String LENGTH = "length";
+  private static final String LINE_LENGTH = "lineLength";
   private static final String METHOD = "method";
   private static final String OFFSET = "offset";
   private static final String PARAMS = "params";
@@ -384,15 +386,20 @@ public class RequestUtilities {
    *     "file": FilePath
    *     "selectionOffset": int
    *     "selectionLength": int
+   *     "lineLength": optional int
    *   }
    * }
    * </pre>
    */
-  public static JsonObject generateEditFormat(String idValue, String file, int offset, int length) {
+  public static JsonObject generateEditFormat(String idValue, String file, int offset, int length,
+      int lineLength) {
     JsonObject params = new JsonObject();
     params.addProperty(FILE, file);
     params.addProperty(SELECTION_OFFSET, offset);
     params.addProperty(SELECTION_LENGTH, length);
+    if (lineLength != -1) {
+      params.addProperty(LINE_LENGTH, lineLength);
+    }
     return buildJsonObjectRequest(idValue, METHOD_EDIT_FORMAT, params);
   }
 

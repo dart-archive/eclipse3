@@ -14,10 +14,11 @@
 package com.google.dart.server.internal.remote.processor;
 
 import com.google.dart.server.AnalysisServerListener;
-import com.google.dart.server.generated.types.AnalysisStatus;
-import com.google.dart.server.generated.types.PubStatus;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
+
+import org.dartlang.analysis.server.protocol.AnalysisStatus;
+import org.dartlang.analysis.server.protocol.PubStatus;
 
 /**
  * Processor for "server.status" notification.

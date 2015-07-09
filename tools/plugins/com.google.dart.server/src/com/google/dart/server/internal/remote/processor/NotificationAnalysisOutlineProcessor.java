@@ -14,8 +14,9 @@
 package com.google.dart.server.internal.remote.processor;
 
 import com.google.dart.server.AnalysisServerListener;
-import com.google.dart.server.generated.types.Outline;
 import com.google.gson.JsonObject;
+
+import org.dartlang.analysis.server.protocol.Outline;
 
 /**
  * Processor for "analysis.outline" notification.

@@ -16,7 +16,6 @@ package com.google.dart.tools.ui.internal.typehierarchy;
 import com.google.common.base.Predicate;
 import com.google.common.base.Predicates;
 import com.google.dart.engine.element.ClassElement;
-import com.google.dart.server.generated.types.Element;
 import com.google.dart.tools.core.DartCoreDebug;
 import com.google.dart.tools.ui.DartToolsPlugin;
 import com.google.dart.tools.ui.actions.OpenAction_NEW;
@@ -25,6 +24,7 @@ import com.google.dart.tools.ui.actions.OpenViewActionGroup_OLD;
 import com.google.dart.tools.ui.internal.text.editor.CompositeActionGroup;
 import com.google.dart.tools.ui.internal.typehierarchy.TypeHierarchyContentProvider_NEW.TypeItem;
 
+import org.dartlang.analysis.server.protocol.Element;
 import org.eclipse.jface.action.IMenuListener;
 import org.eclipse.jface.action.IMenuManager;
 import org.eclipse.jface.action.IToolBarManager;
@@ -276,7 +276,7 @@ public class TypeHierarchyViewPart extends ViewPart {
             if (structuredSelection.size() == 1) {
               Object object = structuredSelection.getFirstElement();
               // prepare Element to open
-              com.google.dart.server.generated.types.Element element = null;
+              Element element = null;
               if (object instanceof TypeItem) {
                 TypeItem typeItem = (TypeItem) object;
                 element = typeItem.getElementToOpen();

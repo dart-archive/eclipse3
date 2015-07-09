@@ -20,16 +20,6 @@ import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
 import com.google.common.collect.Sets;
 import com.google.dart.server.generated.AnalysisServer;
-import com.google.dart.server.generated.types.AnalysisError;
-import com.google.dart.server.generated.types.AnalysisOptions;
-import com.google.dart.server.generated.types.AnalysisStatus;
-import com.google.dart.server.generated.types.ExecutionService;
-import com.google.dart.server.generated.types.HighlightRegion;
-import com.google.dart.server.generated.types.NavigationRegion;
-import com.google.dart.server.generated.types.Occurrences;
-import com.google.dart.server.generated.types.Outline;
-import com.google.dart.server.generated.types.OverrideMember;
-import com.google.dart.server.generated.types.SearchResult;
 import com.google.dart.tools.core.DartCore;
 import com.google.dart.tools.core.DartCoreDebug;
 import com.google.dart.tools.core.analysis.model.AnalysisServerData;
@@ -40,6 +30,17 @@ import com.google.dart.tools.core.analysis.model.AnalysisServerOccurrencesListen
 import com.google.dart.tools.core.analysis.model.AnalysisServerOutlineListener;
 import com.google.dart.tools.core.analysis.model.AnalysisServerOverridesListener;
 import com.google.dart.tools.core.analysis.model.SearchResultsListener;
+
+import org.dartlang.analysis.server.protocol.AnalysisError;
+import org.dartlang.analysis.server.protocol.AnalysisOptions;
+import org.dartlang.analysis.server.protocol.AnalysisStatus;
+import org.dartlang.analysis.server.protocol.ExecutionService;
+import org.dartlang.analysis.server.protocol.HighlightRegion;
+import org.dartlang.analysis.server.protocol.NavigationRegion;
+import org.dartlang.analysis.server.protocol.Occurrences;
+import org.dartlang.analysis.server.protocol.Outline;
+import org.dartlang.analysis.server.protocol.OverrideMember;
+import org.dartlang.analysis.server.protocol.SearchResult;
 
 import java.util.List;
 import java.util.Map;

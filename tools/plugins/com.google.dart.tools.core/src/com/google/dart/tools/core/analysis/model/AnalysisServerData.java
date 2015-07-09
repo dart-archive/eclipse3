@@ -16,13 +16,14 @@ package com.google.dart.tools.core.analysis.model;
 
 import com.google.dart.engine.source.Source;
 import com.google.dart.server.generated.AnalysisServer;
-import com.google.dart.server.generated.types.AnalysisError;
-import com.google.dart.server.generated.types.HighlightRegion;
-import com.google.dart.server.generated.types.NavigationRegion;
-import com.google.dart.server.generated.types.Occurrences;
-import com.google.dart.server.generated.types.Outline;
-import com.google.dart.server.generated.types.OverrideMember;
-import com.google.dart.server.generated.types.SearchResult;
+
+import org.dartlang.analysis.server.protocol.AnalysisError;
+import org.dartlang.analysis.server.protocol.HighlightRegion;
+import org.dartlang.analysis.server.protocol.NavigationRegion;
+import org.dartlang.analysis.server.protocol.Occurrences;
+import org.dartlang.analysis.server.protocol.Outline;
+import org.dartlang.analysis.server.protocol.OverrideMember;
+import org.dartlang.analysis.server.protocol.SearchResult;
 
 /**
  * Instances of {@code AnalysisServerData} provide access to analysis results reported by

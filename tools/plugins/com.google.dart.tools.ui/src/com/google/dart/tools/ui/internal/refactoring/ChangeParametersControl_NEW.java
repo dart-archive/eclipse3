@@ -14,7 +14,6 @@
 package com.google.dart.tools.ui.internal.refactoring;
 
 import com.google.common.collect.Lists;
-import com.google.dart.server.generated.types.RefactoringMethodParameter;
 import com.google.dart.tools.ui.internal.dialogs.TableTextCellEditor;
 import com.google.dart.tools.ui.internal.dialogs.TextFieldNavigationHandler;
 import com.google.dart.tools.ui.internal.refactoring.contentassist.VariableNamesProcessor;
@@ -23,6 +22,7 @@ import com.google.dart.tools.ui.internal.util.SWTUtil;
 import com.google.dart.tools.ui.internal.util.TableLayoutComposite;
 
 import org.apache.commons.lang3.StringUtils;
+import org.dartlang.analysis.server.protocol.RefactoringMethodParameter;
 import org.eclipse.core.runtime.Assert;
 import org.eclipse.jface.contentassist.SubjectControlContentAssistant;
 import org.eclipse.jface.viewers.ColumnWeightData;

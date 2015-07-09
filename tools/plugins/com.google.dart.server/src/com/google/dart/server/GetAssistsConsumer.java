@@ -13,8 +13,8 @@
  */
 package com.google.dart.server;
 
-import com.google.dart.server.generated.types.RequestError;
-import com.google.dart.server.generated.types.SourceChange;
+import org.dartlang.analysis.server.protocol.RequestError;
+import org.dartlang.analysis.server.protocol.SourceChange;
 
 import java.util.List;
 

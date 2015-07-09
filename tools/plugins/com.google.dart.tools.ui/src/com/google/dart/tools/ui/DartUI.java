@@ -17,8 +17,6 @@ import com.google.common.base.Charsets;
 import com.google.dart.engine.context.AnalysisContext;
 import com.google.dart.engine.element.Element;
 import com.google.dart.engine.source.Source;
-import com.google.dart.server.generated.types.Location;
-import com.google.dart.server.generated.types.NavigationTarget;
 import com.google.dart.tools.core.DartCore;
 import com.google.dart.tools.core.analysis.model.IFileInfo;
 import com.google.dart.tools.core.analysis.model.ProjectManager;
@@ -32,6 +30,8 @@ import com.google.dart.tools.ui.internal.text.editor.DartEditor;
 import com.google.dart.tools.ui.internal.text.editor.EditorUtility;
 import com.google.dart.tools.ui.text.IColorManager;
 
+import org.dartlang.analysis.server.protocol.Location;
+import org.dartlang.analysis.server.protocol.NavigationTarget;
 import org.eclipse.core.resources.IFile;
 import org.eclipse.core.resources.IResource;
 import org.eclipse.core.runtime.IPath;
@@ -556,53 +556,6 @@ public final class DartUI {
   }
 
   /**
-   * Opens an editor with {@link com.google.dart.server.Element}.
-   * 
-   * @param target the {@link NavigationTarget} to open in reveal
-   * @return the opened editor or {@code null} if by some reason editor was not opened
-   */
-  public static IEditorPart openInEditor(com.google.dart.server.generated.types.Element target,
-      boolean activate) throws Exception {
-    if (target == null) {
-      return null;
-    }
-    Location location = target.getLocation();
-    if (location == null) {
-      return null;
-    }
-    String path = location.getFile();
-    IEditorPart editor = openFilePath(path, activate);
-    if (editor != null) {
-      int offset = location.getOffset();
-      int length = location.getLength();
-      EditorUtility.revealInEditor(editor, offset, length);
-    }
-    return editor;
-  }
-
-  /**
-   * Opens an editor with {@link NavigationTarget}.
-   * 
-   * @param target the {@link NavigationTarget} to open in reveal
-   * @return the opened editor or {@code null} if by some reason editor was not opened
-   */
-  public static IEditorPart openInEditor(
-      com.google.dart.server.generated.types.NavigationTarget target, boolean activate)
-      throws Exception {
-    if (target == null) {
-      return null;
-    }
-    String path = target.getFile();
-    IEditorPart editor = openFilePath(path, activate);
-    if (editor != null) {
-      int offset = target.getOffset();
-      int length = target.getLength();
-      EditorUtility.revealInEditor(editor, offset, length);
-    }
-    return editor;
-  }
-
-  /**
    * Opens an editor with {@link Element} in context of the given {@link DartEditor}.
    * 
    * @param contextEditor the {@link DartEditor} to use as context, may be {@code null}.
@@ -696,6 +649,53 @@ public final class DartUI {
       int offset, int length) throws Exception {
     ResourceMap map = getResourceMap(context);
     return openSource(map, source, activate, offset, length);
+  }
+
+  /**
+   * Opens an editor with {@link com.google.dart.server.Element}.
+   * 
+   * @param target the {@link NavigationTarget} to open in reveal
+   * @return the opened editor or {@code null} if by some reason editor was not opened
+   */
+  public static IEditorPart openInEditor(org.dartlang.analysis.server.protocol.Element target,
+      boolean activate) throws Exception {
+    if (target == null) {
+      return null;
+    }
+    Location location = target.getLocation();
+    if (location == null) {
+      return null;
+    }
+    String path = location.getFile();
+    IEditorPart editor = openFilePath(path, activate);
+    if (editor != null) {
+      int offset = location.getOffset();
+      int length = location.getLength();
+      EditorUtility.revealInEditor(editor, offset, length);
+    }
+    return editor;
+  }
+
+  /**
+   * Opens an editor with {@link NavigationTarget}.
+   * 
+   * @param target the {@link NavigationTarget} to open in reveal
+   * @return the opened editor or {@code null} if by some reason editor was not opened
+   */
+  public static IEditorPart openInEditor(
+      org.dartlang.analysis.server.protocol.NavigationTarget target, boolean activate)
+      throws Exception {
+    if (target == null) {
+      return null;
+    }
+    String path = target.getFile();
+    IEditorPart editor = openFilePath(path, activate);
+    if (editor != null) {
+      int offset = target.getOffset();
+      int length = target.getLength();
+      EditorUtility.revealInEditor(editor, offset, length);
+    }
+    return editor;
   }
 
   /**

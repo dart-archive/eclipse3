@@ -19,12 +19,6 @@ import com.google.dart.engine.utilities.instrumentation.Instrumentation;
 import com.google.dart.engine.utilities.instrumentation.InstrumentationBuilder;
 import com.google.dart.server.GetHoverConsumer;
 import com.google.dart.server.generated.AnalysisServer;
-import com.google.dart.server.generated.types.CompletionSuggestion;
-import com.google.dart.server.generated.types.CompletionSuggestionKind;
-import com.google.dart.server.generated.types.Element;
-import com.google.dart.server.generated.types.HoverInformation;
-import com.google.dart.server.generated.types.Location;
-import com.google.dart.server.generated.types.RequestError;
 import com.google.dart.tools.core.DartCore;
 import com.google.dart.tools.core.utilities.general.CharOperation;
 import com.google.dart.tools.ui.DartElementImageDescriptor;
@@ -39,11 +33,12 @@ import com.google.dart.tools.ui.internal.viewsupport.DartElementImageProvider;
 import com.google.dart.tools.ui.internal.viewsupport.ImageDescriptorRegistry;
 import com.google.dart.tools.ui.text.dart.IDartCompletionProposal;
 
-import static com.google.dart.server.generated.types.CompletionSuggestionKind.IMPORT;
-import static com.google.dart.server.generated.types.CompletionSuggestionKind.KEYWORD;
-import static com.google.dart.server.generated.types.ElementKind.GETTER;
-import static com.google.dart.server.generated.types.ElementKind.SETTER;
-
+import org.dartlang.analysis.server.protocol.CompletionSuggestion;
+import org.dartlang.analysis.server.protocol.CompletionSuggestionKind;
+import org.dartlang.analysis.server.protocol.Element;
+import org.dartlang.analysis.server.protocol.HoverInformation;
+import org.dartlang.analysis.server.protocol.Location;
+import org.dartlang.analysis.server.protocol.RequestError;
 import org.eclipse.core.runtime.FileLocator;
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.Platform;
@@ -82,6 +77,11 @@ import org.eclipse.swt.graphics.Point;
 import org.eclipse.swt.widgets.Shell;
 import org.eclipse.ui.texteditor.link.EditorLinkedModeUI;
 import org.osgi.framework.Bundle;
+
+import static org.dartlang.analysis.server.protocol.CompletionSuggestionKind.IMPORT;
+import static org.dartlang.analysis.server.protocol.CompletionSuggestionKind.KEYWORD;
+import static org.dartlang.analysis.server.protocol.ElementKind.GETTER;
+import static org.dartlang.analysis.server.protocol.ElementKind.SETTER;
 
 import java.io.BufferedReader;
 import java.io.IOException;

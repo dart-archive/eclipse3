@@ -13,8 +13,8 @@
  */
 package com.google.dart.server;
 
-import com.google.dart.server.generated.types.AnalysisError;
-import com.google.dart.server.generated.types.RequestError;
+import org.dartlang.analysis.server.protocol.AnalysisError;
+import org.dartlang.analysis.server.protocol.RequestError;
 
 /**
  * The interface {@code AnalysisErrorsConsumer} defines the behavior of objects that consume

@@ -13,7 +13,7 @@
  */
 package com.google.dart.server;
 
-import com.google.dart.server.generated.types.RequestErrorCode;
+import org.dartlang.analysis.server.protocol.RequestErrorCode;
 
 /**
  * An enumeration of additional types of errors that can occur in the execution of the server, that

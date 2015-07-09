@@ -15,10 +15,6 @@ package com.google.dart.tools.ui.internal.dialogs;
 
 import com.google.common.util.concurrent.Uninterruptibles;
 import com.google.dart.server.FindTopLevelDeclarationsConsumer;
-import com.google.dart.server.generated.types.Element;
-import com.google.dart.server.generated.types.ElementKind;
-import com.google.dart.server.generated.types.RequestError;
-import com.google.dart.server.generated.types.SearchResult;
 import com.google.dart.tools.core.DartCore;
 import com.google.dart.tools.core.analysis.model.SearchResultsListener;
 import com.google.dart.tools.core.model.DartConventions;
@@ -42,6 +38,10 @@ import com.google.dart.tools.ui.internal.viewsupport.OwnerDrawSupport;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 
+import org.dartlang.analysis.server.protocol.Element;
+import org.dartlang.analysis.server.protocol.ElementKind;
+import org.dartlang.analysis.server.protocol.RequestError;
+import org.dartlang.analysis.server.protocol.SearchResult;
 import org.eclipse.core.resources.IFile;
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IProgressMonitor;

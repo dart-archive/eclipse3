@@ -14,9 +14,9 @@
 package com.google.dart.server.internal.remote.processor;
 
 import com.google.dart.server.ExtendedRequestErrorCode;
-import com.google.dart.server.generated.types.RequestError;
 
 import org.apache.commons.lang3.exception.ExceptionUtils;
+import org.dartlang.analysis.server.protocol.RequestError;
 
 /**
  * Abstract processor class for processing responses sent to consumers.

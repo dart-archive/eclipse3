@@ -13,13 +13,13 @@
  */
 package com.google.dart.tools.core.internal.builder;
 
-import com.google.dart.server.generated.types.AnalysisError;
-import com.google.dart.server.generated.types.AnalysisErrorSeverity;
-import com.google.dart.server.generated.types.AnalysisErrorType;
-import com.google.dart.server.generated.types.Location;
 import com.google.dart.tools.core.DartCore;
 import com.google.dart.tools.core.internal.analysis.model.WorkspaceAnalysisServerListener;
 
+import org.dartlang.analysis.server.protocol.AnalysisError;
+import org.dartlang.analysis.server.protocol.AnalysisErrorSeverity;
+import org.dartlang.analysis.server.protocol.AnalysisErrorType;
+import org.dartlang.analysis.server.protocol.Location;
 import org.eclipse.core.resources.IContainer;
 import org.eclipse.core.resources.IMarker;
 import org.eclipse.core.resources.IProject;

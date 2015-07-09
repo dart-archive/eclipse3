@@ -18,13 +18,13 @@ import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
 import com.google.common.collect.Sets;
 import com.google.dart.server.GetTypeHierarchyConsumer;
-import com.google.dart.server.generated.types.Element;
-import com.google.dart.server.generated.types.RequestError;
-import com.google.dart.server.generated.types.TypeHierarchyItem;
 import com.google.dart.tools.core.DartCore;
 import com.google.dart.tools.ui.internal.text.functions.PositionElement;
 
 import org.apache.commons.lang3.ArrayUtils;
+import org.dartlang.analysis.server.protocol.Element;
+import org.dartlang.analysis.server.protocol.RequestError;
+import org.dartlang.analysis.server.protocol.TypeHierarchyItem;
 import org.eclipse.jface.viewers.ITreeContentProvider;
 import org.eclipse.jface.viewers.StructuredSelection;
 import org.eclipse.jface.viewers.StyledString;

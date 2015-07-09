@@ -14,10 +14,10 @@
 
 package com.google.dart.tools.ui.internal.refactoring;
 
-import com.google.dart.server.generated.types.MoveFileOptions;
-import com.google.dart.server.generated.types.RefactoringFeedback;
-import com.google.dart.server.generated.types.RefactoringKind;
-import com.google.dart.server.generated.types.RefactoringOptions;
+import org.dartlang.analysis.server.protocol.MoveFileOptions;
+import org.dartlang.analysis.server.protocol.RefactoringFeedback;
+import org.dartlang.analysis.server.protocol.RefactoringKind;
+import org.dartlang.analysis.server.protocol.RefactoringOptions;
 
 /**
  * LTK wrapper around Analysis Server 'Move File' refactoring.

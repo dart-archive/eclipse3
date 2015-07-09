@@ -16,8 +16,6 @@ package com.google.dart.tools.ui.omni.elements;
 import com.google.common.collect.Lists;
 import com.google.common.util.concurrent.Uninterruptibles;
 import com.google.dart.server.FindTopLevelDeclarationsConsumer;
-import com.google.dart.server.generated.types.RequestError;
-import com.google.dart.server.generated.types.SearchResult;
 import com.google.dart.tools.core.DartCore;
 import com.google.dart.tools.core.analysis.model.SearchResultsListener;
 import com.google.dart.tools.ui.omni.OmniElement;
@@ -25,6 +23,8 @@ import com.google.dart.tools.ui.omni.OmniProposalProvider;
 import com.google.dart.tools.ui.omni.util.CamelUtil;
 
 import org.apache.commons.lang3.StringUtils;
+import org.dartlang.analysis.server.protocol.RequestError;
+import org.dartlang.analysis.server.protocol.SearchResult;
 import org.eclipse.core.runtime.IProgressMonitor;
 
 import java.util.List;

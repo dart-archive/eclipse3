@@ -26,13 +26,13 @@ import com.google.dart.engine.ast.visitor.ElementLocator;
 import com.google.dart.engine.ast.visitor.NodeLocator;
 import com.google.dart.engine.element.Element;
 import com.google.dart.engine.scanner.Token;
-import com.google.dart.server.generated.types.NavigationRegion;
 import com.google.dart.tools.core.DartCore;
 import com.google.dart.tools.core.DartCoreDebug;
 import com.google.dart.tools.core.utilities.performance.PerformanceManager;
 import com.google.dart.tools.ui.DartToolsPlugin;
 import com.google.dart.tools.ui.actions.OpenAction_OLD;
 
+import org.dartlang.analysis.server.protocol.NavigationRegion;
 import org.eclipse.jface.text.IRegion;
 import org.eclipse.jface.text.ITextViewer;
 import org.eclipse.jface.text.Region;

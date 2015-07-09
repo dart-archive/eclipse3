@@ -14,9 +14,10 @@
 package com.google.dart.server.internal.remote.processor;
 
 import com.google.dart.server.FormatConsumer;
-import com.google.dart.server.generated.types.RequestError;
-import com.google.dart.server.generated.types.SourceEdit;
 import com.google.gson.JsonObject;
+
+import org.dartlang.analysis.server.protocol.RequestError;
+import org.dartlang.analysis.server.protocol.SourceEdit;
 
 import java.util.List;
 

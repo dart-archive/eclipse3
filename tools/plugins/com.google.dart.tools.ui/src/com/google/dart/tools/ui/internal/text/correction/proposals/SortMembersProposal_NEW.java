@@ -14,8 +14,6 @@
 package com.google.dart.tools.ui.internal.text.correction.proposals;
 
 import com.google.dart.server.SortMembersConsumer;
-import com.google.dart.server.generated.types.RequestError;
-import com.google.dart.server.generated.types.SourceFileEdit;
 import com.google.dart.tools.core.DartCore;
 import com.google.dart.tools.internal.corext.refactoring.util.ExecutionUtils;
 import com.google.dart.tools.internal.corext.refactoring.util.RunnableEx;
@@ -26,6 +24,8 @@ import com.google.dart.tools.ui.internal.text.editor.DartEditor;
 import com.google.dart.tools.ui.internal.util.ExceptionHandler;
 import com.google.dart.tools.ui.text.dart.IDartCompletionProposal;
 
+import org.dartlang.analysis.server.protocol.RequestError;
+import org.dartlang.analysis.server.protocol.SourceFileEdit;
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.IStatus;

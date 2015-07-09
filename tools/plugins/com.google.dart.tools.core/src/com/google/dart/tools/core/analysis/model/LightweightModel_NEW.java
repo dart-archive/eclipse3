@@ -14,10 +14,10 @@
 
 package com.google.dart.tools.core.analysis.model;
 
-import com.google.dart.server.generated.types.ExecutableKind;
 import com.google.dart.tools.core.DartCore;
 import com.google.dart.tools.core.internal.util.ResourceUtil;
 
+import org.dartlang.analysis.server.protocol.ExecutableKind;
 import org.eclipse.core.resources.IFile;
 import org.eclipse.core.runtime.CoreException;
 

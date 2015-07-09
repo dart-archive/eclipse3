@@ -15,23 +15,23 @@
 package com.google.dart.tools.core.internal.analysis.model;
 
 import com.google.dart.server.AnalysisServerListener;
-import com.google.dart.server.generated.types.AnalysisError;
-import com.google.dart.server.generated.types.AnalysisStatus;
-import com.google.dart.server.generated.types.CompletionSuggestion;
-import com.google.dart.server.generated.types.HighlightRegion;
-import com.google.dart.server.generated.types.NavigationRegion;
-import com.google.dart.server.generated.types.Occurrences;
-import com.google.dart.server.generated.types.Outline;
-import com.google.dart.server.generated.types.OverrideMember;
-import com.google.dart.server.generated.types.PubStatus;
-import com.google.dart.server.generated.types.RequestError;
-import com.google.dart.server.generated.types.RequestErrorCode;
-import com.google.dart.server.generated.types.SearchResult;
 import com.google.dart.tools.core.DartCore;
 import com.google.dart.tools.core.internal.builder.AnalysisMarkerManager_NEW;
 import com.google.dart.tools.core.internal.util.ResourceUtil;
 import com.google.dart.tools.core.utilities.io.PrintStringWriter;
 
+import org.dartlang.analysis.server.protocol.AnalysisError;
+import org.dartlang.analysis.server.protocol.AnalysisStatus;
+import org.dartlang.analysis.server.protocol.CompletionSuggestion;
+import org.dartlang.analysis.server.protocol.HighlightRegion;
+import org.dartlang.analysis.server.protocol.NavigationRegion;
+import org.dartlang.analysis.server.protocol.Occurrences;
+import org.dartlang.analysis.server.protocol.Outline;
+import org.dartlang.analysis.server.protocol.OverrideMember;
+import org.dartlang.analysis.server.protocol.PubStatus;
+import org.dartlang.analysis.server.protocol.RequestError;
+import org.dartlang.analysis.server.protocol.RequestErrorCode;
+import org.dartlang.analysis.server.protocol.SearchResult;
 import org.eclipse.core.resources.IResource;
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.IStatus;

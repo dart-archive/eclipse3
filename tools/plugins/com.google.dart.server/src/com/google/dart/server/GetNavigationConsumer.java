@@ -13,8 +13,8 @@
  */
 package com.google.dart.server;
 
-import com.google.dart.server.generated.types.NavigationRegion;
-import com.google.dart.server.generated.types.NavigationTarget;
+import org.dartlang.analysis.server.protocol.NavigationRegion;
+import org.dartlang.analysis.server.protocol.NavigationTarget;
 
 /**
  * The interface {@code GetNavigationConsumer} defines the behavior of objects that consume

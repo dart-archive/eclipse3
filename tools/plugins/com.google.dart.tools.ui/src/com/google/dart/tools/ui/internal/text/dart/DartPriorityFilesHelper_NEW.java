@@ -18,8 +18,8 @@ import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
 import com.google.common.util.concurrent.Uninterruptibles;
 import com.google.dart.server.generated.AnalysisServer;
-import com.google.dart.server.generated.types.AnalysisService;
 
+import org.dartlang.analysis.server.protocol.AnalysisService;
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.Status;

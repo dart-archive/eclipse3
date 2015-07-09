@@ -15,16 +15,6 @@
 package com.google.dart.tools.ui.internal.refactoring;
 
 import com.google.common.collect.Lists;
-import com.google.dart.server.generated.types.LinkedEditGroup;
-import com.google.dart.server.generated.types.LinkedEditSuggestion;
-import com.google.dart.server.generated.types.LinkedEditSuggestionKind;
-import com.google.dart.server.generated.types.Location;
-import com.google.dart.server.generated.types.Position;
-import com.google.dart.server.generated.types.RefactoringProblem;
-import com.google.dart.server.generated.types.RefactoringProblemSeverity;
-import com.google.dart.server.generated.types.SourceChange;
-import com.google.dart.server.generated.types.SourceEdit;
-import com.google.dart.server.generated.types.SourceFileEdit;
 import com.google.dart.tools.core.internal.util.ResourceUtil;
 import com.google.dart.tools.core.pub.PubCacheManager_NEW;
 import com.google.dart.tools.core.refactoring.CompilationUnitChange;
@@ -37,6 +27,16 @@ import com.google.dart.tools.ui.internal.text.correction.proposals.LinkedCorrect
 import com.google.dart.tools.ui.internal.text.correction.proposals.TrackedPositions;
 
 import org.apache.commons.lang3.StringUtils;
+import org.dartlang.analysis.server.protocol.LinkedEditGroup;
+import org.dartlang.analysis.server.protocol.LinkedEditSuggestion;
+import org.dartlang.analysis.server.protocol.LinkedEditSuggestionKind;
+import org.dartlang.analysis.server.protocol.Location;
+import org.dartlang.analysis.server.protocol.Position;
+import org.dartlang.analysis.server.protocol.RefactoringProblem;
+import org.dartlang.analysis.server.protocol.RefactoringProblemSeverity;
+import org.dartlang.analysis.server.protocol.SourceChange;
+import org.dartlang.analysis.server.protocol.SourceEdit;
+import org.dartlang.analysis.server.protocol.SourceFileEdit;
 import org.eclipse.core.resources.IFile;
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IStatus;

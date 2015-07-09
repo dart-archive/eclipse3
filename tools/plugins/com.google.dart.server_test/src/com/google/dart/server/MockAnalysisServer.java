@@ -14,8 +14,9 @@
 package com.google.dart.server;
 
 import com.google.dart.server.generated.AnalysisServer;
-import com.google.dart.server.generated.types.AnalysisOptions;
-import com.google.dart.server.generated.types.RefactoringOptions;
+
+import org.dartlang.analysis.server.protocol.AnalysisOptions;
+import org.dartlang.analysis.server.protocol.RefactoringOptions;
 
 import java.util.List;
 import java.util.Map;
@@ -93,7 +94,7 @@ public class MockAnalysisServer implements AnalysisServer {
   }
 
   @Override
-  public void edit_format(String file, int selectionOffset, int selectionLength,
+  public void edit_format(String file, int selectionOffset, int selectionLength, int lineLength,
       FormatConsumer consumer) {
     throw new UnsupportedOperationException();
   }

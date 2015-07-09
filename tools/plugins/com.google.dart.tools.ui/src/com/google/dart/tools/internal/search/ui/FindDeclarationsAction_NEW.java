@@ -16,8 +16,6 @@ package com.google.dart.tools.internal.search.ui;
 import com.google.common.collect.Lists;
 import com.google.common.util.concurrent.Uninterruptibles;
 import com.google.dart.server.FindMemberDeclarationsConsumer;
-import com.google.dart.server.generated.types.RequestError;
-import com.google.dart.server.generated.types.SearchResult;
 import com.google.dart.tools.core.DartCore;
 import com.google.dart.tools.core.analysis.model.SearchResultsListener;
 import com.google.dart.tools.ui.DartToolsPlugin;
@@ -28,6 +26,8 @@ import com.google.dart.tools.ui.internal.text.editor.DartEditor;
 import com.google.dart.tools.ui.internal.text.functions.DartWordFinder;
 import com.google.dart.tools.ui.internal.util.ExceptionHandler;
 
+import org.dartlang.analysis.server.protocol.RequestError;
+import org.dartlang.analysis.server.protocol.SearchResult;
 import org.eclipse.core.resources.IProject;
 import org.eclipse.jface.text.IDocument;
 import org.eclipse.jface.text.IRegion;

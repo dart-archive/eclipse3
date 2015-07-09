@@ -41,9 +41,6 @@ import com.google.dart.server.MapUriConsumer;
 import com.google.dart.server.SortMembersConsumer;
 import com.google.dart.server.UpdateContentConsumer;
 import com.google.dart.server.generated.AnalysisServer;
-import com.google.dart.server.generated.types.AnalysisOptions;
-import com.google.dart.server.generated.types.RefactoringOptions;
-import com.google.dart.server.generated.types.RequestError;
 import com.google.dart.server.internal.BroadcastAnalysisServerListener;
 import com.google.dart.server.internal.remote.processor.AnalysisErrorsProcessor;
 import com.google.dart.server.internal.remote.processor.AssistsProcessor;
@@ -85,6 +82,10 @@ import com.google.dart.server.utilities.logging.Logging;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonPrimitive;
+
+import org.dartlang.analysis.server.protocol.AnalysisOptions;
+import org.dartlang.analysis.server.protocol.RefactoringOptions;
+import org.dartlang.analysis.server.protocol.RequestError;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -167,7 +168,7 @@ public class RemoteAnalysisServerImpl implements AnalysisServer {
   // Max analysis server version that this project (com.google.dart.server) currently works up to
   // (but not including). That is, if the MAX_SERVER_VERSION is 2, any 1.y.z version is
   // sufficient, but this project would not work with 2.0.0
-  private final static int MAX_MAJOR_SERVER_VERSION = 2;
+  private final static int MAX_MAJOR_SERVER_VERSION = 3;
 
   // Server domain
   private static final String SERVER_NOTIFICATION_CONNECTED = "server.connected";
@@ -360,12 +361,12 @@ public class RemoteAnalysisServerImpl implements AnalysisServer {
   }
 
   @Override
-  public void edit_format(String file, int selectionOffset, int selectionLength,
+  public void edit_format(String file, int selectionOffset, int selectionLength, int lineLength,
       FormatConsumer consumer) {
     String id = generateUniqueId();
     sendRequestToServer(
         id,
-        RequestUtilities.generateEditFormat(id, file, selectionOffset, selectionLength),
+        RequestUtilities.generateEditFormat(id, file, selectionOffset, selectionLength, lineLength),
         consumer);
   }
 

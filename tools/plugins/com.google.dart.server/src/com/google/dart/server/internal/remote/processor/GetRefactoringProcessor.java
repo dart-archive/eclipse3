@@ -14,18 +14,19 @@
 package com.google.dart.server.internal.remote.processor;
 
 import com.google.dart.server.GetRefactoringConsumer;
-import com.google.dart.server.generated.types.ExtractLocalVariableFeedback;
-import com.google.dart.server.generated.types.ExtractMethodFeedback;
-import com.google.dart.server.generated.types.InlineLocalVariableFeedback;
-import com.google.dart.server.generated.types.InlineMethodFeedback;
-import com.google.dart.server.generated.types.RefactoringFeedback;
-import com.google.dart.server.generated.types.RefactoringKind;
-import com.google.dart.server.generated.types.RefactoringProblem;
-import com.google.dart.server.generated.types.RenameFeedback;
-import com.google.dart.server.generated.types.RequestError;
-import com.google.dart.server.generated.types.SourceChange;
 import com.google.dart.server.utilities.general.JsonUtilities;
 import com.google.gson.JsonObject;
+
+import org.dartlang.analysis.server.protocol.ExtractLocalVariableFeedback;
+import org.dartlang.analysis.server.protocol.ExtractMethodFeedback;
+import org.dartlang.analysis.server.protocol.InlineLocalVariableFeedback;
+import org.dartlang.analysis.server.protocol.InlineMethodFeedback;
+import org.dartlang.analysis.server.protocol.RefactoringFeedback;
+import org.dartlang.analysis.server.protocol.RefactoringKind;
+import org.dartlang.analysis.server.protocol.RefactoringProblem;
+import org.dartlang.analysis.server.protocol.RenameFeedback;
+import org.dartlang.analysis.server.protocol.RequestError;
+import org.dartlang.analysis.server.protocol.SourceChange;
 
 import java.util.List;
 import java.util.Map;

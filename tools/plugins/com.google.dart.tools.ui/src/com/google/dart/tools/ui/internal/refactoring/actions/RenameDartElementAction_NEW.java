@@ -13,9 +13,6 @@
  */
 package com.google.dart.tools.ui.internal.refactoring.actions;
 
-import com.google.dart.server.generated.types.Element;
-import com.google.dart.server.generated.types.NavigationRegion;
-import com.google.dart.server.generated.types.NavigationTarget;
 import com.google.dart.tools.core.DartCore;
 import com.google.dart.tools.core.analysis.model.AnalysisServerNavigationListener;
 import com.google.dart.tools.ui.actions.AbstractRefactoringAction_NEW;
@@ -26,6 +23,8 @@ import com.google.dart.tools.ui.internal.refactoring.RenameWizard_NEW;
 import com.google.dart.tools.ui.internal.refactoring.ServerRenameRefactoring;
 import com.google.dart.tools.ui.internal.text.editor.DartEditor;
 
+import org.dartlang.analysis.server.protocol.NavigationRegion;
+import org.dartlang.analysis.server.protocol.NavigationTarget;
 import org.eclipse.jface.action.Action;
 import org.eclipse.jface.viewers.ISelection;
 

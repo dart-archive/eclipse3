@@ -14,7 +14,7 @@
 
 package com.google.dart.tools.core.analysis.model;
 
-import com.google.dart.server.generated.types.NavigationRegion;
+import org.dartlang.analysis.server.protocol.NavigationRegion;
 
 /**
  * Used by {@link AnalysisServerData} to notify clients that new {@link NavigationRegion} is ready.

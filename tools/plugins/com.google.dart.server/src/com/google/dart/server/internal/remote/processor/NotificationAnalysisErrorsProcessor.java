@@ -14,9 +14,10 @@
 package com.google.dart.server.internal.remote.processor;
 
 import com.google.dart.server.AnalysisServerListener;
-import com.google.dart.server.generated.types.AnalysisError;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
+
+import org.dartlang.analysis.server.protocol.AnalysisError;
 
 /**
  * Processor for "analysis.errors" notification.

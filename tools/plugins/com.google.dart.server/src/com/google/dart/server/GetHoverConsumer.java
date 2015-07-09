@@ -13,8 +13,8 @@
  */
 package com.google.dart.server;
 
-import com.google.dart.server.generated.types.HoverInformation;
-import com.google.dart.server.generated.types.RequestError;
+import org.dartlang.analysis.server.protocol.HoverInformation;
+import org.dartlang.analysis.server.protocol.RequestError;
 
 /**
  * The interface {@code HoverConsumer} defines the behavior of objects that consume hover text

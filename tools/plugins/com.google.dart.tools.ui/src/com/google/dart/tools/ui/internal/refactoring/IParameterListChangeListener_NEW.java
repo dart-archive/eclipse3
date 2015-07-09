@@ -13,7 +13,7 @@
  */
 package com.google.dart.tools.ui.internal.refactoring;
 
-import com.google.dart.server.generated.types.RefactoringMethodParameter;
+import org.dartlang.analysis.server.protocol.RefactoringMethodParameter;
 
 /**
  * @coverage dart.editor.ui.refactoring.ui

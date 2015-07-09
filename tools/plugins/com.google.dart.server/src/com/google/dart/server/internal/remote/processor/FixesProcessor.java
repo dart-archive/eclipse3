@@ -14,9 +14,10 @@
 package com.google.dart.server.internal.remote.processor;
 
 import com.google.dart.server.GetFixesConsumer;
-import com.google.dart.server.generated.types.AnalysisErrorFixes;
-import com.google.dart.server.generated.types.RequestError;
 import com.google.gson.JsonObject;
+
+import org.dartlang.analysis.server.protocol.AnalysisErrorFixes;
+import org.dartlang.analysis.server.protocol.RequestError;
 
 import java.util.List;
 

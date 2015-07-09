@@ -17,11 +17,6 @@ import com.google.common.collect.Lists;
 import com.google.common.util.concurrent.Uninterruptibles;
 import com.google.dart.server.FindElementReferencesConsumer;
 import com.google.dart.server.FindMemberReferencesConsumer;
-import com.google.dart.server.generated.types.Element;
-import com.google.dart.server.generated.types.NavigationRegion;
-import com.google.dart.server.generated.types.NavigationTarget;
-import com.google.dart.server.generated.types.RequestError;
-import com.google.dart.server.generated.types.SearchResult;
 import com.google.dart.tools.core.DartCore;
 import com.google.dart.tools.core.analysis.model.AnalysisServerNavigationListener;
 import com.google.dart.tools.core.analysis.model.SearchResultsListener;
@@ -33,6 +28,11 @@ import com.google.dart.tools.ui.internal.text.DartHelpContextIds;
 import com.google.dart.tools.ui.internal.text.editor.DartEditor;
 import com.google.dart.tools.ui.internal.util.ExceptionHandler;
 
+import org.dartlang.analysis.server.protocol.Element;
+import org.dartlang.analysis.server.protocol.NavigationRegion;
+import org.dartlang.analysis.server.protocol.NavigationTarget;
+import org.dartlang.analysis.server.protocol.RequestError;
+import org.dartlang.analysis.server.protocol.SearchResult;
 import org.eclipse.core.resources.IFile;
 import org.eclipse.core.resources.IProject;
 import org.eclipse.jface.viewers.ISelection;
@@ -236,7 +236,9 @@ public class FindReferencesAction_NEW extends AbstractDartSelectionAction_NEW im
   }
 
   private void updateSelectedElement() {
-    NavigationTarget[] targets = NewSelectionConverter.getNavigationTargets(getFile(), selectionOffset);
+    NavigationTarget[] targets = NewSelectionConverter.getNavigationTargets(
+        getFile(),
+        selectionOffset);
     setEnabled(targets.length != 0);
   }
 }

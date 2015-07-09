@@ -13,8 +13,8 @@
  */
 package com.google.dart.server;
 
-import com.google.dart.server.generated.types.RequestError;
-import com.google.dart.server.generated.types.SourceFileEdit;
+import org.dartlang.analysis.server.protocol.RequestError;
+import org.dartlang.analysis.server.protocol.SourceFileEdit;
 
 /**
  * The interface {@code SortMembersConsumer} defines the behavior of objects that consume sort

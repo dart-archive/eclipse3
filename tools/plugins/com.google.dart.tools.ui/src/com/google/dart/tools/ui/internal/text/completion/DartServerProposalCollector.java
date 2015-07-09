@@ -13,13 +13,13 @@
  */
 package com.google.dart.tools.ui.internal.text.completion;
 
-import com.google.dart.server.generated.types.CompletionSuggestion;
 import com.google.dart.tools.core.DartCore;
 import com.google.dart.tools.core.completion.DartSuggestionReceiver;
 import com.google.dart.tools.ui.internal.text.dart.DartServerInformationalProposal;
 import com.google.dart.tools.ui.internal.text.dart.DartServerProposal;
 import com.google.dart.tools.ui.text.dart.CompletionProposalComparator;
 
+import org.dartlang.analysis.server.protocol.CompletionSuggestion;
 import org.eclipse.jface.text.IDocument;
 import org.eclipse.jface.text.contentassist.ICompletionProposal;
 

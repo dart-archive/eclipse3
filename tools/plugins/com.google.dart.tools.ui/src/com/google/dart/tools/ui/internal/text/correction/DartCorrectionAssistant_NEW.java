@@ -14,12 +14,12 @@
 package com.google.dart.tools.ui.internal.text.correction;
 
 import com.google.common.collect.Lists;
-import com.google.dart.server.generated.types.AnalysisError;
-import com.google.dart.server.generated.types.Location;
 import com.google.dart.tools.core.DartCore;
 import com.google.dart.tools.ui.DartToolsPlugin;
 import com.google.dart.tools.ui.internal.text.editor.DartEditor;
 
+import org.dartlang.analysis.server.protocol.AnalysisError;
+import org.dartlang.analysis.server.protocol.Location;
 import org.eclipse.core.runtime.Assert;
 import org.eclipse.jface.text.BadLocationException;
 import org.eclipse.jface.text.DefaultInformationControl;

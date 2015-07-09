@@ -13,8 +13,6 @@
  */
 package com.google.dart.tools.ui.internal.text.editor;
 
-import com.google.dart.server.generated.types.Element;
-import com.google.dart.server.generated.types.ElementKind;
 import com.google.dart.server.utilities.general.ObjectUtilities;
 import com.google.dart.tools.ui.DartElementImageDescriptor;
 import com.google.dart.tools.ui.DartPluginImages;
@@ -23,6 +21,8 @@ import com.google.dart.tools.ui.internal.viewsupport.DartElementImageProvider;
 import com.google.dart.tools.ui.internal.viewsupport.ImageDescriptorRegistry;
 
 import org.apache.commons.lang3.StringUtils;
+import org.dartlang.analysis.server.protocol.Element;
+import org.dartlang.analysis.server.protocol.ElementKind;
 import org.eclipse.jface.resource.ImageDescriptor;
 import org.eclipse.jface.viewers.LabelProvider;
 import org.eclipse.jface.viewers.StyledString;

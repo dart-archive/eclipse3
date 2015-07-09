@@ -25,8 +25,6 @@ import com.google.dart.engine.utilities.instrumentation.Instrumentation;
 import com.google.dart.engine.utilities.instrumentation.InstrumentationBuilder;
 import com.google.dart.engine.utilities.logging.Logger;
 import com.google.dart.server.generated.AnalysisServer;
-import com.google.dart.server.generated.types.RequestError;
-import com.google.dart.server.generated.types.ServerService;
 import com.google.dart.server.internal.remote.DebugPrintStream;
 import com.google.dart.server.internal.remote.FileReadMode;
 import com.google.dart.server.internal.remote.RemoteAnalysisServerImpl;
@@ -59,6 +57,8 @@ import com.google.dart.tools.core.utilities.yaml.PubYamlUtils;
 
 import org.apache.commons.lang3.ArrayUtils;
 import org.apache.commons.lang3.StringUtils;
+import org.dartlang.analysis.server.protocol.RequestError;
+import org.dartlang.analysis.server.protocol.ServerService;
 import org.eclipse.core.resources.IContainer;
 import org.eclipse.core.resources.IFile;
 import org.eclipse.core.resources.IFolder;

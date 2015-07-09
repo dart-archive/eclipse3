@@ -13,7 +13,7 @@
  */
 package com.google.dart.server;
 
-import com.google.dart.server.generated.types.RequestError;
+import org.dartlang.analysis.server.protocol.RequestError;
 
 /**
  * The interface {@code CompletionSuggestionsConsumer} defines the behavior of objects that consume

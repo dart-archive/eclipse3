@@ -15,8 +15,6 @@
 package com.google.dart.tools.ui.internal.text.editor;
 
 import com.google.dart.server.generated.AnalysisServer;
-import com.google.dart.server.generated.types.HighlightRegion;
-import com.google.dart.server.generated.types.HighlightRegionType;
 import com.google.dart.tools.core.DartCore;
 import com.google.dart.tools.core.DartCoreDebug;
 import com.google.dart.tools.core.analysis.model.AnalysisServerData;
@@ -26,6 +24,8 @@ import com.google.dart.tools.ui.DartUI;
 import com.google.dart.tools.ui.internal.text.dart.DartReconcilingStrategy;
 import com.google.dart.tools.ui.text.IColorManager;
 
+import org.dartlang.analysis.server.protocol.HighlightRegion;
+import org.dartlang.analysis.server.protocol.HighlightRegionType;
 import org.eclipse.jface.preference.IPreferenceStore;
 import org.eclipse.jface.preference.PreferenceConverter;
 import org.eclipse.jface.text.Document;
@@ -373,24 +373,34 @@ public class SemanticHighlightingManager_NEW implements AnalysisServerHighlights
       return "class";
     } else if (type.equals(HighlightRegionType.CONSTRUCTOR)) {
       return "constructor";
-    } else if (type.equals(HighlightRegionType.DYNAMIC_TYPE)) {
+    } else if (type.equals(HighlightRegionType.DYNAMIC_LOCAL_VARIABLE_DECLARATION)
+        || type.equals(HighlightRegionType.DYNAMIC_LOCAL_VARIABLE_REFERENCE)
+        || type.equals(HighlightRegionType.DYNAMIC_PARAMETER_DECLARATION)
+        || type.equals(HighlightRegionType.DYNAMIC_PARAMETER_REFERENCE)) {
       return "dynamicType";
     } else if (type.equals(HighlightRegionType.ENUM)) {
       return "enum";
     } else if (type.equals(HighlightRegionType.ENUM_CONSTANT)) {
       return "enumConstant";
-    } else if (type.equals(HighlightRegionType.FIELD)) {
-      return "field";
-    } else if (type.equals(HighlightRegionType.FIELD_STATIC)) {
-      return "staticField";
-    } else if (type.equals(HighlightRegionType.FUNCTION)) {
-      return "function";
-    } else if (type.equals(HighlightRegionType.FUNCTION_DECLARATION)) {
-      return "methodDeclarationName";
     } else if (type.equals(HighlightRegionType.FUNCTION_TYPE_ALIAS)) {
       return "functionTypeAlias";
-    } else if (type.equals(HighlightRegionType.GETTER_DECLARATION)) {
+    } else if (type.equals(HighlightRegionType.INSTANCE_FIELD_DECLARATION)
+        || type.equals(HighlightRegionType.INSTANCE_FIELD_REFERENCE)
+        || type.equals(HighlightRegionType.INSTANCE_GETTER_REFERENCE)
+        || type.equals(HighlightRegionType.INSTANCE_SETTER_REFERENCE)) {
+      return "field";
+    } else if (type.equals(HighlightRegionType.INSTANCE_GETTER_DECLARATION)
+        || type.equals(HighlightRegionType.STATIC_GETTER_DECLARATION)
+        || type.equals(HighlightRegionType.TOP_LEVEL_GETTER_DECLARATION)) {
       return "getterDeclaration";
+    } else if (type.equals(HighlightRegionType.INSTANCE_METHOD_DECLARATION)) {
+      return "methodDeclarationName";
+    } else if (type.equals(HighlightRegionType.INSTANCE_METHOD_REFERENCE)) {
+      return "method";
+    } else if (type.equals(HighlightRegionType.INSTANCE_SETTER_DECLARATION)
+        || type.equals(HighlightRegionType.STATIC_SETTER_DECLARATION)
+        || type.equals(HighlightRegionType.TOP_LEVEL_SETTER_DECLARATION)) {
+      return "setterDeclaration";
     } else if (type.equals(HighlightRegionType.IMPORT_PREFIX)) {
       return "importPrefix";
     } else if (type.equals(HighlightRegionType.LABEL)) {
@@ -402,23 +412,30 @@ public class SemanticHighlightingManager_NEW implements AnalysisServerHighlights
       return "number";
     } else if (type.equals(HighlightRegionType.LITERAL_STRING)) {
       return "string";
-    } else if (type.equals(HighlightRegionType.LOCAL_VARIABLE)) {
-      return "localVariable";
+    } else if (type.equals(HighlightRegionType.LOCAL_FUNCTION_DECLARATION)
+        || type.equals(HighlightRegionType.TOP_LEVEL_FUNCTION_DECLARATION)) {
+      return "methodDeclarationName";
+    } else if (type.equals(HighlightRegionType.LOCAL_FUNCTION_REFERENCE)
+        || type.equals(HighlightRegionType.TOP_LEVEL_FUNCTION_REFERENCE)) {
+      return "function";
     } else if (type.equals(HighlightRegionType.LOCAL_VARIABLE_DECLARATION)) {
       return "localVariableDeclaration";
-    } else if (type.equals(HighlightRegionType.METHOD)) {
-      return "method";
-    } else if (type.equals(HighlightRegionType.METHOD_STATIC)) {
+    } else if (type.equals(HighlightRegionType.LOCAL_VARIABLE_REFERENCE)) {
+      return "localVariable";
+    } else if (type.equals(HighlightRegionType.STATIC_FIELD_DECLARATION)
+        || type.equals(HighlightRegionType.STATIC_GETTER_REFERENCE)
+        || type.equals(HighlightRegionType.STATIC_SETTER_REFERENCE)) {
+      return "staticField";
+    } else if (type.equals(HighlightRegionType.STATIC_METHOD_REFERENCE)) {
       return "staticMethod";
-    } else if (type.equals(HighlightRegionType.METHOD_DECLARATION)) {
-      return "methodDeclarationName";
-    } else if (type.equals(HighlightRegionType.METHOD_DECLARATION_STATIC)) {
+    } else if (type.equals(HighlightRegionType.STATIC_METHOD_DECLARATION)) {
       return "staticMethodDeclarationName";
-    } else if (type.equals(HighlightRegionType.PARAMETER)) {
+    } else if (type.equals(HighlightRegionType.PARAMETER_DECLARATION)
+        || type.equals(HighlightRegionType.PARAMETER_REFERENCE)) {
       return "parameterVariable";
-    } else if (type.equals(HighlightRegionType.SETTER_DECLARATION)) {
-      return "setterDeclaration";
-    } else if (type.equals(HighlightRegionType.TOP_LEVEL_VARIABLE)) {
+    } else if (type.equals(HighlightRegionType.TOP_LEVEL_VARIABLE_DECLARATION)
+        || type.equals(HighlightRegionType.TOP_LEVEL_GETTER_REFERENCE)
+        || type.equals(HighlightRegionType.TOP_LEVEL_SETTER_REFERENCE)) {
       return "staticField";
     } else if (type.equals(HighlightRegionType.TYPE_NAME_DYNAMIC)) {
       return "builtin";
@@ -431,8 +448,11 @@ public class SemanticHighlightingManager_NEW implements AnalysisServerHighlights
 //    COMMENT_END_OF_LINE:
 //    DIRECTIVE:
 //    IDENTIFIER_DEFAULT:
+//    INVALID_STRING_ESCAPE:
 //    LITERAL_LIST:
 //    LITERAL_MAP:
+//    UNRESOLVED_INSTANCE_MEMBER_REFERENCE:
+//    VALID_STRING_ESCAPE:
       return null;
     }
   }

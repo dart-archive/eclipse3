@@ -26,8 +26,6 @@ import com.google.dart.engine.element.ElementKind;
 import com.google.dart.engine.element.ExecutableElement;
 import com.google.dart.engine.element.MethodElement;
 import com.google.dart.engine.type.InterfaceType;
-import com.google.dart.server.generated.types.OverriddenMember;
-import com.google.dart.server.generated.types.OverrideMember;
 import com.google.dart.tools.core.DartCore;
 import com.google.dart.tools.core.DartCoreDebug;
 import com.google.dart.tools.core.analysis.model.AnalysisServerOverridesListener;
@@ -37,6 +35,8 @@ import com.google.dart.tools.ui.Messages;
 import com.google.dart.tools.ui.internal.text.dart.IDartReconcilingListener;
 import com.google.dart.tools.ui.internal.util.ExceptionHandler;
 
+import org.dartlang.analysis.server.protocol.OverriddenMember;
+import org.dartlang.analysis.server.protocol.OverrideMember;
 import org.eclipse.core.runtime.Assert;
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.NullProgressMonitor;
@@ -150,24 +150,24 @@ public class OverrideIndicatorManager {
    */
   public static class OverrideIndicator extends Annotation {
     private final boolean isOverride;
-    private final com.google.dart.server.generated.types.Element element;
+    private final org.dartlang.analysis.server.protocol.Element element;
     private final Element element_OLD;
     private final Position position;
-
-    OverrideIndicator(com.google.dart.server.generated.types.Element element, String text,
-        boolean isOverride, Position position) {
-      super(ANNOTATION_TYPE, false, text);
-      this.isOverride = isOverride;
-      this.element = element;
-      this.element_OLD = null;
-      this.position = position;
-    }
 
     OverrideIndicator(Element astElement, String text, boolean isOverride, Position position) {
       super(ANNOTATION_TYPE, false, text);
       this.isOverride = isOverride;
       this.element = null;
       this.element_OLD = astElement;
+      this.position = position;
+    }
+
+    OverrideIndicator(org.dartlang.analysis.server.protocol.Element element, String text,
+        boolean isOverride, Position position) {
+      super(ANNOTATION_TYPE, false, text);
+      this.isOverride = isOverride;
+      this.element = element;
+      this.element_OLD = null;
       this.position = position;
     }
 
@@ -305,7 +305,7 @@ public class OverrideIndicatorManager {
       List<OverriddenMember> interfaceMembers = override.getInterfaceMembers();
       // prepare target
       boolean isOverride = true;
-      com.google.dart.server.generated.types.Element element = null;
+      org.dartlang.analysis.server.protocol.Element element = null;
       String text = null;
       if (superclassMember != null) {
         element = superclassMember.getElement();

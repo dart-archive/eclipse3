@@ -15,12 +15,12 @@ package com.google.dart.tools.ui.internal.text.correction;
 
 import com.google.common.collect.Lists;
 import com.google.dart.engine.services.assist.AssistContext;
-import com.google.dart.server.generated.types.AnalysisError;
 import com.google.dart.tools.core.DartCore;
 import com.google.dart.tools.ui.DartToolsPlugin;
 import com.google.dart.tools.ui.internal.text.editor.DartEditor;
 import com.google.dart.tools.ui.text.dart.CompletionProposalComparator;
 
+import org.dartlang.analysis.server.protocol.AnalysisError;
 import org.eclipse.core.resources.IMarker;
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.jface.text.contentassist.ICompletionProposal;

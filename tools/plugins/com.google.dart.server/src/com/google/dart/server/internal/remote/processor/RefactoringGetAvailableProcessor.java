@@ -14,9 +14,10 @@
 package com.google.dart.server.internal.remote.processor;
 
 import com.google.dart.server.GetAvailableRefactoringsConsumer;
-import com.google.dart.server.generated.types.RequestError;
 import com.google.dart.server.utilities.general.JsonUtilities;
 import com.google.gson.JsonObject;
+
+import org.dartlang.analysis.server.protocol.RequestError;
 
 import java.util.List;
 

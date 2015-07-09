@@ -13,8 +13,8 @@
  */
 package com.google.dart.server;
 
-import com.google.dart.server.generated.types.RefactoringKind;
-import com.google.dart.server.generated.types.RequestError;
+import org.dartlang.analysis.server.protocol.RefactoringKind;
+import org.dartlang.analysis.server.protocol.RequestError;
 
 import java.util.List;
 

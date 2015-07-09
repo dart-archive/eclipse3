@@ -14,7 +14,7 @@
 
 package com.google.dart.tools.core.analysis.model;
 
-import com.google.dart.server.generated.types.Outline;
+import org.dartlang.analysis.server.protocol.Outline;
 
 /**
  * Used by {@link AnalysisServerData} to notify clients that new {@link Outline} is ready.

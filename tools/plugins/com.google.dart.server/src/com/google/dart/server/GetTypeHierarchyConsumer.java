@@ -13,8 +13,8 @@
  */
 package com.google.dart.server;
 
-import com.google.dart.server.generated.types.RequestError;
-import com.google.dart.server.generated.types.TypeHierarchyItem;
+import org.dartlang.analysis.server.protocol.RequestError;
+import org.dartlang.analysis.server.protocol.TypeHierarchyItem;
 
 import java.util.List;
 

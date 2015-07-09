@@ -31,8 +31,6 @@ import com.google.dart.engine.type.Type;
 import com.google.dart.engine.utilities.general.StringUtilities;
 import com.google.dart.engine.utilities.source.SourceRange;
 import com.google.dart.server.GetHoverConsumer;
-import com.google.dart.server.generated.types.HoverInformation;
-import com.google.dart.server.generated.types.RequestError;
 import com.google.dart.tools.core.DartCore;
 import com.google.dart.tools.core.DartCoreDebug;
 import com.google.dart.tools.ui.internal.actions.NewSelectionConverter;
@@ -42,6 +40,8 @@ import com.google.dart.tools.ui.internal.util.GridLayoutFactory;
 import com.google.dart.tools.ui.text.DartSourceViewerConfiguration;
 
 import org.apache.commons.lang3.text.WordUtils;
+import org.dartlang.analysis.server.protocol.HoverInformation;
+import org.dartlang.analysis.server.protocol.RequestError;
 import org.eclipse.core.resources.IMarker;
 import org.eclipse.jface.text.AbstractInformationControl;
 import org.eclipse.jface.text.AbstractReusableInformationControlCreator;

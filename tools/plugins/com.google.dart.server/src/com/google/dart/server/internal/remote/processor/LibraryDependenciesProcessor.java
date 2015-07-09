@@ -15,10 +15,11 @@ package com.google.dart.server.internal.remote.processor;
 
 import com.google.common.reflect.TypeToken;
 import com.google.dart.server.GetLibraryDependenciesConsumer;
-import com.google.dart.server.generated.types.RequestError;
 import com.google.gson.Gson;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
+
+import org.dartlang.analysis.server.protocol.RequestError;
 
 import java.util.Collections;
 import java.util.List;

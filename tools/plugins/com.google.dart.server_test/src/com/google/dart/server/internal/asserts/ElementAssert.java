@@ -15,7 +15,8 @@
 package com.google.dart.server.internal.asserts;
 
 import com.google.dart.engine.source.Source;
-import com.google.dart.server.generated.types.Element;
+
+import org.dartlang.analysis.server.protocol.Element;
 
 /**
  * A helper for validating a {@link Element}.

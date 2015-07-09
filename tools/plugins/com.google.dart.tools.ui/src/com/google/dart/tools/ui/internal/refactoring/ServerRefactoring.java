@@ -18,11 +18,6 @@ import com.google.common.collect.Lists;
 import com.google.common.collect.Sets;
 import com.google.common.util.concurrent.Uninterruptibles;
 import com.google.dart.server.GetRefactoringConsumer;
-import com.google.dart.server.generated.types.RefactoringFeedback;
-import com.google.dart.server.generated.types.RefactoringOptions;
-import com.google.dart.server.generated.types.RefactoringProblem;
-import com.google.dart.server.generated.types.RequestError;
-import com.google.dart.server.generated.types.SourceChange;
 import com.google.dart.tools.core.DartCore;
 import com.google.dart.tools.internal.corext.refactoring.base.StringStatusContext;
 
@@ -30,6 +25,11 @@ import static com.google.dart.tools.ui.internal.refactoring.ServiceUtils_NEW.toL
 import static com.google.dart.tools.ui.internal.refactoring.ServiceUtils_NEW.toRefactoringStatus;
 
 import org.apache.commons.lang3.StringUtils;
+import org.dartlang.analysis.server.protocol.RefactoringFeedback;
+import org.dartlang.analysis.server.protocol.RefactoringOptions;
+import org.dartlang.analysis.server.protocol.RefactoringProblem;
+import org.dartlang.analysis.server.protocol.RequestError;
+import org.dartlang.analysis.server.protocol.SourceChange;
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.OperationCanceledException;
 import org.eclipse.ltk.core.refactoring.Change;

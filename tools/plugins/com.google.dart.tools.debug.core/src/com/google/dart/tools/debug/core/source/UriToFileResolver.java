@@ -18,7 +18,6 @@ import com.google.common.collect.Maps;
 import com.google.common.util.concurrent.Uninterruptibles;
 import com.google.dart.server.CreateContextConsumer;
 import com.google.dart.server.MapUriConsumer;
-import com.google.dart.server.generated.types.RequestError;
 import com.google.dart.tools.core.DartCore;
 import com.google.dart.tools.core.DartCoreDebug;
 import com.google.dart.tools.core.analysis.model.IFileInfo;
@@ -26,6 +25,7 @@ import com.google.dart.tools.core.analysis.model.ProjectManager;
 import com.google.dart.tools.core.internal.util.ResourceUtil;
 import com.google.dart.tools.debug.core.DartLaunchConfigWrapper;
 
+import org.dartlang.analysis.server.protocol.RequestError;
 import org.eclipse.core.resources.IContainer;
 import org.eclipse.core.resources.IFile;
 import org.eclipse.core.resources.IResource;

@@ -13,9 +13,6 @@
  */
 package com.google.dart.tools.ui.omni.elements;
 
-import com.google.dart.server.generated.types.Element;
-import com.google.dart.server.generated.types.ElementKind;
-import com.google.dart.server.generated.types.SearchResult;
 import com.google.dart.tools.core.internal.util.ResourceUtil;
 import com.google.dart.tools.ui.DartElementLabels;
 import com.google.dart.tools.ui.DartToolsPlugin;
@@ -26,6 +23,9 @@ import com.google.dart.tools.ui.omni.OmniElement;
 import com.google.dart.tools.ui.omni.OmniEntry;
 import com.google.dart.tools.ui.omni.OmniProposalProvider;
 
+import org.dartlang.analysis.server.protocol.Element;
+import org.dartlang.analysis.server.protocol.ElementKind;
+import org.dartlang.analysis.server.protocol.SearchResult;
 import org.eclipse.core.resources.IFile;
 import org.eclipse.core.runtime.IPath;
 import org.eclipse.jface.resource.ImageDescriptor;

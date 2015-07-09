@@ -14,10 +14,11 @@
 package com.google.dart.server.internal.remote.processor;
 
 import com.google.dart.server.GetTypeHierarchyConsumer;
-import com.google.dart.server.generated.types.RequestError;
-import com.google.dart.server.generated.types.TypeHierarchyItem;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
+
+import org.dartlang.analysis.server.protocol.RequestError;
+import org.dartlang.analysis.server.protocol.TypeHierarchyItem;
 
 /**
  * Instances of {@code TypeHierarchyResultProcessor} translate JSON result objects for a given

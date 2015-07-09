@@ -14,8 +14,9 @@
 package com.google.dart.server.internal.remote.processor;
 
 import com.google.dart.server.FindTopLevelDeclarationsConsumer;
-import com.google.dart.server.generated.types.RequestError;
 import com.google.gson.JsonObject;
+
+import org.dartlang.analysis.server.protocol.RequestError;
 
 /**
  * Instances of {@code FindTopLevelDeclarationsProcessor} translate JSON result objects for a given

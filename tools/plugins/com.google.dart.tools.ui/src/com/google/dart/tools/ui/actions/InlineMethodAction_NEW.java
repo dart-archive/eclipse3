@@ -13,9 +13,6 @@
  */
 package com.google.dart.tools.ui.actions;
 
-import com.google.dart.server.generated.types.ElementKind;
-import com.google.dart.server.generated.types.NavigationRegion;
-import com.google.dart.server.generated.types.NavigationTarget;
 import com.google.dart.tools.core.DartCore;
 import com.google.dart.tools.core.analysis.model.AnalysisServerNavigationListener;
 import com.google.dart.tools.ui.internal.actions.NewSelectionConverter;
@@ -26,6 +23,9 @@ import com.google.dart.tools.ui.internal.refactoring.ServerInlineMethodRefactori
 import com.google.dart.tools.ui.internal.refactoring.actions.RefactoringStarter;
 import com.google.dart.tools.ui.internal.text.editor.DartEditor;
 
+import org.dartlang.analysis.server.protocol.ElementKind;
+import org.dartlang.analysis.server.protocol.NavigationRegion;
+import org.dartlang.analysis.server.protocol.NavigationTarget;
 import org.eclipse.jface.action.Action;
 import org.eclipse.jface.viewers.ISelection;
 
@@ -81,7 +81,9 @@ public class InlineMethodAction_NEW extends AbstractRefactoringAction_NEW implem
 
   private void updateSelectedElement() {
     setEnabled(false);
-    NavigationTarget[] targets = NewSelectionConverter.getNavigationTargets(getFile(), selectionOffset);
+    NavigationTarget[] targets = NewSelectionConverter.getNavigationTargets(
+        getFile(),
+        selectionOffset);
     if (targets.length != 0) {
       NavigationTarget target = targets[0];
       String kind = target.getKind();

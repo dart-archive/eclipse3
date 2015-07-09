@@ -14,13 +14,12 @@
 
 package com.google.dart.tools.ui.internal.refactoring;
 
-import com.google.dart.server.generated.types.RefactoringFeedback;
-import com.google.dart.server.generated.types.RefactoringKind;
-import com.google.dart.server.generated.types.RefactoringOptions;
-import com.google.dart.server.generated.types.RenameFeedback;
-import com.google.dart.server.generated.types.RenameOptions;
-
 import org.apache.commons.lang3.text.WordUtils;
+import org.dartlang.analysis.server.protocol.RefactoringFeedback;
+import org.dartlang.analysis.server.protocol.RefactoringKind;
+import org.dartlang.analysis.server.protocol.RefactoringOptions;
+import org.dartlang.analysis.server.protocol.RenameFeedback;
+import org.dartlang.analysis.server.protocol.RenameOptions;
 
 /**
  * LTK wrapper around Analysis Server 'Rename' refactoring.

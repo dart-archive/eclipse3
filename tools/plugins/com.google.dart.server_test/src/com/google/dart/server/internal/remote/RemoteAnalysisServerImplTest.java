@@ -36,59 +36,60 @@ import com.google.dart.server.GetVersionConsumer;
 import com.google.dart.server.MapUriConsumer;
 import com.google.dart.server.SortMembersConsumer;
 import com.google.dart.server.UpdateContentConsumer;
-import com.google.dart.server.generated.types.AddContentOverlay;
-import com.google.dart.server.generated.types.AnalysisError;
-import com.google.dart.server.generated.types.AnalysisErrorFixes;
-import com.google.dart.server.generated.types.AnalysisErrorSeverity;
-import com.google.dart.server.generated.types.AnalysisOptions;
-import com.google.dart.server.generated.types.AnalysisService;
-import com.google.dart.server.generated.types.AnalysisStatus;
-import com.google.dart.server.generated.types.ChangeContentOverlay;
-import com.google.dart.server.generated.types.CompletionSuggestion;
-import com.google.dart.server.generated.types.CompletionSuggestionKind;
-import com.google.dart.server.generated.types.Element;
-import com.google.dart.server.generated.types.ElementKind;
-import com.google.dart.server.generated.types.ExecutionService;
-import com.google.dart.server.generated.types.ExtractLocalVariableFeedback;
-import com.google.dart.server.generated.types.ExtractLocalVariableOptions;
-import com.google.dart.server.generated.types.ExtractMethodFeedback;
-import com.google.dart.server.generated.types.ExtractMethodOptions;
-import com.google.dart.server.generated.types.HighlightRegion;
-import com.google.dart.server.generated.types.HighlightRegionType;
-import com.google.dart.server.generated.types.HoverInformation;
-import com.google.dart.server.generated.types.InlineLocalVariableFeedback;
-import com.google.dart.server.generated.types.InlineMethodFeedback;
-import com.google.dart.server.generated.types.InlineMethodOptions;
-import com.google.dart.server.generated.types.Location;
-import com.google.dart.server.generated.types.NavigationRegion;
-import com.google.dart.server.generated.types.NavigationTarget;
-import com.google.dart.server.generated.types.Occurrences;
-import com.google.dart.server.generated.types.Outline;
-import com.google.dart.server.generated.types.OverriddenMember;
-import com.google.dart.server.generated.types.OverrideMember;
-import com.google.dart.server.generated.types.RefactoringFeedback;
-import com.google.dart.server.generated.types.RefactoringKind;
-import com.google.dart.server.generated.types.RefactoringMethodParameter;
-import com.google.dart.server.generated.types.RefactoringMethodParameterKind;
-import com.google.dart.server.generated.types.RefactoringOptions;
-import com.google.dart.server.generated.types.RefactoringProblem;
-import com.google.dart.server.generated.types.RefactoringProblemSeverity;
-import com.google.dart.server.generated.types.RemoveContentOverlay;
-import com.google.dart.server.generated.types.RenameFeedback;
-import com.google.dart.server.generated.types.RenameOptions;
-import com.google.dart.server.generated.types.RequestError;
-import com.google.dart.server.generated.types.SearchResult;
-import com.google.dart.server.generated.types.SearchResultKind;
-import com.google.dart.server.generated.types.ServerService;
-import com.google.dart.server.generated.types.SourceChange;
-import com.google.dart.server.generated.types.SourceEdit;
-import com.google.dart.server.generated.types.SourceFileEdit;
-import com.google.dart.server.generated.types.TypeHierarchyItem;
 import com.google.dart.server.internal.AnalysisServerError;
 import com.google.dart.server.internal.remote.utilities.RequestUtilities;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
+
+import org.dartlang.analysis.server.protocol.AddContentOverlay;
+import org.dartlang.analysis.server.protocol.AnalysisError;
+import org.dartlang.analysis.server.protocol.AnalysisErrorFixes;
+import org.dartlang.analysis.server.protocol.AnalysisErrorSeverity;
+import org.dartlang.analysis.server.protocol.AnalysisOptions;
+import org.dartlang.analysis.server.protocol.AnalysisService;
+import org.dartlang.analysis.server.protocol.AnalysisStatus;
+import org.dartlang.analysis.server.protocol.ChangeContentOverlay;
+import org.dartlang.analysis.server.protocol.CompletionSuggestion;
+import org.dartlang.analysis.server.protocol.CompletionSuggestionKind;
+import org.dartlang.analysis.server.protocol.Element;
+import org.dartlang.analysis.server.protocol.ElementKind;
+import org.dartlang.analysis.server.protocol.ExecutionService;
+import org.dartlang.analysis.server.protocol.ExtractLocalVariableFeedback;
+import org.dartlang.analysis.server.protocol.ExtractLocalVariableOptions;
+import org.dartlang.analysis.server.protocol.ExtractMethodFeedback;
+import org.dartlang.analysis.server.protocol.ExtractMethodOptions;
+import org.dartlang.analysis.server.protocol.HighlightRegion;
+import org.dartlang.analysis.server.protocol.HighlightRegionType;
+import org.dartlang.analysis.server.protocol.HoverInformation;
+import org.dartlang.analysis.server.protocol.InlineLocalVariableFeedback;
+import org.dartlang.analysis.server.protocol.InlineMethodFeedback;
+import org.dartlang.analysis.server.protocol.InlineMethodOptions;
+import org.dartlang.analysis.server.protocol.Location;
+import org.dartlang.analysis.server.protocol.NavigationRegion;
+import org.dartlang.analysis.server.protocol.NavigationTarget;
+import org.dartlang.analysis.server.protocol.Occurrences;
+import org.dartlang.analysis.server.protocol.Outline;
+import org.dartlang.analysis.server.protocol.OverriddenMember;
+import org.dartlang.analysis.server.protocol.OverrideMember;
+import org.dartlang.analysis.server.protocol.RefactoringFeedback;
+import org.dartlang.analysis.server.protocol.RefactoringKind;
+import org.dartlang.analysis.server.protocol.RefactoringMethodParameter;
+import org.dartlang.analysis.server.protocol.RefactoringMethodParameterKind;
+import org.dartlang.analysis.server.protocol.RefactoringOptions;
+import org.dartlang.analysis.server.protocol.RefactoringProblem;
+import org.dartlang.analysis.server.protocol.RefactoringProblemSeverity;
+import org.dartlang.analysis.server.protocol.RemoveContentOverlay;
+import org.dartlang.analysis.server.protocol.RenameFeedback;
+import org.dartlang.analysis.server.protocol.RenameOptions;
+import org.dartlang.analysis.server.protocol.RequestError;
+import org.dartlang.analysis.server.protocol.SearchResult;
+import org.dartlang.analysis.server.protocol.SearchResultKind;
+import org.dartlang.analysis.server.protocol.ServerService;
+import org.dartlang.analysis.server.protocol.SourceChange;
+import org.dartlang.analysis.server.protocol.SourceEdit;
+import org.dartlang.analysis.server.protocol.SourceFileEdit;
+import org.dartlang.analysis.server.protocol.TypeHierarchyItem;
 
 import static org.fest.assertions.Assertions.assertThat;
 import static org.fest.assertions.MapAssert.entry;
@@ -600,7 +601,7 @@ public class RemoteAnalysisServerImplTest extends AbstractRemoteServerTest {
         "        'length': 2",
         "      },",
         "      {",
-        "        'type': 'FIELD',",
+        "        'type': 'INSTANCE_FIELD_REFERENCE',",
         "        'offset': 10,",
         "        'length': 20",
         "      }",
@@ -619,7 +620,7 @@ public class RemoteAnalysisServerImplTest extends AbstractRemoteServerTest {
     }
     {
       HighlightRegion error = regions.get(1);
-      assertEquals(HighlightRegionType.FIELD, error.getType());
+      assertEquals(HighlightRegionType.INSTANCE_FIELD_REFERENCE, error.getType());
       assertEquals(10, error.getOffset());
       assertEquals(20, error.getLength());
     }
@@ -1509,7 +1510,7 @@ public class RemoteAnalysisServerImplTest extends AbstractRemoteServerTest {
     final int[] selectionOffsetArray = {-1};
     final int[] selectionLengthArray = {-1};
     final RequestError[] requestErrorArray = {null};
-    server.edit_format("/fileA.dart", 1, 2, new FormatConsumer() {
+    server.edit_format("/fileA.dart", 1, 2, -1, new FormatConsumer() {
       @Override
       public void computedFormat(List<SourceEdit> edits, int selectionOffset, int selectionLength) {
         editsArray[0] = edits;
@@ -1572,7 +1573,7 @@ public class RemoteAnalysisServerImplTest extends AbstractRemoteServerTest {
     final int[] selectionOffsetArray = {-1};
     final int[] selectionLengthArray = {-1};
     final RequestError[] requestErrorArray = {null};
-    server.edit_format("/fileA.dart", 1, 2, new FormatConsumer() {
+    server.edit_format("/fileA.dart", 1, 2, -1, new FormatConsumer() {
       @Override
       public void computedFormat(List<SourceEdit> edits, int selectionOffset, int selectionLength) {
         editsArray[0] = edits;

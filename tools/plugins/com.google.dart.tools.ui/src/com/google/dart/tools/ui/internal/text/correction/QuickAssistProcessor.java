@@ -23,9 +23,6 @@ import com.google.dart.engine.services.correction.CorrectionProposal;
 import com.google.dart.engine.source.Source;
 import com.google.dart.server.GetAssistsConsumer;
 import com.google.dart.server.GetAvailableRefactoringsConsumer;
-import com.google.dart.server.generated.types.RefactoringKind;
-import com.google.dart.server.generated.types.RequestError;
-import com.google.dart.server.generated.types.SourceChange;
 import com.google.dart.tools.core.DartCore;
 import com.google.dart.tools.core.DartCoreDebug;
 import com.google.dart.tools.internal.corext.refactoring.util.ExecutionUtils;
@@ -49,6 +46,9 @@ import com.google.dart.tools.ui.internal.text.correction.proposals.SortMembersPr
 import com.google.dart.tools.ui.internal.text.editor.DartEditor;
 import com.google.dart.tools.ui.internal.text.editor.DartSelection;
 
+import org.dartlang.analysis.server.protocol.RefactoringKind;
+import org.dartlang.analysis.server.protocol.RequestError;
+import org.dartlang.analysis.server.protocol.SourceChange;
 import org.eclipse.jface.action.IAction;
 import org.eclipse.jface.text.contentassist.ICompletionProposal;
 import org.eclipse.jface.text.quickassist.IQuickAssistProcessor;

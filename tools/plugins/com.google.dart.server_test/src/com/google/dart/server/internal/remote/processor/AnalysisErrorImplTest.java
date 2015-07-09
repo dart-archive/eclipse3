@@ -13,11 +13,11 @@
  */
 package com.google.dart.server.internal.remote.processor;
 
-import com.google.dart.server.generated.types.AnalysisError;
-import com.google.dart.server.generated.types.AnalysisErrorSeverity;
-import com.google.dart.server.generated.types.Location;
-
 import junit.framework.TestCase;
+
+import org.dartlang.analysis.server.protocol.AnalysisError;
+import org.dartlang.analysis.server.protocol.AnalysisErrorSeverity;
+import org.dartlang.analysis.server.protocol.Location;
 
 import static org.mockito.Mockito.mock;
 

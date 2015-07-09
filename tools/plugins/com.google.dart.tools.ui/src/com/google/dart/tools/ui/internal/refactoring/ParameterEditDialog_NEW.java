@@ -13,7 +13,6 @@
  */
 package com.google.dart.tools.ui.internal.refactoring;
 
-import com.google.dart.server.generated.types.RefactoringMethodParameter;
 import com.google.dart.tools.core.model.DartConventions;
 import com.google.dart.tools.internal.corext.refactoring.Checks;
 import com.google.dart.tools.internal.corext.refactoring.RefactoringCoreMessages;
@@ -21,6 +20,7 @@ import com.google.dart.tools.internal.corext.refactoring.util.Messages;
 import com.google.dart.tools.ui.DartToolsPlugin;
 import com.google.dart.tools.ui.internal.dialogs.TextFieldNavigationHandler;
 
+import org.dartlang.analysis.server.protocol.RefactoringMethodParameter;
 import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.Status;
 import org.eclipse.jface.dialogs.StatusDialog;

@@ -16,13 +16,13 @@ package com.google.dart.tools.ui.internal.text.correction;
 import com.google.common.collect.Lists;
 import com.google.common.util.concurrent.Uninterruptibles;
 import com.google.dart.server.GetFixesConsumer;
-import com.google.dart.server.generated.types.AnalysisError;
-import com.google.dart.server.generated.types.AnalysisErrorFixes;
-import com.google.dart.server.generated.types.Location;
-import com.google.dart.server.generated.types.RequestError;
-import com.google.dart.server.generated.types.SourceChange;
 import com.google.dart.tools.core.DartCore;
 
+import org.dartlang.analysis.server.protocol.AnalysisError;
+import org.dartlang.analysis.server.protocol.AnalysisErrorFixes;
+import org.dartlang.analysis.server.protocol.Location;
+import org.dartlang.analysis.server.protocol.RequestError;
+import org.dartlang.analysis.server.protocol.SourceChange;
 import org.eclipse.jface.text.contentassist.ICompletionProposal;
 
 import java.util.List;

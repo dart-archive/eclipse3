@@ -18,8 +18,9 @@ import com.google.dart.server.AnalysisServerListener;
 import com.google.dart.server.AnalysisServerListenerAdapter;
 import com.google.dart.server.GetSuggestionsConsumer;
 import com.google.dart.server.generated.AnalysisServer;
-import com.google.dart.server.generated.types.CompletionSuggestion;
-import com.google.dart.server.generated.types.RequestError;
+
+import org.dartlang.analysis.server.protocol.CompletionSuggestion;
+import org.dartlang.analysis.server.protocol.RequestError;
 
 import java.util.List;
 import java.util.concurrent.CountDownLatch;

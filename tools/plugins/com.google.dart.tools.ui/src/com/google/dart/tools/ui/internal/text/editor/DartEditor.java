@@ -34,8 +34,6 @@ import com.google.dart.engine.services.assist.AssistContext;
 import com.google.dart.engine.source.FileBasedSource;
 import com.google.dart.engine.source.Source;
 import com.google.dart.engine.utilities.source.SourceRange;
-import com.google.dart.server.generated.types.NavigationRegion;
-import com.google.dart.server.generated.types.Outline;
 import com.google.dart.tools.core.DartCore;
 import com.google.dart.tools.core.DartCoreDebug;
 import com.google.dart.tools.core.MessageConsole;
@@ -101,6 +99,8 @@ import com.google.dart.tools.ui.text.folding.IDartFoldingStructureProviderExtens
 
 import com.ibm.icu.text.BreakIterator;
 
+import org.dartlang.analysis.server.protocol.NavigationRegion;
+import org.dartlang.analysis.server.protocol.Outline;
 import org.eclipse.core.commands.operations.IOperationApprover;
 import org.eclipse.core.commands.operations.IUndoContext;
 import org.eclipse.core.resources.IFile;

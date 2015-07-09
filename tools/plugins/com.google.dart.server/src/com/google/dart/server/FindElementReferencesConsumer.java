@@ -13,8 +13,8 @@
  */
 package com.google.dart.server;
 
-import com.google.dart.server.generated.types.Element;
-import com.google.dart.server.generated.types.RequestError;
+import org.dartlang.analysis.server.protocol.Element;
+import org.dartlang.analysis.server.protocol.RequestError;
 
 /**
  * The interface {@code FindElementReferencesConsumer} defines the behavior of objects that consume

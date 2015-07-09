@@ -20,13 +20,13 @@ import com.google.dart.engine.services.assist.AssistContext;
 import com.google.dart.engine.services.correction.CorrectionProcessors;
 import com.google.dart.engine.services.correction.CorrectionProposal;
 import com.google.dart.server.GetFixesConsumer;
-import com.google.dart.server.generated.types.AnalysisErrorFixes;
-import com.google.dart.server.generated.types.RequestError;
 import com.google.dart.tools.core.DartCore;
 import com.google.dart.tools.core.DartCoreDebug;
 import com.google.dart.tools.internal.corext.refactoring.util.ExecutionUtils;
 import com.google.dart.tools.internal.corext.refactoring.util.RunnableEx;
 
+import org.dartlang.analysis.server.protocol.AnalysisErrorFixes;
+import org.dartlang.analysis.server.protocol.RequestError;
 import org.eclipse.jface.text.contentassist.ICompletionProposal;
 
 import java.util.List;

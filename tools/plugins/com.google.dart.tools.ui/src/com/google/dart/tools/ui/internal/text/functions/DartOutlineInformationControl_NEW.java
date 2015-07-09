@@ -13,14 +13,14 @@
  */
 package com.google.dart.tools.ui.internal.text.functions;
 
-import com.google.dart.server.generated.types.ElementKind;
-import com.google.dart.server.generated.types.Outline;
 import com.google.dart.tools.ui.DartToolsPlugin;
 import com.google.dart.tools.ui.internal.text.editor.DartEditor;
 import com.google.dart.tools.ui.internal.text.editor.DartOutlinePage_NEW;
 import com.google.dart.tools.ui.internal.text.editor.LightNodeElements;
 import com.google.dart.tools.ui.internal.util.GridDataFactory;
 
+import org.dartlang.analysis.server.protocol.ElementKind;
+import org.dartlang.analysis.server.protocol.Outline;
 import org.eclipse.jface.dialogs.Dialog;
 import org.eclipse.jface.dialogs.IDialogSettings;
 import org.eclipse.jface.dialogs.PopupDialog;

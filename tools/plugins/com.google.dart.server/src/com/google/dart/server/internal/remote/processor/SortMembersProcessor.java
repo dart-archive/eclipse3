@@ -14,9 +14,10 @@
 package com.google.dart.server.internal.remote.processor;
 
 import com.google.dart.server.SortMembersConsumer;
-import com.google.dart.server.generated.types.RequestError;
-import com.google.dart.server.generated.types.SourceFileEdit;
 import com.google.gson.JsonObject;
+
+import org.dartlang.analysis.server.protocol.RequestError;
+import org.dartlang.analysis.server.protocol.SourceFileEdit;
 
 /**
  * Instances of {@code SortMembersProcessor} translate JSON result objects for a given

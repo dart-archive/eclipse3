@@ -15,12 +15,13 @@
 package com.google.dart.tools.ui.internal.refactoring;
 
 import com.google.common.collect.ImmutableList;
-import com.google.dart.server.generated.types.ExtractMethodFeedback;
-import com.google.dart.server.generated.types.ExtractMethodOptions;
-import com.google.dart.server.generated.types.RefactoringFeedback;
-import com.google.dart.server.generated.types.RefactoringKind;
-import com.google.dart.server.generated.types.RefactoringMethodParameter;
-import com.google.dart.server.generated.types.RefactoringOptions;
+
+import org.dartlang.analysis.server.protocol.ExtractMethodFeedback;
+import org.dartlang.analysis.server.protocol.ExtractMethodOptions;
+import org.dartlang.analysis.server.protocol.RefactoringFeedback;
+import org.dartlang.analysis.server.protocol.RefactoringKind;
+import org.dartlang.analysis.server.protocol.RefactoringMethodParameter;
+import org.dartlang.analysis.server.protocol.RefactoringOptions;
 
 import java.util.List;
 

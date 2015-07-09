@@ -14,9 +14,10 @@
 package com.google.dart.server.internal.remote.processor;
 
 import com.google.dart.server.FindElementReferencesConsumer;
-import com.google.dart.server.generated.types.Element;
-import com.google.dart.server.generated.types.RequestError;
 import com.google.gson.JsonObject;
+
+import org.dartlang.analysis.server.protocol.Element;
+import org.dartlang.analysis.server.protocol.RequestError;
 
 /**
  * Instances of {@code FindElementReferencesProcessor} translate JSON result objects for a given

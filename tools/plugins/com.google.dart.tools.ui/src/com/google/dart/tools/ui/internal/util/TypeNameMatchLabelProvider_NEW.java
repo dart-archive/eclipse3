@@ -13,11 +13,11 @@
  */
 package com.google.dart.tools.ui.internal.util;
 
-import com.google.dart.server.generated.types.Element;
-import com.google.dart.server.generated.types.ElementKind;
 import com.google.dart.tools.ui.DartPluginImages;
 import com.google.dart.tools.ui.DartToolsPlugin;
 
+import org.dartlang.analysis.server.protocol.Element;
+import org.dartlang.analysis.server.protocol.ElementKind;
 import org.eclipse.jface.viewers.LabelProvider;
 import org.eclipse.swt.graphics.Image;
 

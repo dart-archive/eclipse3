@@ -27,11 +27,11 @@ import com.google.dart.engine.ast.visitor.GeneralizingAstVisitor;
 import com.google.dart.engine.ast.visitor.NodeLocator;
 import com.google.dart.engine.element.Element;
 import com.google.dart.engine.services.assist.AssistContext;
-import com.google.dart.server.generated.types.NavigationRegion;
-import com.google.dart.server.generated.types.NavigationTarget;
 import com.google.dart.tools.core.DartCore;
 import com.google.dart.tools.ui.internal.text.editor.DartEditor;
 
+import org.dartlang.analysis.server.protocol.NavigationRegion;
+import org.dartlang.analysis.server.protocol.NavigationTarget;
 import org.eclipse.jface.text.ITextSelection;
 
 import java.util.List;

@@ -14,7 +14,7 @@
 
 package com.google.dart.tools.core.analysis.model;
 
-import com.google.dart.server.generated.types.SearchResult;
+import org.dartlang.analysis.server.protocol.SearchResult;
 
 import java.util.List;
 

@@ -19,22 +19,23 @@ import com.google.common.collect.Maps;
 import com.google.dart.engine.source.Source;
 import com.google.dart.engine.utilities.general.ArrayUtilities;
 import com.google.dart.server.AnalysisServerListener;
-import com.google.dart.server.generated.types.AnalysisError;
-import com.google.dart.server.generated.types.AnalysisStatus;
-import com.google.dart.server.generated.types.CompletionSuggestion;
-import com.google.dart.server.generated.types.HighlightRegion;
-import com.google.dart.server.generated.types.NavigationRegion;
-import com.google.dart.server.generated.types.NavigationTarget;
-import com.google.dart.server.generated.types.Occurrences;
-import com.google.dart.server.generated.types.Outline;
-import com.google.dart.server.generated.types.OverrideMember;
-import com.google.dart.server.generated.types.PubStatus;
-import com.google.dart.server.generated.types.RequestError;
-import com.google.dart.server.generated.types.SearchResult;
 import com.google.dart.server.internal.asserts.NavigationRegionsAssert;
 
 import junit.framework.Assert;
 import junit.framework.AssertionFailedError;
+
+import org.dartlang.analysis.server.protocol.AnalysisError;
+import org.dartlang.analysis.server.protocol.AnalysisStatus;
+import org.dartlang.analysis.server.protocol.CompletionSuggestion;
+import org.dartlang.analysis.server.protocol.HighlightRegion;
+import org.dartlang.analysis.server.protocol.NavigationRegion;
+import org.dartlang.analysis.server.protocol.NavigationTarget;
+import org.dartlang.analysis.server.protocol.Occurrences;
+import org.dartlang.analysis.server.protocol.Outline;
+import org.dartlang.analysis.server.protocol.OverrideMember;
+import org.dartlang.analysis.server.protocol.PubStatus;
+import org.dartlang.analysis.server.protocol.RequestError;
+import org.dartlang.analysis.server.protocol.SearchResult;
 
 import static org.fest.assertions.Assertions.assertThat;
 

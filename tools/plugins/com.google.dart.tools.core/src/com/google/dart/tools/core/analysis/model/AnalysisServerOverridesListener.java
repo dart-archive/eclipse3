@@ -14,7 +14,7 @@
 
 package com.google.dart.tools.core.analysis.model;
 
-import com.google.dart.server.generated.types.OverrideMember;
+import org.dartlang.analysis.server.protocol.OverrideMember;
 
 /**
  * Used by {@link AnalysisServerData} to notify clients that new {@link OverrideMember}s are ready.

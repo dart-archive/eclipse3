@@ -65,7 +65,7 @@ public class OpenTopLevelDeclarationsHandler extends AbstractHandler {
     if (types.length == 1) {
       try {
         if (DartCoreDebug.ENABLE_ANALYSIS_SERVER) {
-          DartUI.openInEditor((com.google.dart.server.generated.types.Element) types[0], true);
+          DartUI.openInEditor((org.dartlang.analysis.server.protocol.Element) types[0], true);
         } else {
           DartUI.openInEditor((Element) types[0], true, true);
         }

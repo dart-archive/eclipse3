@@ -15,12 +15,12 @@
 package com.google.dart.tools.ui.internal.text.editor;
 
 import com.google.common.collect.Maps;
-import com.google.dart.server.generated.types.Occurrences;
 import com.google.dart.tools.core.DartCore;
 import com.google.dart.tools.core.analysis.model.AnalysisServerOccurrencesListener;
 import com.google.dart.tools.ui.internal.text.dart.DartReconcilingStrategy;
 import com.google.dart.tools.ui.internal.text.functions.DartWordFinder;
 
+import org.dartlang.analysis.server.protocol.Occurrences;
 import org.eclipse.jface.text.BadLocationException;
 import org.eclipse.jface.text.IDocument;
 import org.eclipse.jface.text.IDocumentExtension4;

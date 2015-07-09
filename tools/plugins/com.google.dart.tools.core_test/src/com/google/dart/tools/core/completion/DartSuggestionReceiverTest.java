@@ -16,9 +16,10 @@ package com.google.dart.tools.core.completion;
 import com.google.dart.server.AnalysisServerListener;
 import com.google.dart.server.GetSuggestionsConsumer;
 import com.google.dart.server.MockAnalysisServer;
-import com.google.dart.server.generated.types.CompletionSuggestion;
 
 import junit.framework.TestCase;
+
+import org.dartlang.analysis.server.protocol.CompletionSuggestion;
 
 import java.util.ArrayList;
 import java.util.List;

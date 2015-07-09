@@ -14,9 +14,10 @@
 package com.google.dart.server.internal.remote.processor;
 
 import com.google.dart.server.AnalysisServerListener;
-import com.google.dart.server.generated.types.Occurrences;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
+
+import org.dartlang.analysis.server.protocol.Occurrences;
 
 /**
  * Processor for "analysis.occurrences" notification.

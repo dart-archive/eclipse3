@@ -14,8 +14,6 @@
 package com.google.dart.tools.ui.internal.text.editor;
 
 import com.google.common.base.Objects;
-import com.google.dart.server.generated.types.Element;
-import com.google.dart.server.generated.types.Outline;
 import com.google.dart.tools.ui.DartPluginImages;
 import com.google.dart.tools.ui.DartToolsPlugin;
 import com.google.dart.tools.ui.actions.InstrumentedAction;
@@ -24,6 +22,8 @@ import com.google.dart.tools.ui.internal.text.DartHelpContextIds;
 import com.google.dart.tools.ui.internal.util.SWTUtil;
 import com.google.dart.tools.ui.internal.viewsupport.ColoredViewersManager;
 
+import org.dartlang.analysis.server.protocol.Element;
+import org.dartlang.analysis.server.protocol.Outline;
 import org.eclipse.core.runtime.Assert;
 import org.eclipse.core.runtime.ListenerList;
 import org.eclipse.jface.action.IAction;

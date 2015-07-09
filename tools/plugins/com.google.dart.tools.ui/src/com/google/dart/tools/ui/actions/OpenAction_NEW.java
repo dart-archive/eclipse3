@@ -13,9 +13,6 @@
  */
 package com.google.dart.tools.ui.actions;
 
-import com.google.dart.server.generated.types.Element;
-import com.google.dart.server.generated.types.NavigationRegion;
-import com.google.dart.server.generated.types.NavigationTarget;
 import com.google.dart.tools.core.DartCore;
 import com.google.dart.tools.core.analysis.model.AnalysisServerNavigationListener;
 import com.google.dart.tools.ui.DartUI;
@@ -24,6 +21,9 @@ import com.google.dart.tools.ui.internal.text.DartHelpContextIds;
 import com.google.dart.tools.ui.internal.text.editor.DartEditor;
 import com.google.dart.tools.ui.internal.util.ExceptionHandler;
 
+import org.dartlang.analysis.server.protocol.Element;
+import org.dartlang.analysis.server.protocol.NavigationRegion;
+import org.dartlang.analysis.server.protocol.NavigationTarget;
 import org.eclipse.jface.viewers.ISelection;
 import org.eclipse.ui.PlatformUI;
 
@@ -73,7 +73,9 @@ public class OpenAction_NEW extends AbstractDartSelectionAction_NEW implements
 
   @Override
   public void run() {
-    NavigationTarget[] targets = NewSelectionConverter.getNavigationTargets(getFile(), selectionOffset);
+    NavigationTarget[] targets = NewSelectionConverter.getNavigationTargets(
+        getFile(),
+        selectionOffset);
     if (targets.length != 0) {
       NavigationTarget target = targets[0];
       open(target);
@@ -106,7 +108,9 @@ public class OpenAction_NEW extends AbstractDartSelectionAction_NEW implements
   }
 
   private void updateSelectedElement() {
-    NavigationTarget[] targets = NewSelectionConverter.getNavigationTargets(getFile(), selectionOffset);
+    NavigationTarget[] targets = NewSelectionConverter.getNavigationTargets(
+        getFile(),
+        selectionOffset);
     setEnabled(targets.length != 0);
   }
 }

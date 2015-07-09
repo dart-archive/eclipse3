@@ -13,7 +13,6 @@
  */
 package com.google.dart.tools.ui.internal.refactoring;
 
-import com.google.dart.server.generated.types.RefactoringMethodParameter;
 import com.google.dart.tools.internal.corext.refactoring.util.Messages;
 import com.google.dart.tools.ui.DartPluginImages;
 import com.google.dart.tools.ui.DartToolsPlugin;
@@ -24,6 +23,7 @@ import com.google.dart.tools.ui.internal.text.editor.DartSourceViewer;
 import com.google.dart.tools.ui.internal.util.RowLayouter;
 import com.google.dart.tools.ui.text.DartSourceViewerConfiguration;
 
+import org.dartlang.analysis.server.protocol.RefactoringMethodParameter;
 import org.eclipse.jface.dialogs.Dialog;
 import org.eclipse.jface.layout.PixelConverter;
 import org.eclipse.jface.preference.IPreferenceStore;
