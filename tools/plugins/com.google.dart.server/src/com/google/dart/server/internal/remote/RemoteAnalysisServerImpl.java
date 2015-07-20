@@ -86,6 +86,7 @@ import com.google.gson.JsonPrimitive;
 import org.dartlang.analysis.server.protocol.AnalysisOptions;
 import org.dartlang.analysis.server.protocol.RefactoringOptions;
 import org.dartlang.analysis.server.protocol.RequestError;
+import org.osgi.framework.Version;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -165,10 +166,15 @@ public class RemoteAnalysisServerImpl implements AnalysisServer {
     }
   }
 
-  // Max analysis server version that this project (com.google.dart.server) currently works up to
-  // (but not including). That is, if the MAX_SERVER_VERSION is 2, any 1.y.z version is
-  // sufficient, but this project would not work with 2.0.0
-  private final static int MAX_MAJOR_SERVER_VERSION = 2;
+  /**
+   * Minimal analysis server version, inclusive.
+   */
+  private final static Version MIN_SERVER_VERSION = Version.parseVersion("1.9.0");
+
+  /**
+   * Maximal analysis server version, exclusive.
+   */
+  private final static Version MAX_SERVER_VERSION = Version.parseVersion("2.0.0");
 
   // Server domain
   private static final String SERVER_NOTIFICATION_CONNECTED = "server.connected";
@@ -805,21 +811,36 @@ public class RemoteAnalysisServerImpl implements AnalysisServer {
       requestSink = blockRequestSink;
       server_getVersion(new GetVersionConsumer() {
         @Override
-        public void computedVersion(String version) {
-          // check if a valid version
-          if (StringUtilities.isVersionLessThanMajorVersion(version, MAX_MAJOR_SERVER_VERSION)) {
+        public void computedVersion(String versionStr) {
+          String message = null;
+          // parse version
+          Version version = null;
+          try {
+            version = Version.parseVersion(versionStr);
+          } catch (Throwable e) {
+            message = "Unable to parse version: " + versionStr;
+          }
+          // invalid version
+          if (version != null) {
+            if (version.compareTo(MIN_SERVER_VERSION) < 0
+                || version.compareTo(MAX_SERVER_VERSION) >= 0) {
+              message = "This version of the com.google.dart.server project can communicate only "
+                  + "with server versions between " + MIN_SERVER_VERSION + " and "
+                  + MAX_SERVER_VERSION + ", but the version read from the server is " + version
+                  + ".";
+            }
+          }
+          // OK
+          if (message == null) {
             synchronized (requestSinkLock) {
               requestSink = blockRequestSink.toPassthroughSink();
+              return;
             }
-            return;
           }
-          // version mismatch
-          String message = "This version of the com.google.dart.server project can communicate "
-              + "only with server versions up to " + Integer.toString(MAX_MAJOR_SERVER_VERSION)
-              + ".0.0, the version read from the server is " + version;
+          // report error
           Logging.getLogger().logError(message);
-          listener.serverIncompatibleVersion(version);
-          sendErrorForEveryRequest(version);
+          listener.serverIncompatibleVersion(versionStr);
+          sendErrorForEveryRequest(versionStr);
         }
 
         @Override
