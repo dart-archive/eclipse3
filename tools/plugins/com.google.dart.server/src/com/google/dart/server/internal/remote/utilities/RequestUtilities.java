@@ -62,6 +62,7 @@ public class RequestUtilities {
   private static final String METHOD_ANALYSIS_GET_LIBRARY_DEPENDENCIES = "analysis.getLibraryDependencies";
   private static final String METHOD_ANALYSIS_GET_NAVIGATION = "analysis.getNavigation";
   private static final String METHOD_ANALYSIS_REANALYZE = "analysis.reanalyze";
+  private static final String METHOD_ANALYSIS_SET_GENERAL_SUBSCRIPTIONS = "analysis.setGeneralSubscriptions";
   private static final String METHOD_ANALYSIS_SET_ROOTS = "analysis.setAnalysisRoots";
   private static final String METHOD_ANALYSIS_SET_PRIORITY_FILES = "analysis.setPriorityFiles";
   private static final String METHOD_ANALYSIS_SET_SUBSCRIPTIONS = "analysis.setSubscriptions";
@@ -275,6 +276,26 @@ public class RequestUtilities {
       params.add("packageRoots", buildJsonElement(packageRoots));
     }
     return buildJsonObjectRequest(id, METHOD_ANALYSIS_SET_ROOTS, params);
+  }
+
+  /**
+   * Generate and return a {@value #METHOD_ANALYSIS_SET_GENERAL_SUBSCRIPTIONS} request.
+   * 
+   * <pre>
+   * request: {
+   *   "id": String
+   *   "method": "analysis.setGeneralSubscriptions"
+   *   "params": {
+   *     "subscriptions": List&lt;GeneralAnalysisService&gt;
+   *   }
+   * }
+   * </pre>
+   */
+  public static JsonObject generateAnalysisSetGeneralSubscriptions(String idValue,
+      List<String> subscriptions) {
+    JsonObject params = new JsonObject();
+    params.add(SUBSCRIPTIONS, buildJsonElement(subscriptions));
+    return buildJsonObjectRequest(idValue, METHOD_ANALYSIS_SET_GENERAL_SUBSCRIPTIONS, params);
   }
 
   /**

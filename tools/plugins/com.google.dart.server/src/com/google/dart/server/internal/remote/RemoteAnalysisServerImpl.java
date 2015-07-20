@@ -168,7 +168,7 @@ public class RemoteAnalysisServerImpl implements AnalysisServer {
   // Max analysis server version that this project (com.google.dart.server) currently works up to
   // (but not including). That is, if the MAX_SERVER_VERSION is 2, any 1.y.z version is
   // sufficient, but this project would not work with 2.0.0
-  private final static int MAX_MAJOR_SERVER_VERSION = 3;
+  private final static int MAX_MAJOR_SERVER_VERSION = 2;
 
   // Server domain
   private static final String SERVER_NOTIFICATION_CONNECTED = "server.connected";
@@ -316,6 +316,17 @@ public class RemoteAnalysisServerImpl implements AnalysisServer {
         includedPaths,
         excludedPaths,
         packageRoots));
+  }
+
+  @Override
+  public void analysis_setGeneralSubscriptions(List<String> subscriptions) {
+    String id = generateUniqueId();
+    if (subscriptions == null) {
+      subscriptions = StringUtilities.EMPTY_LIST;
+    }
+    sendRequestToServer(
+        id,
+        RequestUtilities.generateAnalysisSetGeneralSubscriptions(id, subscriptions));
   }
 
   @Override

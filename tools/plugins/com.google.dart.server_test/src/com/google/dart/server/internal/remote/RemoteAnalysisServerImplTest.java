@@ -59,6 +59,7 @@ import org.dartlang.analysis.server.protocol.ExtractLocalVariableFeedback;
 import org.dartlang.analysis.server.protocol.ExtractLocalVariableOptions;
 import org.dartlang.analysis.server.protocol.ExtractMethodFeedback;
 import org.dartlang.analysis.server.protocol.ExtractMethodOptions;
+import org.dartlang.analysis.server.protocol.GeneralAnalysisService;
 import org.dartlang.analysis.server.protocol.HighlightRegion;
 import org.dartlang.analysis.server.protocol.HighlightRegionType;
 import org.dartlang.analysis.server.protocol.HoverInformation;
@@ -972,6 +973,24 @@ public class RemoteAnalysisServerImplTest extends AbstractRemoteServerTest {
         "      '/path1': '/path2',",
         "      '/path3': '/path4'",
         "    }",
+        "  }",
+        "}");
+    assertTrue(requests.contains(expected));
+  }
+
+  public void test_analysis_setGeneralSubscriptions() throws Exception {
+    List<String> subscriptions = Lists.newArrayList();
+    subscriptions.add(GeneralAnalysisService.ANALYZED_FILES);
+    server.analysis_setGeneralSubscriptions(subscriptions);
+    List<JsonObject> requests = requestSink.getRequests();
+    JsonElement expected = parseJson(//
+        "{",
+        "  'id': '0',",
+        "  'method': 'analysis.setGeneralSubscriptions',",
+        "  'params': {",
+        "    'subscriptions': [",
+        "      ANALYZED_FILES",
+        "    ]",
         "  }",
         "}");
     assertTrue(requests.contains(expected));

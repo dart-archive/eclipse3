@@ -586,6 +586,7 @@ public class DartCore extends Plugin implements DartSdkListener {
           if (DartCoreDebug.ANALYSIS_SERVER_PRINT_TO_CONSOLE) {
             additionalArguments = ArrayUtils.add(additionalArguments, "--internal-print-to-console");
           }
+          additionalArguments = ArrayUtils.add(additionalArguments, "--useAnalysisHighlight2");
           // HTTP port
           int httpPort = 0;
           if (DartCoreDebug.ANALYSIS_SERVER_HTTP_PORT != null

@@ -69,6 +69,11 @@ public class MockAnalysisServer implements AnalysisServer {
   }
 
   @Override
+  public void analysis_setGeneralSubscriptions(List<String> subscriptions) {
+    throw new UnsupportedOperationException();
+  }
+
+  @Override
   public void analysis_setPriorityFiles(List<String> files) {
     throw new UnsupportedOperationException();
   }
