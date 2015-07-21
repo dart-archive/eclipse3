@@ -29,6 +29,7 @@ import com.google.dart.server.GetErrorsConsumer;
 import com.google.dart.server.GetFixesConsumer;
 import com.google.dart.server.GetHoverConsumer;
 import com.google.dart.server.GetLibraryDependenciesConsumer;
+import com.google.dart.server.GetNavigationConsumer;
 import com.google.dart.server.GetRefactoringConsumer;
 import com.google.dart.server.GetSuggestionsConsumer;
 import com.google.dart.server.GetTypeHierarchyConsumer;
@@ -513,6 +514,146 @@ public class RemoteAnalysisServerImplTest extends AbstractRemoteServerTest {
 
     assertNull(libraries[0]);
     assertThat(packageMap).isEmpty();
+    assertNotNull(requestErrorArray[0]);
+    RequestError requestError = requestErrorArray[0];
+    assertEquals("CONTENT_MODIFIED", requestError.getCode());
+    assertEquals("message0", requestError.getMessage());
+    assertEquals("stackTrace0", requestError.getStackTrace());
+  }
+
+  public void test_analysis_getNavigation() throws Exception {
+    final List<NavigationRegion> results = Lists.newArrayList();
+    final RequestError[] requestErrorArray = {null};
+    server.analysis_getNavigation("/test.dart", 1, 2, new GetNavigationConsumer() {
+      @Override
+      public void computedNavigation(List<NavigationRegion> regions) {
+        results.addAll(regions);
+      }
+
+      @Override
+      public void onError(RequestError requestError) {
+        requestErrorArray[0] = requestError;
+      }
+    });
+
+    List<JsonObject> requests = requestSink.getRequests();
+    JsonElement expected = parseJson(//
+        "{",
+        "  'id': '0',",
+        "  'method': 'analysis.getNavigation',",
+        "  'params': {",
+        "    'file': '/test.dart',",
+        "    'offset': 1,",
+        "    'length': 2",
+        "  }",
+        "}");
+    assertTrue(requests.contains(expected));
+
+    putResponse(//
+        "{",
+        "  'id': '0',",
+        "  'result': {",
+        "    'files': ['/test2.dart', '/test3.dart'],",
+        "    'targets': [",
+        "      {",
+        "        'kind': 'COMPILATION_UNIT',",
+        "        'fileIndex': 0,",
+        "        'offset': 3,",
+        "        'length': 4,",
+        "        'startLine': 5,",
+        "        'startColumn': 6",
+        "      },",
+        "      {",
+        "        'kind': 'CLASS',",
+        "        'fileIndex': 1,",
+        "        'offset': 7,",
+        "        'length': 8,",
+        "        'startLine': 9,",
+        "        'startColumn': 10",
+        "      }",
+        "    ],",
+        "    'regions' : [",
+        "      {",
+        "        'offset': 1,",
+        "        'length': 2,",
+        "        'targets': [0, 1]",
+        "      }",
+        "    ]",
+        "  }",
+        "}");
+    responseStream.waitForEmpty();
+    server.test_waitForWorkerComplete();
+
+    assertNull(requestErrorArray[0]);
+    assertThat(results).hasSize(1);
+    {
+      NavigationRegion region = results.get(0);
+      assertEquals(1, region.getOffset());
+      assertEquals(2, region.getLength());
+      List<NavigationTarget> targets = region.getTargetObjects();
+      assertThat(targets).hasSize(2);
+      {
+        NavigationTarget target = targets.get(0);
+        assertEquals(ElementKind.COMPILATION_UNIT, target.getKind());
+        assertEquals("/test2.dart", target.getFile());
+        assertEquals(3, target.getOffset());
+        assertEquals(4, target.getLength());
+        assertEquals(5, target.getStartLine());
+        assertEquals(6, target.getStartColumn());
+      }
+      {
+        NavigationTarget target = targets.get(1);
+        assertEquals(ElementKind.CLASS, target.getKind());
+        assertEquals("/test3.dart", target.getFile());
+        assertEquals(7, target.getOffset());
+        assertEquals(8, target.getLength());
+        assertEquals(9, target.getStartLine());
+        assertEquals(10, target.getStartColumn());
+      }
+    }
+  }
+
+  public void test_analysis_getNavigation_error() throws Exception {
+    final List<NavigationRegion> results = Lists.newArrayList();
+    final RequestError[] requestErrorArray = {null};
+    server.analysis_getNavigation("/test.dart", 1, 2, new GetNavigationConsumer() {
+      @Override
+      public void computedNavigation(List<NavigationRegion> regions) {
+        results.addAll(regions);
+      }
+
+      @Override
+      public void onError(RequestError requestError) {
+        requestErrorArray[0] = requestError;
+      }
+    });
+
+    List<JsonObject> requests = requestSink.getRequests();
+    JsonElement expected = parseJson(//
+        "{",
+        "  'id': '0',",
+        "  'method': 'analysis.getNavigation',",
+        "  'params': {",
+        "    'file': '/test.dart',",
+        "    'offset': 1,",
+        "    'length': 2",
+        "  }",
+        "}");
+    assertTrue(requests.contains(expected));
+
+    putResponse(//
+        "{",
+        "  'id': '0',",
+        "  'error': {",
+        "    'code': 'CONTENT_MODIFIED',",
+        "    'message': 'message0',",
+        "    'stackTrace': 'stackTrace0'",
+        "  }",
+        "}");
+    responseStream.waitForEmpty();
+    server.test_waitForWorkerComplete();
+
+    assertThat(results).isEmpty();
     assertNotNull(requestErrorArray[0]);
     RequestError requestError = requestErrorArray[0];
     assertEquals("CONTENT_MODIFIED", requestError.getCode());

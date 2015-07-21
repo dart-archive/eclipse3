@@ -46,8 +46,8 @@ public class NotificationAnalysisNavigationProcessor extends NotificationProcess
       target.lookupFile(targetFiles);
     }
     // prepare regions
-    JsonArray z = paramsObject.get("regions").getAsJsonArray();
-    List<NavigationRegion> regions = NavigationRegion.fromJsonArray(z);
+    JsonArray regionsArray = paramsObject.get("regions").getAsJsonArray();
+    List<NavigationRegion> regions = NavigationRegion.fromJsonArray(regionsArray);
     for (NavigationRegion region : regions) {
       region.lookupTargets(targets);
     }

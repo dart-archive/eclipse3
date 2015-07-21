@@ -14,7 +14,9 @@
 package com.google.dart.server;
 
 import org.dartlang.analysis.server.protocol.NavigationRegion;
-import org.dartlang.analysis.server.protocol.NavigationTarget;
+import org.dartlang.analysis.server.protocol.RequestError;
+
+import java.util.List;
 
 /**
  * The interface {@code GetNavigationConsumer} defines the behavior of objects that consume
@@ -22,14 +24,18 @@ import org.dartlang.analysis.server.protocol.NavigationTarget;
  * 
  * @coverage dart.server
  */
-public interface GetNavigationConsumer {
+public interface GetNavigationConsumer extends Consumer {
   /**
    * The navigation information that has been computed.
    * 
-   * @param files the paths of files that are referenced by the navigation targets
-   * @param targets the navigation targets that are referenced by the navigation regions
    * @param regions the navigation regions within the requested region of the file
    */
-  public void computedNavigation(String[] files, NavigationTarget[] targets,
-      NavigationRegion[] regions);
+  public void computedNavigation(List<NavigationRegion> regions);
+
+  /**
+   * If a result cannot be passed back, some {@link RequestError} is passed back instead.
+   * 
+   * @param requestError the reason why a result was not passed back
+   */
+  public void onError(RequestError requestError);
 }

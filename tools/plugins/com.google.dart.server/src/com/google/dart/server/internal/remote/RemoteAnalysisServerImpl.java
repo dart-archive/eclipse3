@@ -52,6 +52,7 @@ import com.google.dart.server.internal.remote.processor.FindMemberReferencesProc
 import com.google.dart.server.internal.remote.processor.FindTopLevelDeclarationsProcessor;
 import com.google.dart.server.internal.remote.processor.FixesProcessor;
 import com.google.dart.server.internal.remote.processor.FormatProcessor;
+import com.google.dart.server.internal.remote.processor.GetNavigationProcessor;
 import com.google.dart.server.internal.remote.processor.GetRefactoringProcessor;
 import com.google.dart.server.internal.remote.processor.HoverProcessor;
 import com.google.dart.server.internal.remote.processor.LibraryDependenciesProcessor;
@@ -298,7 +299,8 @@ public class RemoteAnalysisServerImpl implements AnalysisServer {
     String id = generateUniqueId();
     sendRequestToServer(
         id,
-        RequestUtilities.generateAnalysisGetNavigation(id, file, offset, length));
+        RequestUtilities.generateAnalysisGetNavigation(id, file, offset, length),
+        consumer);
   }
 
   @Override
@@ -727,6 +729,10 @@ public class RemoteAnalysisServerImpl implements AnalysisServer {
       new FixesProcessor((GetFixesConsumer) consumer).process(resultObject, requestError);
     } else if (consumer instanceof GetLibraryDependenciesConsumer) {
       new LibraryDependenciesProcessor((GetLibraryDependenciesConsumer) consumer).process(
+          resultObject,
+          requestError);
+    } else if (consumer instanceof GetNavigationConsumer) {
+      new GetNavigationProcessor((GetNavigationConsumer) consumer).process(
           resultObject,
           requestError);
     } else if (consumer instanceof GetAvailableRefactoringsConsumer) {
