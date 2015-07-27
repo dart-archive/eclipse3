@@ -57,6 +57,7 @@ import com.google.dart.server.internal.remote.processor.GetRefactoringProcessor;
 import com.google.dart.server.internal.remote.processor.HoverProcessor;
 import com.google.dart.server.internal.remote.processor.LibraryDependenciesProcessor;
 import com.google.dart.server.internal.remote.processor.MapUriProcessor;
+import com.google.dart.server.internal.remote.processor.NotificationAnalysisAnalyzedFilesProcessor;
 import com.google.dart.server.internal.remote.processor.NotificationAnalysisErrorsProcessor;
 import com.google.dart.server.internal.remote.processor.NotificationAnalysisFlushResultsProcessor;
 import com.google.dart.server.internal.remote.processor.NotificationAnalysisHighlightsProcessor;
@@ -183,6 +184,7 @@ public class RemoteAnalysisServerImpl implements AnalysisServer {
   private static final String SERVER_NOTIFICATION_STATUS = "server.status";
 
   // Analysis domain
+  private static final String ANALYSIS_NOTIFICATION_ANALYZED_FILES = "analysis.analyzedFiles";
   private static final String ANALYSIS_NOTIFICATION_ERRORS = "analysis.errors";
   private static final String ANALYSIS_NOTIFICATION_FLUSH_RESULTS = "analysis.flushResults";
   private static final String ANALYSIS_NOTIFICATION_HIGHTLIGHTS = "analysis.highlights";
@@ -627,6 +629,9 @@ public class RemoteAnalysisServerImpl implements AnalysisServer {
     } else if (event.equals(ANALYSIS_NOTIFICATION_OVERRIDES)) {
       // analysis.overrides
       new NotificationAnalysisOverridesProcessor(listener).process(response);
+    } else if (event.equals(ANALYSIS_NOTIFICATION_ANALYZED_FILES)) {
+      // analysis.errors
+      new NotificationAnalysisAnalyzedFilesProcessor(listener).process(response);
     } else if (event.equals(COMPLETION_NOTIFICATION_RESULTS)) {
       // completion.results
       new NotificationCompletionResultsProcessor(listener).process(response);

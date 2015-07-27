@@ -39,6 +39,7 @@ import com.google.dart.server.SortMembersConsumer;
 import com.google.dart.server.UpdateContentConsumer;
 import com.google.dart.server.internal.AnalysisServerError;
 import com.google.dart.server.internal.remote.utilities.RequestUtilities;
+import com.google.dart.server.utilities.general.StringUtilities;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
@@ -659,6 +660,23 @@ public class RemoteAnalysisServerImplTest extends AbstractRemoteServerTest {
     assertEquals("CONTENT_MODIFIED", requestError.getCode());
     assertEquals("message0", requestError.getMessage());
     assertEquals("stackTrace0", requestError.getStackTrace());
+  }
+
+  public void test_analysis_notification_analyzedFiles() throws Exception {
+    putResponse(//
+        "{",
+        "  'event': 'analysis.analyzedFiles',",
+        "  'params': {",
+        "    'directories': ['/test1.dart','/test2.dart','/test3.dart','/test4.dart']",
+        "  }",
+        "}");
+    responseStream.waitForEmpty();
+    server.test_waitForWorkerComplete();
+    listener.assertAnalyzedFiles(ImmutableList.of(
+        "/test1.dart",
+        "/test2.dart",
+        "/test3.dart",
+        "/test4.dart"));
   }
 
   public void test_analysis_notification_errors() throws Exception {

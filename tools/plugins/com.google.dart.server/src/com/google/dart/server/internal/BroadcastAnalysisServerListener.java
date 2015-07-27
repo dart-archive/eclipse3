@@ -56,6 +56,13 @@ public class BroadcastAnalysisServerListener implements AnalysisServerListener {
   }
 
   @Override
+  public void computedAnalyzedFiles(List<String> directories) {
+    for (AnalysisServerListener listener : getListeners()) {
+      listener.computedAnalyzedFiles(directories);
+    }
+  }
+
+  @Override
   public void computedCompletion(String completionId, int replacementOffset, int replacementLength,
       List<CompletionSuggestion> completions, boolean isLast) {
     for (AnalysisServerListener listener : getListeners()) {

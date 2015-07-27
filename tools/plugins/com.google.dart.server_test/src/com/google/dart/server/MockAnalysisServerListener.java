@@ -30,6 +30,11 @@ import java.util.List;
 public class MockAnalysisServerListener implements AnalysisServerListener {
 
   @Override
+  public void computedAnalyzedFiles(List<String> directories) {
+    throw new UnsupportedOperationException();
+  }
+
+  @Override
   public void computedCompletion(String completionId, int replacementOffset, int replacementLength,
       List<CompletionSuggestion> completions, boolean isLast) {
     throw new UnsupportedOperationException();

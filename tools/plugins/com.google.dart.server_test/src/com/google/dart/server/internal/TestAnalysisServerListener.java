@@ -64,6 +64,7 @@ public class TestAnalysisServerListener implements AnalysisServerListener {
   private final Map<String, List<SearchResult>> searchResultsMap = Maps.newHashMap();
   private final List<AnalysisServerError> serverErrors = Lists.newArrayList();
   private final Map<String, List<AnalysisError>> sourcesErrors = Maps.newHashMap();
+  private final List<String> analyzedFiles = Lists.newArrayList();
   private final Map<String, List<HighlightRegion>> highlightsMap = Maps.newHashMap();
   private final Map<String, List<NavigationRegion>> navigationMap = Maps.newHashMap();
   private final Map<String, List<Occurrences>> occurrencesMap = Maps.newHashMap();
@@ -75,6 +76,16 @@ public class TestAnalysisServerListener implements AnalysisServerListener {
   public synchronized void assertAnalysisStatus(AnalysisStatus expectedStatus) {
     Assert.assertEquals(expectedStatus.isAnalyzing(), analysisStatus.isAnalyzing());
     Assert.assertEquals(expectedStatus.getAnalysisTarget(), analysisStatus.getAnalysisTarget());
+  }
+
+  /**
+   * Assert that the passed set of analyzed files equals the last set passed to the server.
+   * 
+   * @param files the list of expected analyzed file paths
+   * @throws AssertionFailedError if a different set of strings is passed than was expected
+   */
+  public synchronized void assertAnalyzedFiles(List<String> files) {
+    assertThat(getAnalyzedFiles()).isEqualTo(files);
   }
 
   /**
@@ -147,6 +158,12 @@ public class TestAnalysisServerListener implements AnalysisServerListener {
   }
 
   @Override
+  public void computedAnalyzedFiles(List<String> directories) {
+    analyzedFiles.clear();
+    analyzedFiles.addAll(directories);
+  }
+
+  @Override
   public synchronized void computedCompletion(String completionId, int replacementOffset,
       int replacementLength, List<CompletionSuggestion> suggestions, boolean isLast) {
     // computed completion results are aggregate, replacing any prior results
@@ -215,6 +232,13 @@ public class TestAnalysisServerListener implements AnalysisServerListener {
   @Override
   public synchronized void flushedResults(List<String> files) {
     flushedResults.addAll(files);
+  }
+
+  /**
+   * Returns the last set of analyzed files sent from the server.
+   */
+  public synchronized List<String> getAnalyzedFiles() {
+    return analyzedFiles;
   }
 
   public boolean getCompletionIsLast(String completionId) {

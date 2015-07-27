@@ -38,6 +38,16 @@ import java.util.List;
  */
 public interface AnalysisServerListener {
   /**
+   * Reports the paths of the files that are being analyzed.
+   * <p>
+   * This notification is not subscribed to by default. Clients can subscribe by including the value
+   * "ANALYZED_FILES" in the list of services passed in an analysis.setGeneralSubscriptions request.
+   * 
+   * @param directories a list of the paths of the files that are being analyzed
+   */
+  public void computedAnalyzedFiles(List<String> directories);
+
+  /**
    * A new collection of completions have been computed for the given completion id.
    * 
    * @param completionId the id associated with the completion
