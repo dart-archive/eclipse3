@@ -35,6 +35,7 @@ import com.google.dart.server.GetSuggestionsConsumer;
 import com.google.dart.server.GetTypeHierarchyConsumer;
 import com.google.dart.server.GetVersionConsumer;
 import com.google.dart.server.MapUriConsumer;
+import com.google.dart.server.OrganizeDirectivesConsumer;
 import com.google.dart.server.SortMembersConsumer;
 import com.google.dart.server.UpdateContentConsumer;
 import com.google.dart.server.internal.AnalysisServerError;
@@ -3169,6 +3170,115 @@ public class RemoteAnalysisServerImplTest extends AbstractRemoteServerTest {
     assertEquals("class", feedback.getElementKindName());
     assertEquals("oldName", feedback.getOldName());
     assertNull(requestErrorArray[0]);
+  }
+
+  public void test_edit_organizeDirectives() throws Exception {
+    final SourceFileEdit[] fileEditArray = {null};
+    server.edit_organizeDirectives("/file.dart", new OrganizeDirectivesConsumer() {
+      @Override
+      public void computedEdit(SourceFileEdit fileEdit) {
+        fileEditArray[0] = fileEdit;
+      }
+
+      @Override
+      public void onError(RequestError requestError) {
+      }
+    });
+    List<JsonObject> requests = requestSink.getRequests();
+    JsonElement expected = parseJson(//
+        "{",
+        "  'id': '0',",
+        "  'method': 'edit.organizeDirectives',",
+        "  'params': {",
+        "    'file': '/file.dart'",
+        "  }",
+        "}");
+    assertTrue(requests.contains(expected));
+
+    putResponse(//
+        "{",
+        "  'id': '0',",
+        "  'result': {",
+        "    'edit': {",
+        "      'file':'file1.dart',",
+        "      'fileStamp': 101,",
+        "      'edits': [",
+        "        {",
+        "          'offset': 1,",
+        "          'length': 2,",
+        "          'replacement': 'replacement1'",
+        "        },",
+        "        {",
+        "          'offset': 3,",
+        "          'length': 4,",
+        "          'replacement': 'replacement2'",
+        "        }",
+        "      ]",
+        "    }",
+        "  }",
+        "}");
+    responseStream.waitForEmpty();
+    server.test_waitForWorkerComplete();
+
+    // assertions on 'edit'
+    SourceFileEdit fileEdit = fileEditArray[0];
+    List<SourceEdit> edits = fileEdit.getEdits();
+    assertThat(edits).hasSize(2);
+    {
+      SourceEdit edit = edits.get(0);
+      assertEquals(1, edit.getOffset());
+      assertEquals(2, edit.getLength());
+      assertEquals("replacement1", edit.getReplacement());
+    }
+    {
+      SourceEdit edit = edits.get(1);
+      assertEquals(3, edit.getOffset());
+      assertEquals(4, edit.getLength());
+      assertEquals("replacement2", edit.getReplacement());
+    }
+  }
+
+  public void test_edit_organizeDirectives_error() throws Exception {
+    final SourceFileEdit[] fileEditArray = {null};
+    final RequestError[] requestErrorArray = {null};
+    server.edit_organizeDirectives("/file.dart", new OrganizeDirectivesConsumer() {
+      @Override
+      public void computedEdit(SourceFileEdit fileEdit) {
+        fileEditArray[0] = fileEdit;
+      }
+
+      @Override
+      public void onError(RequestError requestError) {
+        requestErrorArray[0] = requestError;
+      }
+    });
+    List<JsonObject> requests = requestSink.getRequests();
+    JsonElement expected = parseJson(//
+        "{",
+        "  'id': '0',",
+        "  'method': 'edit.organizeDirectives',",
+        "  'params': {",
+        "    'file': '/file.dart'",
+        "  }",
+        "}");
+    assertTrue(requests.contains(expected));
+
+    putResponse(//
+        "{",
+        "  'id': '0',",
+        "  'error': {",
+        "    'code': 'ORGANIZE_DIRECTIVES_ERROR',",
+        "    'message': 'File has 1 scan/parse errors.'",
+        "  }",
+        "}");
+    responseStream.waitForEmpty();
+    server.test_waitForWorkerComplete();
+
+    assertNull(fileEditArray[0]);
+    assertNotNull(requestErrorArray[0]);
+    RequestError requestError = requestErrorArray[0];
+    assertEquals("ORGANIZE_DIRECTIVES_ERROR", requestError.getCode());
+    assertEquals("File has 1 scan/parse errors.", requestError.getMessage());
   }
 
   public void test_edit_sortMembers() throws Exception {

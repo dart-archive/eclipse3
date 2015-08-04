@@ -38,6 +38,7 @@ import com.google.dart.server.GetSuggestionsConsumer;
 import com.google.dart.server.GetTypeHierarchyConsumer;
 import com.google.dart.server.GetVersionConsumer;
 import com.google.dart.server.MapUriConsumer;
+import com.google.dart.server.OrganizeDirectivesConsumer;
 import com.google.dart.server.SortMembersConsumer;
 import com.google.dart.server.UpdateContentConsumer;
 import com.google.dart.server.generated.AnalysisServer;
@@ -71,6 +72,7 @@ import com.google.dart.server.internal.remote.processor.NotificationSearchResult
 import com.google.dart.server.internal.remote.processor.NotificationServerConnectedProcessor;
 import com.google.dart.server.internal.remote.processor.NotificationServerErrorProcessor;
 import com.google.dart.server.internal.remote.processor.NotificationServerStatusProcessor;
+import com.google.dart.server.internal.remote.processor.OrganizeDirectivesProcessor;
 import com.google.dart.server.internal.remote.processor.RefactoringGetAvailableProcessor;
 import com.google.dart.server.internal.remote.processor.SortMembersProcessor;
 import com.google.dart.server.internal.remote.processor.TypeHierarchyProcessor;
@@ -432,6 +434,12 @@ public class RemoteAnalysisServerImpl implements AnalysisServer {
   }
 
   @Override
+  public void edit_organizeDirectives(String file, OrganizeDirectivesConsumer consumer) {
+    String id = generateUniqueId();
+    sendRequestToServer(id, RequestUtilities.generateEditOrganizeDirectives(id, file), consumer);
+  }
+
+  @Override
   public void edit_sortMembers(String file, SortMembersConsumer consumer) {
     String id = generateUniqueId();
     sendRequestToServer(id, RequestUtilities.generateEditSortMembers(id, file), consumer);
@@ -746,6 +754,10 @@ public class RemoteAnalysisServerImpl implements AnalysisServer {
           requestError);
     } else if (consumer instanceof GetErrorsConsumer) {
       new AnalysisErrorsProcessor((GetErrorsConsumer) consumer).process(resultObject, requestError);
+    } else if (consumer instanceof OrganizeDirectivesConsumer) {
+      new OrganizeDirectivesProcessor((OrganizeDirectivesConsumer) consumer).process(
+          resultObject,
+          requestError);
     } else if (consumer instanceof SortMembersConsumer) {
       new SortMembersProcessor((SortMembersConsumer) consumer).process(resultObject, requestError);
     }

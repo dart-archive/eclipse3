@@ -75,6 +75,7 @@ public class RequestUtilities {
   private static final String METHOD_EDIT_GET_AVAILABLE_REFACTORING = "edit.getAvailableRefactorings";
   private static final String METHOD_EDIT_GET_FIXES = "edit.getFixes";
   private static final String METHOD_EDIT_GET_REFACTORING = "edit.getRefactoring";
+  private static final String METHOD_EDIT_ORGANIZE_DIRECTIVES = "edit.organizeDirectives";
   private static final String METHOD_EDIT_SORT_MEMBERS = "edit.sortMembers";
 
   // Code Completion domain
@@ -523,6 +524,25 @@ public class RequestUtilities {
       params.add("options", options.toJson());
     }
     return buildJsonObjectRequest(idValue, METHOD_EDIT_GET_REFACTORING, params);
+  }
+
+  /**
+   * Generate and return a {@value #METHOD_EDIT_ORGANIZE_DIRECTIVES} request.
+   * 
+   * <pre>
+   * request: {
+   *   "id": String
+   *   "method": "edit.organizeDirectives"
+   *   "params": {
+   *     "file": FilePath
+   *   }
+   * }
+   * </pre>
+   */
+  public static JsonObject generateEditOrganizeDirectives(String idValue, String file) {
+    JsonObject params = new JsonObject();
+    params.addProperty(FILE, file);
+    return buildJsonObjectRequest(idValue, METHOD_EDIT_ORGANIZE_DIRECTIVES, params);
   }
 
   /**

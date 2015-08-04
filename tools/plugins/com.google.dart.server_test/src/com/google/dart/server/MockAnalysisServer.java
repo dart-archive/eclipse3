@@ -127,6 +127,11 @@ public class MockAnalysisServer implements AnalysisServer {
   }
 
   @Override
+  public void edit_organizeDirectives(String file, OrganizeDirectivesConsumer consumer) {
+    throw new UnsupportedOperationException();
+  }
+
+  @Override
   public void edit_sortMembers(String file, SortMembersConsumer consumer) {
     throw new UnsupportedOperationException();
   }
