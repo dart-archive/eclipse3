@@ -59,6 +59,10 @@ public class WorkspaceAnalysisServerListener implements AnalysisServerListener {
   }
 
   @Override
+  public void computedAnalyzedFiles(List<String> directories) {
+  }
+
+  @Override
   public void computedCompletion(String completionId, int replacementOffset, int replacementLength,
       List<CompletionSuggestion> completions, boolean isLast) {
     // TODO(jwren/scheglov) not yet implemented
