@@ -1,7 +1,4 @@
 <config>
-  <directory path="${dart.editor.path}/tools/plugins/com.google.dart.command.analyze/bin">
-    <include prefix="com/google/dart/command/analyze/" source="/com.google.dart.command.analyze/src/"/>
-  </directory>
   <directory path="${dart.editor.path}/tools/plugins/com.google.dart.eclipse.core/bin">
     <include prefix="com/google/dart/eclipse/core/" source="/com.google.dart.eclipse.core/src/"/>
   </directory>
