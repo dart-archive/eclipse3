@@ -18,7 +18,6 @@ import org.eclipse.core.runtime.OperationCanceledException;
 import org.eclipse.core.runtime.Path;
 import org.eclipse.core.runtime.Status;
 import org.eclipse.core.runtime.jobs.Job;
-import org.eclipse.core.runtime.preferences.IEclipsePreferences;
 import org.eclipse.osgi.util.NLS;
 
 import java.io.File;
@@ -136,17 +135,12 @@ public class RunPubJob extends Job {
       if (DartCoreDebug.NO_PUB_PACKAGES) {
         args.add("--no-package-symlinks");
       }
-
-      // Add command.
-      addArgs(command, args);
-
-      // Add global args.
-      IEclipsePreferences preferences = DartCore.getPlugin().getPrefs();
-      if (preferences != null) {
-        String pubArgs = preferences.get(DartCore.PUB_GLOBAL_ARGS_PREFERENCE, null);
-        addArgs(pubArgs, args);
+      if (command.contains(" ")) {
+        String[] strings = command.split(" ");
+        args.addAll(Arrays.asList(strings));
+      } else {
+        args.add(command);
       }
-
       // add folder for pub build
       if (command.equals(BUILD_COMMAND) || command.equals(BUILD_DEBUG_COMMAND)) {
         if (sourceFolder != null) {
@@ -228,17 +222,6 @@ public class RunPubJob extends Job {
    */
   protected ProcessRunner newProcessRunner(ProcessBuilder builder) {
     return new ProcessRunner(builder);
-  }
-
-  private void addArgs(String cmd, List<String> args) {
-    if (cmd != null) {
-      if (cmd.contains(" ")) {
-        String[] strings = cmd.split(" ");
-        args.addAll(Arrays.asList(strings));
-      } else {
-        args.add(cmd);
-      }
-    }
   }
 
   private void setDerived(IProgressMonitor monitor) throws IOException {
