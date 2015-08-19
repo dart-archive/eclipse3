@@ -30,7 +30,6 @@ import org.eclipse.core.runtime.jobs.IJobChangeEvent;
 import org.eclipse.core.runtime.jobs.Job;
 import org.eclipse.core.runtime.jobs.JobChangeAdapter;
 import org.eclipse.core.runtime.preferences.IEclipsePreferences;
-import org.eclipse.jface.dialogs.MessageDialog;
 import org.eclipse.jface.layout.GridDataFactory;
 import org.eclipse.jface.layout.GridLayoutFactory;
 import org.eclipse.jface.preference.IPersistentPreferenceStore;
@@ -44,13 +43,13 @@ import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.Group;
+import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Text;
 import org.eclipse.ui.IWorkbench;
 import org.eclipse.ui.IWorkbenchPreferencePage;
 import org.eclipse.ui.PlatformUI;
 import org.eclipse.ui.internal.editors.text.EditorsPlugin;
 import org.eclipse.ui.texteditor.AbstractDecoratedTextEditorPreferenceConstants;
-import org.osgi.service.prefs.BackingStoreException;
 
 import java.io.IOException;
 
@@ -66,13 +65,14 @@ public class DartBasePreferencePage extends PreferencePage implements IWorkbench
   private Button printMarginCheck;
   private Text printMarginText;
   private Button removeTrailingWhitespaceCheck;
-  private Button enableAnalysisServerButton;
   private Button enableFolding;
   private Button enableAutoCompletion;
   private Button runPubAutoCheck;
   private boolean runPubChanged = false;
 
   private Button formatCheck;
+
+  private Text pubArguments;
 
   public DartBasePreferencePage() {
     setPreferenceStore(DartToolsPlugin.getDefault().getPreferenceStore());
@@ -126,6 +126,8 @@ public class DartBasePreferencePage extends PreferencePage implements IWorkbench
     IEclipsePreferences prefs = DartCore.getPlugin().getPrefs();
     if (prefs != null) {
       prefs.putBoolean(DartCore.PUB_AUTO_RUN_PREFERENCE, runPubAutoCheck.getSelection());
+      prefs.put(DartCore.PUB_GLOBAL_ARGS_PREFERENCE, pubArguments.getText());
+
       try {
         DartCore.getPlugin().savePrefs();
       } catch (CoreException e) {
@@ -155,18 +157,6 @@ public class DartBasePreferencePage extends PreferencePage implements IWorkbench
           instrumentation.log();
         }
       }
-    }
-
-    boolean serverChanged = setPrefBool(
-        DartCoreDebug.ENABLE_ANALYSIS_SERVER_PREF,
-        true,
-        enableAnalysisServerButton);
-
-    if (serverChanged) {
-      MessageDialog.openInformation(
-          getShell(),
-          "Restart Required",
-          "These changes will only take effect once the IDE has been restarted.");
     }
 
     return true;
@@ -206,19 +196,6 @@ public class DartBasePreferencePage extends PreferencePage implements IWorkbench
         PreferencesMessages.DartBasePreferencePage_show_line_numbers,
         PreferencesMessages.DartBasePreferencePage_show_line_numbers_tooltip);
     GridDataFactory.fillDefaults().span(2, 1).applyTo(lineNumbersCheck);
-
-    // Analysis group
-    Group serverGroup = new Group(composite, SWT.NONE);
-    serverGroup.setText("Analysis");
-    GridDataFactory.fillDefaults().grab(true, false).align(SWT.FILL, SWT.BEGINNING).applyTo(
-        serverGroup);
-    GridLayoutFactory.fillDefaults().margins(8, 8).applyTo(serverGroup);
-
-    enableAnalysisServerButton = createCheckBox(
-        serverGroup,
-        PreferencesMessages.ExperimentalPreferencePage_enable_analysis_server,
-        PreferencesMessages.ExperimentalPreferencePage_enable_analysis_server_tooltip);
-    GridDataFactory.fillDefaults().applyTo(enableAnalysisServerButton);
 
     // Format group
     Group formatGroup = new Group(composite, SWT.NONE);
@@ -269,13 +246,13 @@ public class DartBasePreferencePage extends PreferencePage implements IWorkbench
     pubGroup.setText(PreferencesMessages.DartBasePreferencePage_pub);
     GridDataFactory.fillDefaults().grab(true, false).align(SWT.FILL, SWT.BEGINNING).applyTo(
         pubGroup);
-    GridLayoutFactory.fillDefaults().margins(8, 8).applyTo(pubGroup);
+    GridLayoutFactory.fillDefaults().numColumns(2).margins(8, 8).applyTo(pubGroup);
 
     runPubAutoCheck = createCheckBox(
         pubGroup,
         PreferencesMessages.DartBasePreferencePage_pub_auto_label,
         PreferencesMessages.DartBasePreferencePage_pub_auto_details);
-    GridDataFactory.fillDefaults().applyTo(runPubAutoCheck);
+    GridDataFactory.fillDefaults().span(2, 1).applyTo(runPubAutoCheck);
     runPubAutoCheck.addSelectionListener(new SelectionListener() {
       @Override
       public void widgetDefaultSelected(SelectionEvent e) {
@@ -287,6 +264,14 @@ public class DartBasePreferencePage extends PreferencePage implements IWorkbench
         runPubChanged = true;
       }
     });
+
+    Label argsLabel = new Label(pubGroup, SWT.NONE);
+    argsLabel.setText("Global args:");
+    GridDataFactory.fillDefaults().applyTo(argsLabel);
+
+    pubArguments = new Text(pubGroup, SWT.BORDER | SWT.SINGLE);
+    GridDataFactory.fillDefaults().align(SWT.FILL, SWT.CENTER).grab(true, false).applyTo(
+        pubArguments);
 
     // init
     initFromPrefs();
@@ -332,9 +317,7 @@ public class DartBasePreferencePage extends PreferencePage implements IWorkbench
     IEclipsePreferences prefs = DartCore.getPlugin().getPrefs();
     if (prefs != null) {
       runPubAutoCheck.setSelection(prefs.getBoolean(DartCore.PUB_AUTO_RUN_PREFERENCE, true));
-      enableAnalysisServerButton.setSelection(prefs.getBoolean(
-          DartCoreDebug.ENABLE_ANALYSIS_SERVER_PREF,
-          true));
+      pubArguments.setText(prefs.get(DartCore.PUB_GLOBAL_ARGS_PREFERENCE, ""));
     }
 
   }
@@ -370,16 +353,4 @@ public class DartBasePreferencePage extends PreferencePage implements IWorkbench
     firstJob.schedule();
   }
 
-  private boolean setPrefBool(String prefKey, boolean def, Button button) {
-    IEclipsePreferences prefs = DartCore.getPlugin().getPrefs();
-    boolean oldValue = prefs.getBoolean(prefKey, def);
-    boolean newValue = button.getSelection();
-    prefs.putBoolean(prefKey, newValue);
-    try {
-      prefs.flush();
-    } catch (BackingStoreException e) {
-
-    }
-    return oldValue != newValue;
-  }
 }
