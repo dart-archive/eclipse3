@@ -185,9 +185,14 @@ public class DartCore extends Plugin implements DartSdkListener {
   public static final String EXTENSION_JS = "js";
 
   /**
-   * Preference for the automatically running pub.
+   * Preference for automatically running pub.
    */
   public static final String PUB_AUTO_RUN_PREFERENCE = "pubAutoRun";
+
+  /**
+   * Preference for pub global arguments.
+   */
+  public static final String PUB_GLOBAL_ARGS_PREFERENCE = "pubGlobalArgs";
 
   /**
    * Preference for enabling hints.
