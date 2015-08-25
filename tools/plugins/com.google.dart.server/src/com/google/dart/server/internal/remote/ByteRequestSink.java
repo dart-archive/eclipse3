@@ -14,12 +14,16 @@
 package com.google.dart.server.internal.remote;
 
 import com.google.common.base.Charsets;
+import com.google.common.util.concurrent.Uninterruptibles;
 import com.google.gson.JsonObject;
 
 import java.io.OutputStream;
 import java.io.OutputStreamWriter;
 import java.io.PrintStream;
 import java.io.PrintWriter;
+import java.util.concurrent.BlockingQueue;
+import java.util.concurrent.LinkedBlockingQueue;
+import java.util.concurrent.TimeUnit;
 
 /**
  * An {@link OutputStream} based implementation of {@link RequestSink}.
@@ -27,6 +31,25 @@ import java.io.PrintWriter;
  * @coverage dart.server.remote
  */
 public class ByteRequestSink implements RequestSink {
+  private class LinesWriterThread extends Thread {
+    public LinesWriterThread() {
+      setName("ByteRequestSink.LinesWriterThread");
+      setDaemon(true);
+    }
+
+    @Override
+    public void run() {
+      while (true) {
+        try {
+          String line = lineQueue.take();
+          writer.println(line);
+          writer.flush();
+        } catch (InterruptedException e) {
+        }
+      }
+    }
+  }
+
   /**
    * The {@link PrintWriter} to print JSON strings to.
    */
@@ -36,6 +59,10 @@ public class ByteRequestSink implements RequestSink {
    * The {@link PrintStream} to print all lines to.
    */
   private DebugPrintStream debugStream;
+  /**
+   * The queue of lines.
+   */
+  private final BlockingQueue<String> lineQueue = new LinkedBlockingQueue<String>();
 
   /**
    * Initializes a newly created request sink.
@@ -46,6 +73,7 @@ public class ByteRequestSink implements RequestSink {
   public ByteRequestSink(OutputStream stream, DebugPrintStream debugStream) {
     writer = new PrintWriter(new OutputStreamWriter(stream, Charsets.UTF_8));
     this.debugStream = debugStream;
+    new LinesWriterThread().start();
   }
 
   @Override
@@ -56,12 +84,20 @@ public class ByteRequestSink implements RequestSink {
         debugStream.println(System.currentTimeMillis() + " => " + text);
       }
     }
-    writer.println(text);
-    writer.flush();
+    lineQueue.add(text);
   }
 
   @Override
   public void close() {
     writer.close();
+  }
+
+  public void waitForFlush() {
+    while (true) {
+      if (lineQueue.isEmpty()) {
+        return;
+      }
+      Uninterruptibles.sleepUninterruptibly(1, TimeUnit.MILLISECONDS);
+    }
   }
 }

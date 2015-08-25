@@ -41,6 +41,7 @@ public class ByteRequestSinkTest extends TestCase {
         "}");
     // write
     requestSink.add(originalJsonObject);
+    requestSink.waitForFlush();
     // restore and compare
     byte[] bytes = byteStream.toByteArray();
     String actualJsonString = new String(bytes, Charsets.UTF_8);
