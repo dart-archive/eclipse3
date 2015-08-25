@@ -253,7 +253,6 @@ public class StdioServerSocket implements AnalysisServerSocket {
       args.add("--observe");
       args.add("--pause-isolates-on-exit");
       args.add("--code_comments");
-      args.add("--profile_depth=16");
       args.add("--collect-code=false");
     }
     //

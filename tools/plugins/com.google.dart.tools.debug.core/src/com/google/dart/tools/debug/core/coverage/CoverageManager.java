@@ -101,6 +101,9 @@ public class CoverageManager {
     for (Entry<Integer, Integer> entry : hitMap.entrySet()) {
       if (entry.getValue() == 0) {
         int line = entry.getKey();
+        if (line >= lineRanges.size()) {
+          continue;
+        }
         SourceRange range = lineRanges.get(line - 1);
         if (markerRange == null) {
           markerRange = range;
