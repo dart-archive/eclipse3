@@ -40,8 +40,8 @@ See https://bugs.eclipse.org/bugs/show_bug.cgi?id=411361
   Get the Source
 ====================================
 
-* See http://code.google.com/p/dart/wiki/GettingTheSource to check out the Dart source.
-   
+* Get the source from https://github.com/dart-lang/eclipse3
+
 ====================================
   Workspace Configuration
 ====================================
