@@ -524,11 +524,12 @@ public class RemoteAnalysisServerImpl implements AnalysisServer {
   }
 
   @Override
-  public void search_getTypeHierarchy(String file, int offset, GetTypeHierarchyConsumer consumer) {
+  public void search_getTypeHierarchy(String file, int offset, boolean superOnly,
+      GetTypeHierarchyConsumer consumer) {
     String id = generateUniqueId();
     sendRequestToServer(
         id,
-        RequestUtilities.generateSearchGetTypeHierarchy(id, file, offset),
+        RequestUtilities.generateSearchGetTypeHierarchy(id, file, offset, superOnly),
         consumer);
   }
 

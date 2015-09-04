@@ -40,7 +40,6 @@ import com.google.dart.server.SortMembersConsumer;
 import com.google.dart.server.UpdateContentConsumer;
 import com.google.dart.server.internal.AnalysisServerError;
 import com.google.dart.server.internal.remote.utilities.RequestUtilities;
-import com.google.dart.server.utilities.general.StringUtilities;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
@@ -1398,7 +1397,15 @@ public class RemoteAnalysisServerImplTest extends AbstractRemoteServerTest {
   }
 
   public void test_analysis_updateOptions_all_false() throws Exception {
-    AnalysisOptions options = new AnalysisOptions(false, false, false, false, false, false, false);
+    AnalysisOptions options = new AnalysisOptions(
+        false,
+        false,
+        false,
+        false,
+        false,
+        false,
+        false,
+        false);
     server.analysis_updateOptions(options);
     List<JsonObject> requests = requestSink.getRequests();
     JsonElement expected = parseJson(//
@@ -1411,6 +1418,7 @@ public class RemoteAnalysisServerImplTest extends AbstractRemoteServerTest {
         "      'enableDeferredLoading': false,",
         "      'enableEnums': false,",
         "      'enableNullAwareOperators': false,",
+        "      'enableSuperMixins': false,",
         "      'generateDart2jsHints': false,",
         "      'generateHints': false,",
         "      'generateLints': false",
@@ -1421,7 +1429,7 @@ public class RemoteAnalysisServerImplTest extends AbstractRemoteServerTest {
   }
 
   public void test_analysis_updateOptions_all_true() throws Exception {
-    AnalysisOptions options = new AnalysisOptions(true, true, true, true, true, true, true);
+    AnalysisOptions options = new AnalysisOptions(true, true, true, true, true, true, true, true);
     server.analysis_updateOptions(options);
     List<JsonObject> requests = requestSink.getRequests();
     JsonElement expected = parseJson(//
@@ -1434,6 +1442,7 @@ public class RemoteAnalysisServerImplTest extends AbstractRemoteServerTest {
         "      'enableDeferredLoading': true,",
         "      'enableEnums': true,",
         "      'enableNullAwareOperators': true,",
+        "      'enableSuperMixins': true,",
         "      'generateDart2jsHints': true,",
         "      'generateHints': true,",
         "      'generateLints': true",
@@ -1444,7 +1453,7 @@ public class RemoteAnalysisServerImplTest extends AbstractRemoteServerTest {
   }
 
   public void test_analysis_updateOptions_subset1() throws Exception {
-    AnalysisOptions options = new AnalysisOptions(true, null, null, null, null, null, null);
+    AnalysisOptions options = new AnalysisOptions(true, null, null, null, null, null, null, null);
     server.analysis_updateOptions(options);
     List<JsonObject> requests = requestSink.getRequests();
     JsonElement expected = parseJson(//
@@ -1461,7 +1470,7 @@ public class RemoteAnalysisServerImplTest extends AbstractRemoteServerTest {
   }
 
   public void test_analysis_updateOptions_subset2() throws Exception {
-    AnalysisOptions options = new AnalysisOptions(false, true, null, null, null, null, null);
+    AnalysisOptions options = new AnalysisOptions(false, true, null, null, null, null, null, null);
     server.analysis_updateOptions(options);
     List<JsonObject> requests = requestSink.getRequests();
     JsonElement expected = parseJson(//
@@ -4075,7 +4084,7 @@ public class RemoteAnalysisServerImplTest extends AbstractRemoteServerTest {
   public void test_search_getTypeHierarchy() throws Exception {
     final Object[] itemsArray = {null};
     final RequestError[] requestErrorArray = {null};
-    server.search_getTypeHierarchy("/fileA.dart", 1, new GetTypeHierarchyConsumer() {
+    server.search_getTypeHierarchy("/fileA.dart", 1, true, new GetTypeHierarchyConsumer() {
       @Override
       public void computedHierarchy(List<TypeHierarchyItem> hierarchyItems) {
         itemsArray[0] = hierarchyItems;
@@ -4093,7 +4102,8 @@ public class RemoteAnalysisServerImplTest extends AbstractRemoteServerTest {
         "  'method': 'search.getTypeHierarchy',",
         "  'params': {",
         "    'file': '/fileA.dart',",
-        "    'offset': 1",
+        "    'offset': 1,",
+        "    'superOnly': true",
         "  }",
         "}");
     assertTrue(requests.contains(expected));
@@ -4146,7 +4156,7 @@ public class RemoteAnalysisServerImplTest extends AbstractRemoteServerTest {
   public void test_search_getTypeHierarchy_error() throws Exception {
     final Object[] itemsArray = {null};
     final RequestError[] requestErrorArray = {null};
-    server.search_getTypeHierarchy("/fileA.dart", 1, new GetTypeHierarchyConsumer() {
+    server.search_getTypeHierarchy("/fileA.dart", 1, false, new GetTypeHierarchyConsumer() {
       @Override
       public void computedHierarchy(List<TypeHierarchyItem> hierarchyItems) {
         itemsArray[0] = hierarchyItems;
@@ -4164,7 +4174,8 @@ public class RemoteAnalysisServerImplTest extends AbstractRemoteServerTest {
         "  'method': 'search.getTypeHierarchy',",
         "  'params': {",
         "    'file': '/fileA.dart',",
-        "    'offset': 1",
+        "    'offset': 1,",
+        "    'superOnly': false",
         "  }",
         "}");
     assertTrue(requests.contains(expected));

@@ -184,6 +184,7 @@ public class TypeHierarchyContentProvider_NEW implements ITreeContentProvider {
     DartCore.getAnalysisServer().search_getTypeHierarchy(
         element.file,
         element.offset,
+        false,
         new GetTypeHierarchyConsumer() {
           @Override
           public void computedHierarchy(List<TypeHierarchyItem> computedItems) {

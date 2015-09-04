@@ -272,6 +272,7 @@ public class AnalysisServerDataImpl implements AnalysisServerData {
         true /* deferred loading */,
         true /* enums */,
         DartCoreDebug.ENABLE_NULL_AWARE_OPERATORS,
+        true /* enableSuperMixins */,
         DartCore.getPlugin().isHintsDart2JSEnabled(),
         DartCore.getPlugin().isHintsEnabled(),
         DartCore.getPlugin().isLintsEnabled()));

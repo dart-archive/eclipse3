@@ -49,6 +49,7 @@ public class RequestUtilities {
   private static final String SELECTION_LENGTH = "selectionLength";
   private static final String SELECTION_OFFSET = "selectionOffset";
   private static final String SUBSCRIPTIONS = "subscriptions";
+  private static final String SUPER_ONLY = "superOnly";
   private static final String URI = "uri";
 
   // Server domain
@@ -746,14 +747,17 @@ public class RequestUtilities {
    *   "params": {
    *     "file": FilePath
    *     "offset": int
+   *     "superOnly": optional bool
    *   }
    * }
    * </pre>
    */
-  public static JsonObject generateSearchGetTypeHierarchy(String id, String file, int offset) {
+  public static JsonObject generateSearchGetTypeHierarchy(String id, String file, int offset,
+      boolean superOnly) {
     JsonObject params = new JsonObject();
     params.addProperty(FILE, file);
     params.addProperty(OFFSET, offset);
+    params.addProperty(SUPER_ONLY, superOnly);
     return buildJsonObjectRequest(id, METHOD_SEARCH_GET_TYPE_HIERARCHY, params);
   }
 
