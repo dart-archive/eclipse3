@@ -83,9 +83,7 @@ public class DartElementHyperlinkDetector extends AbstractHyperlinkDetector {
         NavigationRegion[] navigationRegions = DartCore.getAnalysisServerData().getNavigation(file);
         for (NavigationRegion navigationRegion : navigationRegions) {
           if (navigationRegion.containsInclusive(offset)) {
-            return new IHyperlink[] {new DartNavigationRegionHyperlink_NEW(
-                editor.getInputResourceFile(),
-                navigationRegion)};
+            return new IHyperlink[] {new DartNavigationRegionHyperlink_NEW(navigationRegion)};
           }
         }
       }

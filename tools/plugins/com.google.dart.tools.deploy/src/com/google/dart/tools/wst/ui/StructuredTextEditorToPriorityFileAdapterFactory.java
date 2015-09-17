@@ -6,8 +6,10 @@ import com.google.dart.tools.core.analysis.model.Project;
 import com.google.dart.tools.ui.internal.text.dart.DartPriorityFileEditor;
 
 import org.eclipse.core.runtime.IAdapterFactory;
-import org.eclipse.jface.text.IDocument;
+import org.eclipse.core.runtime.IPath;
 import org.eclipse.swt.custom.StyledText;
+import org.eclipse.ui.IEditorInput;
+import org.eclipse.ui.IFileEditorInput;
 import org.eclipse.wst.sse.ui.StructuredTextEditor;
 import org.eclipse.wst.sse.ui.internal.StructuredTextViewer;
 
@@ -22,40 +24,43 @@ public class StructuredTextEditorToPriorityFileAdapterFactory implements IAdapte
   public Object getAdapter(Object adaptableObject, Class adapterType) {
     if (adaptableObject instanceof StructuredTextEditor
         && DartPriorityFileEditor.class.equals(adapterType)) {
-      StructuredTextEditor textEditor = (StructuredTextEditor) adaptableObject;
+      final StructuredTextEditor textEditor = (StructuredTextEditor) adaptableObject;
       final StructuredTextViewer textViewer = textEditor.getTextViewer();
       final StyledText textWidget = textViewer.getTextWidget();
-      final IDocument document = textViewer.getDocument();
-      final StructuredDocumentDartInfo documentInfo = StructuredDocumentDartInfo.create(document);
-      if (documentInfo == null) {
-        return null;
+      final IEditorInput editorInput = textEditor.getEditorInput();
+      if (editorInput instanceof IFileEditorInput) {
+        final IFileEditorInput fileEditorInput = (IFileEditorInput) editorInput;
+        final IPath location = fileEditorInput.getFile().getLocation();
+        if (location != null) {
+          final String filePath = location.toOSString();
+          return new DartPriorityFileEditor() {
+            @Override
+            public AnalysisContext getInputAnalysisContext() {
+              return null;
+            }
+
+            @Override
+            public String getInputFilePath() {
+              return filePath;
+            }
+
+            @Override
+            public Project getInputProject() {
+              return null;
+            }
+
+            @Override
+            public Source getInputSource() {
+              return null;
+            }
+
+            @Override
+            public boolean isVisible() {
+              return textWidget.isVisible();
+            }
+          };
+        }
       }
-      return new DartPriorityFileEditor() {
-        @Override
-        public AnalysisContext getInputAnalysisContext() {
-          return documentInfo.getContext();
-        }
-
-        @Override
-        public String getInputFilePath() {
-          return documentInfo.getFile().getAbsolutePath();
-        }
-
-        @Override
-        public Project getInputProject() {
-          return documentInfo.getProject();
-        }
-
-        @Override
-        public Source getInputSource() {
-          return documentInfo.getSource();
-        }
-
-        @Override
-        public boolean isVisible() {
-          return textWidget.isVisible();
-        }
-      };
     }
     return null;
   }

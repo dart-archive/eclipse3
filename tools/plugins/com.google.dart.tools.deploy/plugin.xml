@@ -853,7 +853,7 @@
            adaptableType="org.eclipse.wst.sse.ui.StructuredTextEditor"
            class="com.google.dart.tools.wst.ui.StructuredTextEditorToPriorityFileAdapterFactory">
         <adapter
-              type="com.google.dart.tools.ui.internal.text.dart.DartPrioritySourceEditor">
+              type="com.google.dart.tools.ui.internal.text.dart.DartPriorityFileEditor">
         </adapter>
      </factory>
   </extension>
