@@ -30,7 +30,7 @@
 
         <!-- parse the tools/VERSION file into an ant property -->
         <!-- the format is "MAJOR x\nMINOR x\nPATCH n" -->
-        <loadproperties srcFile="${source.dir}/../../tools/VERSION">
+        <loadproperties srcFile="${source.dir}/../VERSION">
             <filterchain>
                 <replaceregex pattern=" " replace="="/>
              </filterchain>
@@ -65,6 +65,11 @@
               <exclude name="*_test/**" />
               <exclude name="**/bin/**" />
               <exclude name="com.google.dart.tools.designer/**" />
+              <exclude name="com.google.dart.tools.deploy/**" />
+              <exclude name="com.google.dart.tools.ui.swtbot/**" />
+              <exclude name="com.google.dart.tools.tests/**" />
+              <exclude name="org.eclipse/**" />
+              <exclude name="com.xored/**" />
           </fileset>
     	</copy>
     	
@@ -72,12 +77,14 @@
           <fileset dir="${source.dir}/features">
               <exclude name="*_test/**" />
               <exclude name="**/bin/**" />
+              <exclude name="com.google.dart.tools.deploy/**" />
+              <exclude name="com.google.dart.tools.test/**" />
           </fileset>
       </copy> 
     	
     	<!-- extra dependencies... -->
     	
-      <property name="source.root" location="${source.dir}/../.." /> 	
+      <property name="source.root" location="${source.dir}/.." />
     	
     	
       <!-- com.google.dart.thirdparty -->
@@ -138,6 +145,7 @@
           	
         <untar src="${build.dir}/${eclipse.zip}" dest="${eclipse.dir}/.." compression="gzip"/>
     	
+        
     	  <!-- clean repo -->
         <delete dir="${build.dir}/buildRepo"/>
         <delete dir="${build.dir}/I.build"/>
