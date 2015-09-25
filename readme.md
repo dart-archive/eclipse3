@@ -9,7 +9,7 @@ Eclipse plugins and Dart Editor
 In Eclipse, choose *Help > Install new software…* and add this URL:
 
 ```
-http://www.dartlang.org/eclipse/update/channels/stable/
+http://dart-lang.github.io/eclipse3
 ```
 
 ## Providing feedback
