@@ -62,6 +62,7 @@ import com.google.dart.server.internal.remote.processor.NotificationAnalysisAnal
 import com.google.dart.server.internal.remote.processor.NotificationAnalysisErrorsProcessor;
 import com.google.dart.server.internal.remote.processor.NotificationAnalysisFlushResultsProcessor;
 import com.google.dart.server.internal.remote.processor.NotificationAnalysisHighlightsProcessor;
+import com.google.dart.server.internal.remote.processor.NotificationAnalysisImplementedProcessor;
 import com.google.dart.server.internal.remote.processor.NotificationAnalysisNavigationProcessor;
 import com.google.dart.server.internal.remote.processor.NotificationAnalysisOccurrencesProcessor;
 import com.google.dart.server.internal.remote.processor.NotificationAnalysisOutlineProcessor;
@@ -190,6 +191,7 @@ public class RemoteAnalysisServerImpl implements AnalysisServer {
   private static final String ANALYSIS_NOTIFICATION_ERRORS = "analysis.errors";
   private static final String ANALYSIS_NOTIFICATION_FLUSH_RESULTS = "analysis.flushResults";
   private static final String ANALYSIS_NOTIFICATION_HIGHTLIGHTS = "analysis.highlights";
+  private static final String ANALYSIS_NOTIFICATION_IMPLEMENTED = "analysis.implemented";
   private static final String ANALYSIS_NOTIFICATION_NAVIGATION = "analysis.navigation";
   private static final String ANALYSIS_NOTIFICATION_OCCURRENCES = "analysis.occurrences";
   private static final String ANALYSIS_NOTIFICATION_OUTLINE = "analysis.outline";
@@ -626,6 +628,9 @@ public class RemoteAnalysisServerImpl implements AnalysisServer {
     } else if (event.equals(ANALYSIS_NOTIFICATION_HIGHTLIGHTS)) {
       // analysis.highlights
       new NotificationAnalysisHighlightsProcessor(listener).process(response);
+    } else if (event.equals(ANALYSIS_NOTIFICATION_IMPLEMENTED)) {
+      // analysis.implemented
+      new NotificationAnalysisImplementedProcessor(listener).process(response);
     } else if (event.equals(ANALYSIS_NOTIFICATION_NAVIGATION)) {
       // analysis.navigation
       new NotificationAnalysisNavigationProcessor(listener).process(response);

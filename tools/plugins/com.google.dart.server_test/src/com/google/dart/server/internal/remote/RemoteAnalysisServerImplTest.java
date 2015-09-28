@@ -65,6 +65,8 @@ import org.dartlang.analysis.server.protocol.GeneralAnalysisService;
 import org.dartlang.analysis.server.protocol.HighlightRegion;
 import org.dartlang.analysis.server.protocol.HighlightRegionType;
 import org.dartlang.analysis.server.protocol.HoverInformation;
+import org.dartlang.analysis.server.protocol.ImplementedClass;
+import org.dartlang.analysis.server.protocol.ImplementedMember;
 import org.dartlang.analysis.server.protocol.InlineLocalVariableFeedback;
 import org.dartlang.analysis.server.protocol.InlineMethodFeedback;
 import org.dartlang.analysis.server.protocol.InlineMethodOptions;
@@ -783,6 +785,48 @@ public class RemoteAnalysisServerImplTest extends AbstractRemoteServerTest {
       assertEquals(HighlightRegionType.INSTANCE_FIELD_REFERENCE, error.getType());
       assertEquals(10, error.getOffset());
       assertEquals(20, error.getLength());
+    }
+  }
+
+  public void test_analysis_notification_implemented() throws Exception {
+    putResponse(//
+        "{",
+        "  'event': 'analysis.implemented',",
+        "  'params': {",
+        "    'file': '/test.dart',",
+        "    'classes': [",
+        "      {",
+        "        'offset': 1,",
+        "        'length': 2",
+        "      }",
+        "    ],",
+        "    'members': [",
+        "      {",
+        "        'offset': 3,",
+        "        'length': 4",
+        "      }",
+        "    ]",
+        "  }",
+        "}");
+    responseStream.waitForEmpty();
+    server.test_waitForWorkerComplete();
+    {
+      List<ImplementedClass> implementedClasses = listener.getImplementedClasses("/test.dart");
+      assertThat(implementedClasses).hasSize(1);
+      {
+        ImplementedClass clazz = implementedClasses.get(0);
+        assertEquals(1, clazz.getOffset());
+        assertEquals(2, clazz.getLength());
+      }
+    }
+    {
+      List<ImplementedMember> implementedMembers = listener.getImplementedMembers("/test.dart");
+      assertThat(implementedMembers).hasSize(1);
+      {
+        ImplementedMember member = implementedMembers.get(0);
+        assertEquals(3, member.getOffset());
+        assertEquals(4, member.getLength());
+      }
     }
   }
 

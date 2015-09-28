@@ -20,6 +20,8 @@ import org.dartlang.analysis.server.protocol.AnalysisError;
 import org.dartlang.analysis.server.protocol.AnalysisStatus;
 import org.dartlang.analysis.server.protocol.CompletionSuggestion;
 import org.dartlang.analysis.server.protocol.HighlightRegion;
+import org.dartlang.analysis.server.protocol.ImplementedClass;
+import org.dartlang.analysis.server.protocol.ImplementedMember;
 import org.dartlang.analysis.server.protocol.NavigationRegion;
 import org.dartlang.analysis.server.protocol.Occurrences;
 import org.dartlang.analysis.server.protocol.Outline;
@@ -83,6 +85,16 @@ public interface AnalysisServerListener {
    * @param highlights the highlight regions contained in the file
    */
   public void computedHighlights(String file, List<HighlightRegion> highlights);
+
+  /**
+   * New collections of implemented classes and class members have been computed for the given file.
+   * 
+   * @param file the file with which the implementations are associated.
+   * @param implementedClasses the classes defined in the file that are implemented or extended.
+   * @param implementedMembers the member defined in the file that are implemented or overridden.
+   */
+  public void computedImplemented(String file, List<ImplementedClass> implementedClasses,
+      List<ImplementedMember> implementedMembers);
 
   /**
    * New launch data has been computed.

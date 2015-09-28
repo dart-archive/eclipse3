@@ -32,73 +32,57 @@ import java.util.Iterator;
 import org.apache.commons.lang3.StringUtils;
 
 /**
- * A description of a region from which the user can navigate to the declaration of an element.
+ * A description of a class that is implemented or extended.
  *
  * @coverage dart.server.generated.types
  */
 @SuppressWarnings("unused")
-public class NavigationRegion {
+public class ImplementedClass {
 
-  public static final NavigationRegion[] EMPTY_ARRAY = new NavigationRegion[0];
+  public static final ImplementedClass[] EMPTY_ARRAY = new ImplementedClass[0];
 
-  public static final List<NavigationRegion> EMPTY_LIST = Lists.newArrayList();
+  public static final List<ImplementedClass> EMPTY_LIST = Lists.newArrayList();
 
   /**
-   * The offset of the region from which the user can navigate.
+   * The offset of the name of the implemented class.
    */
   private final int offset;
 
   /**
-   * The length of the region from which the user can navigate.
+   * The length of the name of the implemented class.
    */
   private final int length;
 
   /**
-   * The indexes of the targets (in the enclosing navigation response) to which the given region is
-   * bound. By opening the target, clients can implement one form of navigation. This list cannot be
-   * empty.
+   * Constructor for {@link ImplementedClass}.
    */
-  private final int[] targets;
-
-  private final List<NavigationTarget> targetObjects = Lists.newArrayList();
-
-  /**
-   * Constructor for {@link NavigationRegion}.
-   */
-  public NavigationRegion(int offset, int length, int[] targets) {
+  public ImplementedClass(int offset, int length) {
     this.offset = offset;
     this.length = length;
-    this.targets = targets;
-  }
-
-  public boolean containsInclusive(int x) {
-    return offset <= x && x <= offset + length;
   }
 
   @Override
   public boolean equals(Object obj) {
-    if (obj instanceof NavigationRegion) {
-      NavigationRegion other = (NavigationRegion) obj;
+    if (obj instanceof ImplementedClass) {
+      ImplementedClass other = (ImplementedClass) obj;
       return
         other.offset == offset &&
-        other.length == length &&
-        Arrays.equals(other.targets, targets);
+        other.length == length;
     }
     return false;
   }
 
-  public static NavigationRegion fromJson(JsonObject jsonObject) {
+  public static ImplementedClass fromJson(JsonObject jsonObject) {
     int offset = jsonObject.get("offset").getAsInt();
     int length = jsonObject.get("length").getAsInt();
-    int[] targets = JsonUtilities.decodeIntArray(jsonObject.get("targets").getAsJsonArray());
-    return new NavigationRegion(offset, length, targets);
+    return new ImplementedClass(offset, length);
   }
 
-  public static List<NavigationRegion> fromJsonArray(JsonArray jsonArray) {
+  public static List<ImplementedClass> fromJsonArray(JsonArray jsonArray) {
     if (jsonArray == null) {
       return EMPTY_LIST;
     }
-    ArrayList<NavigationRegion> list = new ArrayList<NavigationRegion>(jsonArray.size());
+    ArrayList<ImplementedClass> list = new ArrayList<ImplementedClass>(jsonArray.size());
     Iterator<JsonElement> iterator = jsonArray.iterator();
     while (iterator.hasNext()) {
       list.add(fromJson(iterator.next().getAsJsonObject()));
@@ -106,31 +90,18 @@ public class NavigationRegion {
     return list;
   }
 
-  public List<NavigationTarget> getTargetObjects() {
-    return targetObjects;
-  }
-
   /**
-   * The length of the region from which the user can navigate.
+   * The length of the name of the implemented class.
    */
   public int getLength() {
     return length;
   }
 
   /**
-   * The offset of the region from which the user can navigate.
+   * The offset of the name of the implemented class.
    */
   public int getOffset() {
     return offset;
-  }
-
-  /**
-   * The indexes of the targets (in the enclosing navigation response) to which the given region is
-   * bound. By opening the target, clients can implement one form of navigation. This list cannot be
-   * empty.
-   */
-  public int[] getTargets() {
-    return targets;
   }
 
   @Override
@@ -138,27 +109,13 @@ public class NavigationRegion {
     HashCodeBuilder builder = new HashCodeBuilder();
     builder.append(offset);
     builder.append(length);
-    builder.append(targets);
     return builder.toHashCode();
-  }
-
-  public void lookupTargets(List<NavigationTarget> allTargets) {
-    for (int i = 0; i < targets.length; i++) {
-      int targetIndex = targets[i];
-      NavigationTarget target = allTargets.get(targetIndex);
-      targetObjects.add(target);
-    }
   }
 
   public JsonObject toJson() {
     JsonObject jsonObject = new JsonObject();
     jsonObject.addProperty("offset", offset);
     jsonObject.addProperty("length", length);
-    JsonArray jsonArrayTargets = new JsonArray();
-    for (int elt : targets) {
-      jsonArrayTargets.add(new JsonPrimitive(elt));
-    }
-    jsonObject.add("targets", jsonArrayTargets);
     return jsonObject;
   }
 
@@ -169,9 +126,7 @@ public class NavigationRegion {
     builder.append("offset=");
     builder.append(offset + ", ");
     builder.append("length=");
-    builder.append(length + ", ");
-    builder.append("targets=");
-    builder.append(StringUtils.join(targets, ", "));
+    builder.append(length);
     builder.append("]");
     return builder.toString();
   }

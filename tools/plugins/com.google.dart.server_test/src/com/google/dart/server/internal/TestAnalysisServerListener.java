@@ -28,6 +28,8 @@ import org.dartlang.analysis.server.protocol.AnalysisError;
 import org.dartlang.analysis.server.protocol.AnalysisStatus;
 import org.dartlang.analysis.server.protocol.CompletionSuggestion;
 import org.dartlang.analysis.server.protocol.HighlightRegion;
+import org.dartlang.analysis.server.protocol.ImplementedClass;
+import org.dartlang.analysis.server.protocol.ImplementedMember;
 import org.dartlang.analysis.server.protocol.NavigationRegion;
 import org.dartlang.analysis.server.protocol.NavigationTarget;
 import org.dartlang.analysis.server.protocol.Occurrences;
@@ -66,6 +68,8 @@ public class TestAnalysisServerListener implements AnalysisServerListener {
   private final Map<String, List<AnalysisError>> sourcesErrors = Maps.newHashMap();
   private final List<String> analyzedFiles = Lists.newArrayList();
   private final Map<String, List<HighlightRegion>> highlightsMap = Maps.newHashMap();
+  private final Map<String, List<ImplementedClass>> implementedClassesMap = Maps.newHashMap();
+  private final Map<String, List<ImplementedMember>> implementedMembersMap = Maps.newHashMap();
   private final Map<String, List<NavigationRegion>> navigationMap = Maps.newHashMap();
   private final Map<String, List<Occurrences>> occurrencesMap = Maps.newHashMap();
   private final Map<String, Outline> outlineMap = Maps.newHashMap();
@@ -185,6 +189,13 @@ public class TestAnalysisServerListener implements AnalysisServerListener {
   }
 
   @Override
+  public void computedImplemented(String file, List<ImplementedClass> implementedClasses,
+      List<ImplementedMember> implementedMembers) {
+    implementedClassesMap.put(file, implementedClasses);
+    implementedMembersMap.put(file, implementedMembers);
+  }
+
+  @Override
   public synchronized void computedLaunchData(String file, String kind, String[] referencedFiles) {
     // TODO(brianwilkerson) Add tests for this notification and implement this method appropriately
   }
@@ -291,6 +302,22 @@ public class TestAnalysisServerListener implements AnalysisServerListener {
    */
   public synchronized List<HighlightRegion> getHighlightRegions(String file) {
     return highlightsMap.get(file);
+  }
+
+  /**
+   * Returns {@link ImplementedClass}s for the given file, maybe {@code null} if have not been ever
+   * notified.
+   */
+  public synchronized List<ImplementedClass> getImplementedClasses(String file) {
+    return implementedClassesMap.get(file);
+  }
+
+  /**
+   * Returns {@link ImplementedMember}s for the given file, maybe {@code null} if have not been ever
+   * notified.
+   */
+  public synchronized List<ImplementedMember> getImplementedMembers(String file) {
+    return implementedMembersMap.get(file);
   }
 
   /**

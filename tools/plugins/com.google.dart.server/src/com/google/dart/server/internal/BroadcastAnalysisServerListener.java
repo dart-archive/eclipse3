@@ -21,6 +21,8 @@ import org.dartlang.analysis.server.protocol.AnalysisError;
 import org.dartlang.analysis.server.protocol.AnalysisStatus;
 import org.dartlang.analysis.server.protocol.CompletionSuggestion;
 import org.dartlang.analysis.server.protocol.HighlightRegion;
+import org.dartlang.analysis.server.protocol.ImplementedClass;
+import org.dartlang.analysis.server.protocol.ImplementedMember;
 import org.dartlang.analysis.server.protocol.NavigationRegion;
 import org.dartlang.analysis.server.protocol.Occurrences;
 import org.dartlang.analysis.server.protocol.Outline;
@@ -86,6 +88,14 @@ public class BroadcastAnalysisServerListener implements AnalysisServerListener {
   public void computedHighlights(String file, List<HighlightRegion> highlights) {
     for (AnalysisServerListener listener : getListeners()) {
       listener.computedHighlights(file, highlights);
+    }
+  }
+
+  @Override
+  public void computedImplemented(String file, List<ImplementedClass> implementedClasses,
+      List<ImplementedMember> implementedMembers) {
+    for (AnalysisServerListener listener : getListeners()) {
+      listener.computedImplemented(file, implementedClasses, implementedMembers);
     }
   }
 

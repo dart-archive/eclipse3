@@ -24,6 +24,8 @@ import org.dartlang.analysis.server.protocol.AnalysisError;
 import org.dartlang.analysis.server.protocol.AnalysisStatus;
 import org.dartlang.analysis.server.protocol.CompletionSuggestion;
 import org.dartlang.analysis.server.protocol.HighlightRegion;
+import org.dartlang.analysis.server.protocol.ImplementedClass;
+import org.dartlang.analysis.server.protocol.ImplementedMember;
 import org.dartlang.analysis.server.protocol.NavigationRegion;
 import org.dartlang.analysis.server.protocol.Occurrences;
 import org.dartlang.analysis.server.protocol.Outline;
@@ -79,6 +81,12 @@ public class WorkspaceAnalysisServerListener implements AnalysisServerListener {
   public void computedHighlights(String file, List<HighlightRegion> highlights) {
     HighlightRegion[] highlightsArray = highlights.toArray(new HighlightRegion[highlights.size()]);
     dataImpl.internalComputedHighlights(file, highlightsArray);
+  }
+
+  @Override
+  public void computedImplemented(String file, List<ImplementedClass> implementedClasses,
+      List<ImplementedMember> implementedMembers) {
+    // TODO(scheglov) not yet implemented
   }
 
   @Override
