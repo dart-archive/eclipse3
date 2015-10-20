@@ -26,7 +26,6 @@ import com.google.dart.engine.utilities.instrumentation.InstrumentationBuilder;
 import com.google.dart.engine.utilities.logging.Logger;
 import com.google.dart.server.generated.AnalysisServer;
 import com.google.dart.server.internal.remote.DebugPrintStream;
-import com.google.dart.server.internal.remote.FileReadMode;
 import com.google.dart.server.internal.remote.RemoteAnalysisServerImpl;
 import com.google.dart.server.internal.remote.StdioServerSocket;
 import com.google.dart.server.utilities.logging.Logging;
@@ -55,7 +54,6 @@ import com.google.dart.tools.core.utilities.io.FileUtilities;
 import com.google.dart.tools.core.utilities.performance.PerformanceManager;
 import com.google.dart.tools.core.utilities.yaml.PubYamlUtils;
 
-import org.apache.commons.lang3.ArrayUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.dartlang.analysis.server.protocol.RequestError;
 import org.dartlang.analysis.server.protocol.ServerService;
@@ -95,6 +93,7 @@ import java.io.PrintStream;
 import java.io.PrintWriter;
 import java.io.StringWriter;
 import java.lang.management.ManagementFactory;
+import java.net.ServerSocket;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -470,12 +469,40 @@ public class DartCore extends Plugin implements DartSdkListener {
   }
 
   /**
-   * Return an array of analysis server arguments
+   * Find and return an unused server socket port.
+   */
+  public static int findUnusedPort() {
+    try {
+      ServerSocket ss = new ServerSocket(0);
+      int port = ss.getLocalPort();
+      ss.close();
+      return port;
+    } catch (IOException ioe) {
+      //$FALL-THROUGH$
+    }
+    return -1;
+  }
+
+  /**
+   * Return an array of analysis server arguments.
    * 
    * @return a non-null array of arguments
    */
   public static String[] getAdditionalAnalysisServerArguments() {
     String value = getUserDefinedProperty(ANALYSIS_SERVER_ARG_PROP_KEY);
+    if (value == null) {
+      return StringUtilities.EMPTY_ARRAY;
+    }
+    return value.split(",");
+  }
+
+  /**
+   * Return an list of Dart VM arguments for analysis server.
+   * 
+   * @return a non-null array of arguments
+   */
+  public static String[] getAdditionalAnalysisServerVmArguments() {
+    String value = getUserDefinedProperty(ANALYSIS_SERVER_VM_ARG_PROP_KEY);
     if (value == null) {
       return StringUtilities.EMPTY_ARRAY;
     }
@@ -527,7 +554,22 @@ public class DartCore extends Plugin implements DartSdkListener {
         }
 
         try {
-          String[] additionalArguments = DartCore.getAdditionalAnalysisServerArguments();
+          // VM arguments
+          List<String> additionalVmArguments = Lists.newArrayList(DartCore.getAdditionalAnalysisServerVmArguments());
+          additionalVmArguments.add("--package-root=" + packageRoot);
+          if (DartCoreDebug.ANALYSIS_SERVER_DEBUG) {
+            int debugPort = findUnusedPort();
+            Logging.getLogger().logInformation("Analysis server debug port " + debugPort);
+            additionalVmArguments.add("--debug:" + debugPort);
+          }
+          if (DartCoreDebug.ANALYSIS_SERVER_PROFILE) {
+            additionalVmArguments.add("--observe");
+            additionalVmArguments.add("--pause-isolates-on-exit");
+            additionalVmArguments.add("--code_comments");
+            additionalVmArguments.add("--collect-code=false");
+          }
+          // Server arguments
+          List<String> additionalArguments = Lists.newArrayList(DartCore.getAdditionalAnalysisServerArguments());
           // prepare debug stream
           DebugPrintStream debugStream;
           {
@@ -557,47 +599,41 @@ public class DartCore extends Plugin implements DartSdkListener {
           }
           // additional options
           if (DartCoreDebug.ANALYSIS_SERVER_INCREMENTAL_RESOLUTION_API) {
-            additionalArguments = ArrayUtils.add(
-                additionalArguments,
-                "--enable-incremental-resolution-api");
+            additionalArguments.add("--enable-incremental-resolution-api");
           }
           if (DartCoreDebug.ANALYSIS_SERVER_NEW_TASK_MODEL) {
-            additionalArguments = ArrayUtils.add(additionalArguments, "--enable-new-task-model");
+            additionalArguments.add("--enable-new-task-model");
           }
           {
             String log = DartCoreDebug.ANALYSIS_SERVER_INCREMENTAL_RESOLUTION_LOG;
             if (!StringUtils.isEmpty(log)) {
-              additionalArguments = ArrayUtils.add(
-                  additionalArguments,
-                  "--incremental-resolution-log=" + log);
+              additionalArguments.add("--incremental-resolution-log=" + log);
             }
           }
           if (DartCoreDebug.ANALYSIS_SERVER_INCREMENTAL_RESOLUTION_VALIDATION) {
-            additionalArguments = ArrayUtils.add(
-                additionalArguments,
-                "--incremental-resolution-validation");
+            additionalArguments.add("--incremental-resolution-validation");
           }
           {
             String log = DartCoreDebug.ANALYSIS_SERVER_INSTRUMENTATION_LOG_FILE;
             if (!StringUtils.isEmpty(log)) {
               log = log.trim();
               if (log.length() > 0) {
-                additionalArguments = ArrayUtils.add(
-                    additionalArguments,
-                    "--instrumentation-log-file=" + log);
+                additionalArguments.add("--instrumentation-log-file=" + log);
               }
             }
           }
           if (DartCoreDebug.ANALYSIS_SERVER_PRINT_TO_CONSOLE) {
-            additionalArguments = ArrayUtils.add(additionalArguments, "--internal-print-to-console");
+            additionalArguments.add("--internal-print-to-console");
           }
-          additionalArguments = ArrayUtils.add(additionalArguments, "--useAnalysisHighlight2");
+          additionalArguments.add("--useAnalysisHighlight2");
           // HTTP port
           int httpPort = 0;
           if (DartCoreDebug.ANALYSIS_SERVER_HTTP_PORT != null
               && !DartCoreDebug.ANALYSIS_SERVER_HTTP_PORT.isEmpty()) {
             try {
               httpPort = Integer.parseInt(DartCoreDebug.ANALYSIS_SERVER_HTTP_PORT);
+              additionalArguments.add("--port=" + httpPort);
+              Logging.getLogger().logInformation("Analysis server http port " + httpPort);
             } catch (NumberFormatException e) {
               DartCore.logError("Analysis server HTTP port must be an integer.");
               return null;
@@ -606,15 +642,10 @@ public class DartCore extends Plugin implements DartSdkListener {
           // create server, if "com.google.dart.svnRoot" flag was not set then use snapshot
           StdioServerSocket socket = new StdioServerSocket(
               runtimePath,
+              additionalVmArguments,
               analysisServerPath,
-              packageRoot,
-              debugStream,
               additionalArguments,
-              DartCoreDebug.ANALYSIS_SERVER_DEBUG,
-              DartCoreDebug.ANALYSIS_SERVER_PROFILE,
-              httpPort,
-              false,
-              FileReadMode.AS_IS);
+              debugStream);
           if (isPluginsBuild()) {
             // plugin mode
             socket.setClientId("org.dartlang.dartplugin");
@@ -1719,6 +1750,11 @@ public class DartCore extends Plugin implements DartSdkListener {
    * Property key for user-specified analysis server arguments.
    */
   public static final String ANALYSIS_SERVER_ARG_PROP_KEY = "com.dart.tools.server.args";
+
+  /**
+   * Property key for user-specified Dart VM arguments for analysis server.
+   */
+  public static final String ANALYSIS_SERVER_VM_ARG_PROP_KEY = "com.dart.tools.server.vm.args";
 
   /**
    * Initialize a newly created instance of this class.

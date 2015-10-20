@@ -13,6 +13,7 @@
  */
 package com.google.dart.server.timing;
 
+import com.google.common.collect.Lists;
 import com.google.dart.engine.sdk.DirectoryBasedDartSdk;
 import com.google.dart.server.AnalysisServerListenerAdapter;
 import com.google.dart.server.generated.AnalysisServer;
@@ -112,11 +113,10 @@ public class AnalyzeEngineInServer extends TimingTest {
     // give more accurate timing results) rather than from source.
     StdioServerSocket serverSocket = new StdioServerSocket(
         runtimePath,
+        Lists.<String> newArrayList(),
         analysisServerPath,
-        null,
-        false,
-        false,
-        0);
+        Lists.<String> newArrayList(),
+        null);
     server = new RemoteAnalysisServerImpl(serverSocket);
     server.start();
   }
