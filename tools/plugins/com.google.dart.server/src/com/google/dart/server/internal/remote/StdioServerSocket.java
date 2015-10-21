@@ -14,8 +14,11 @@
 package com.google.dart.server.internal.remote;
 
 import com.google.common.base.Preconditions;
+import com.google.common.collect.Lists;
 import com.google.dart.server.AnalysisServerSocket;
 import com.google.dart.server.utilities.logging.Logging;
+
+import static org.apache.commons.lang3.ObjectUtils.defaultIfNull;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -54,9 +57,9 @@ public class StdioServerSocket implements AnalysisServerSocket {
       String analysisServerPath, List<String> additionalServerArguments,
       DebugPrintStream debugStream) {
     this.runtimePath = runtimePath;
-    this.vmArguments = additionalVmArguments;
+    this.vmArguments = defaultIfNull(additionalVmArguments, Lists.<String> newArrayList());
     this.analysisServerPath = analysisServerPath;
-    this.serverArguments = additionalServerArguments;
+    this.serverArguments = defaultIfNull(additionalServerArguments, Lists.<String> newArrayList());
     this.debugStream = debugStream;
   }
 
