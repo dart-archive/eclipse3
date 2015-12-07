@@ -58,6 +58,11 @@ public class MockAnalysisServer implements AnalysisServer {
   }
 
   @Override
+  public void analysis_getReachableSources(String file, GetReachableSourcesConsumer consumer) {
+    throw new UnsupportedOperationException();
+  }
+
+  @Override
   public void analysis_reanalyze(List<String> roots) {
     throw new UnsupportedOperationException();
   }
@@ -95,6 +100,11 @@ public class MockAnalysisServer implements AnalysisServer {
 
   @Override
   public void completion_getSuggestions(String file, int offset, GetSuggestionsConsumer consumer) {
+    throw new UnsupportedOperationException();
+  }
+
+  @Override
+  public void diagnostic_getDiagnostics(GetDiagnosticsConsumer consumer) {
     throw new UnsupportedOperationException();
   }
 

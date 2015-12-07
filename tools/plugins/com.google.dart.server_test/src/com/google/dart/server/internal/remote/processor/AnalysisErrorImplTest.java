@@ -14,7 +14,6 @@
 package com.google.dart.server.internal.remote.processor;
 
 import junit.framework.TestCase;
-
 import org.dartlang.analysis.server.protocol.AnalysisError;
 import org.dartlang.analysis.server.protocol.AnalysisErrorSeverity;
 import org.dartlang.analysis.server.protocol.Location;
@@ -26,12 +25,7 @@ public class AnalysisErrorImplTest extends TestCase {
     String errorSeverity = AnalysisErrorSeverity.ERROR;
     String errorType = "COMPILE_TIME_ERROR";
     Location location = mock(Location.class);
-    AnalysisError error = new AnalysisError(
-        errorSeverity,
-        errorType,
-        location,
-        "my message",
-        "my correction");
+    AnalysisError error = new AnalysisError(errorSeverity, errorType, location, "my message", "my correction", false);
     assertEquals(errorSeverity, error.getSeverity());
     assertEquals(errorType, error.getType());
     assertEquals(location, error.getLocation());

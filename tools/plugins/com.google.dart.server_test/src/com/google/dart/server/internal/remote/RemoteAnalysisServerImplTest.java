@@ -128,7 +128,7 @@ public class RemoteAnalysisServerImplTest extends AbstractRemoteServerTest {
     });
 
     List<JsonObject> requests = requestSink.getRequests();
-    JsonElement expected = parseJson(//
+    JsonObject expected = parseJson(//
         "{",
         "  'id': '0',",
         "  'method': 'analysis.getErrors',",
@@ -154,7 +154,8 @@ public class RemoteAnalysisServerImplTest extends AbstractRemoteServerTest {
         "          'startColumn': 4",
         "        },",
         "        'message': 'message A',",
-        "        'correction': 'correction A'",
+        "        'correction': 'correction A',",
+        "        'hasFix': true",
         "      },",
         "      {",
         "        'severity': 'ERROR',",
@@ -167,7 +168,8 @@ public class RemoteAnalysisServerImplTest extends AbstractRemoteServerTest {
         "          'startColumn': 8",
         "        },",
         "        'message': 'message B',",
-        "        'correction': 'correction B'",
+        "        'correction': 'correction B',",
+        "        'hasFix': false",
         "      }",
         "    ]",
         "  }",
@@ -182,13 +184,13 @@ public class RemoteAnalysisServerImplTest extends AbstractRemoteServerTest {
         1,
         2,
         3,
-        4), "message A", "correction A"), errors[0][0]);
+        4), "message A", "correction A", true), errors[0][0]);
     assertEquals(new AnalysisError(AnalysisErrorSeverity.ERROR, "COMPILE_TIME_ERROR", new Location(
         "/fileB.dart",
         5,
         6,
         7,
-        8), "message B", "correction B"), errors[0][1]);
+        8), "message B", "correction B", false), errors[0][1]);
   }
 
   public void test_analysis_getErrors_error() throws Exception {
@@ -207,7 +209,7 @@ public class RemoteAnalysisServerImplTest extends AbstractRemoteServerTest {
     });
 
     List<JsonObject> requests = requestSink.getRequests();
-    JsonElement expected = parseJson(//
+    JsonObject expected = parseJson(//
         "{",
         "  'id': '0',",
         "  'method': 'analysis.getErrors',",
@@ -254,7 +256,7 @@ public class RemoteAnalysisServerImplTest extends AbstractRemoteServerTest {
     });
 
     List<JsonObject> requests = requestSink.getRequests();
-    JsonElement expected = parseJson(//
+    JsonObject expected = parseJson(//
         "{",
         "  'id': '0',",
         "  'method': 'analysis.getErrors',",
@@ -324,7 +326,7 @@ public class RemoteAnalysisServerImplTest extends AbstractRemoteServerTest {
     });
 
     List<JsonObject> requests = requestSink.getRequests();
-    JsonElement expected = parseJson(//
+    JsonObject expected = parseJson(//
         "{",
         "  'id': '0',",
         "  'method': 'analysis.getHover',",
@@ -387,7 +389,7 @@ public class RemoteAnalysisServerImplTest extends AbstractRemoteServerTest {
     });
 
     List<JsonObject> requests = requestSink.getRequests();
-    JsonElement expected = parseJson(//
+    JsonObject expected = parseJson(//
         "{",
         "  'id': '0',",
         "  'method': 'analysis.getHover',",
@@ -438,7 +440,7 @@ public class RemoteAnalysisServerImplTest extends AbstractRemoteServerTest {
     });
 
     List<JsonObject> requests = requestSink.getRequests();
-    JsonElement expected = parseJson(//
+    JsonObject expected = parseJson(//
         "{",
         "  'id': '0',",
         "  'method': 'analysis.getLibraryDependencies'",
@@ -495,7 +497,7 @@ public class RemoteAnalysisServerImplTest extends AbstractRemoteServerTest {
     });
 
     List<JsonObject> requests = requestSink.getRequests();
-    JsonElement expected = parseJson(//
+    JsonObject expected = parseJson(//
         "{",
         "  'id': '0',",
         "  'method': 'analysis.getLibraryDependencies'",
@@ -540,7 +542,7 @@ public class RemoteAnalysisServerImplTest extends AbstractRemoteServerTest {
     });
 
     List<JsonObject> requests = requestSink.getRequests();
-    JsonElement expected = parseJson(//
+    JsonObject expected = parseJson(//
         "{",
         "  'id': '0',",
         "  'method': 'analysis.getNavigation',",
@@ -632,7 +634,7 @@ public class RemoteAnalysisServerImplTest extends AbstractRemoteServerTest {
     });
 
     List<JsonObject> requests = requestSink.getRequests();
-    JsonElement expected = parseJson(//
+    JsonObject expected = parseJson(//
         "{",
         "  'id': '0',",
         "  'method': 'analysis.getNavigation',",
@@ -699,7 +701,8 @@ public class RemoteAnalysisServerImplTest extends AbstractRemoteServerTest {
         "          'startColumn': 4",
         "        },",
         "        'message': 'message A',",
-        "        'correction': 'correction A'",
+        "        'correction': 'correction A',",
+        "        'hasFix': false",
         "      },",
         "      {",
         "        'severity': 'ERROR',",
@@ -712,7 +715,8 @@ public class RemoteAnalysisServerImplTest extends AbstractRemoteServerTest {
         "          'startColumn': 8",
         "        },",
         "        'message': 'message B',",
-        "        'correction': 'correction B'",
+        "        'correction': 'correction B',",
+        "        'hasFix': false",
         "      }",
         "    ]",
         "  }",
@@ -724,12 +728,12 @@ public class RemoteAnalysisServerImplTest extends AbstractRemoteServerTest {
         "SYNTACTIC_ERROR",
         new Location("/fileA.dart", 1, 2, 3, 4),
         "message A",
-        "correction A"), new AnalysisError(
+        "correction A", false), new AnalysisError(
         AnalysisErrorSeverity.ERROR,
         "COMPILE_TIME_ERROR",
         new Location("/fileB.dart", 5, 6, 7, 8),
         "message B",
-        "correction B"));
+        "correction B", false));
   }
 
   public void test_analysis_notification_flushResults() throws Exception {
@@ -1103,7 +1107,7 @@ public class RemoteAnalysisServerImplTest extends AbstractRemoteServerTest {
   public void test_analysis_reanalyze() throws Exception {
     server.analysis_reanalyze(null);
     List<JsonObject> requests = requestSink.getRequests();
-    JsonElement expected = parseJson(//
+    JsonObject expected = parseJson(//
         "{",
         "  'id': '0',",
         "  'method': 'analysis.reanalyze'",
@@ -1117,7 +1121,7 @@ public class RemoteAnalysisServerImplTest extends AbstractRemoteServerTest {
         ImmutableList.of("/fileC.dart", "/fileD.dart"),
         null);
     List<JsonObject> requests = requestSink.getRequests();
-    JsonElement expected = parseJson(//
+    JsonObject expected = parseJson(//
         "{",
         "  'id': '0',",
         "  'method': 'analysis.setAnalysisRoots',",
@@ -1132,7 +1136,7 @@ public class RemoteAnalysisServerImplTest extends AbstractRemoteServerTest {
   public void test_analysis_setAnalysisRoots_emptyLists() throws Exception {
     server.analysis_setAnalysisRoots(new ArrayList<String>(0), new ArrayList<String>(0), null);
     List<JsonObject> requests = requestSink.getRequests();
-    JsonElement expected = parseJson(//
+    JsonObject expected = parseJson(//
         "{",
         "  'id': '0',",
         "  'method': 'analysis.setAnalysisRoots',",
@@ -1147,7 +1151,7 @@ public class RemoteAnalysisServerImplTest extends AbstractRemoteServerTest {
   public void test_analysis_setAnalysisRoots_nullLists() throws Exception {
     server.analysis_setAnalysisRoots(null, null, null);
     List<JsonObject> requests = requestSink.getRequests();
-    JsonElement expected = parseJson(//
+    JsonObject expected = parseJson(//
         "{",
         "  'id': '0',",
         "  'method': 'analysis.setAnalysisRoots',",
@@ -1165,7 +1169,7 @@ public class RemoteAnalysisServerImplTest extends AbstractRemoteServerTest {
         null,
         ImmutableMap.of("/path1", "/path2", "/path3", "/path4"));
     List<JsonObject> requests = requestSink.getRequests();
-    JsonElement expected = parseJson(//
+    JsonObject expected = parseJson(//
         "{",
         "  'id': '0',",
         "  'method': 'analysis.setAnalysisRoots',",
@@ -1186,7 +1190,7 @@ public class RemoteAnalysisServerImplTest extends AbstractRemoteServerTest {
     subscriptions.add(GeneralAnalysisService.ANALYZED_FILES);
     server.analysis_setGeneralSubscriptions(subscriptions);
     List<JsonObject> requests = requestSink.getRequests();
-    JsonElement expected = parseJson(//
+    JsonObject expected = parseJson(//
         "{",
         "  'id': '0',",
         "  'method': 'analysis.setGeneralSubscriptions',",
@@ -1202,7 +1206,7 @@ public class RemoteAnalysisServerImplTest extends AbstractRemoteServerTest {
   public void test_analysis_setPriorityFiles() throws Exception {
     server.analysis_setPriorityFiles(ImmutableList.of("/fileA.dart", "/fileB.dart"));
     List<JsonObject> requests = requestSink.getRequests();
-    JsonElement expected = parseJson(//
+    JsonObject expected = parseJson(//
         "{",
         "  'id': '0',",
         "  'method': 'analysis.setPriorityFiles',",
@@ -1216,7 +1220,7 @@ public class RemoteAnalysisServerImplTest extends AbstractRemoteServerTest {
   public void test_analysis_setPriorityFiles_emptyList() throws Exception {
     server.analysis_setPriorityFiles(new ArrayList<String>(0));
     List<JsonObject> requests = requestSink.getRequests();
-    JsonElement expected = parseJson(//
+    JsonObject expected = parseJson(//
         "{",
         "  'id': '0',",
         "  'method': 'analysis.setPriorityFiles',",
@@ -1230,7 +1234,7 @@ public class RemoteAnalysisServerImplTest extends AbstractRemoteServerTest {
   public void test_analysis_setPriorityFiles_nullList() throws Exception {
     server.analysis_setPriorityFiles(null);
     List<JsonObject> requests = requestSink.getRequests();
-    JsonElement expected = parseJson(//
+    JsonObject expected = parseJson(//
         "{",
         "  'id': '0',",
         "  'method': 'analysis.setPriorityFiles',",
@@ -1252,7 +1256,7 @@ public class RemoteAnalysisServerImplTest extends AbstractRemoteServerTest {
 
     server.analysis_setSubscriptions(subscriptionsMap);
     List<JsonObject> requests = requestSink.getRequests();
-    JsonElement expected = parseJson(//
+    JsonObject expected = parseJson(//
         "{",
         "  'id': '0',",
         "  'method': 'analysis.setSubscriptions',",
@@ -1271,7 +1275,7 @@ public class RemoteAnalysisServerImplTest extends AbstractRemoteServerTest {
   public void test_analysis_setSubscriptions_emptyMap() throws Exception {
     server.analysis_setSubscriptions(new HashMap<String, List<String>>(0));
     List<JsonObject> requests = requestSink.getRequests();
-    JsonElement expected = parseJson(//
+    JsonObject expected = parseJson(//
         "{",
         "  'id': '0',",
         "  'method': 'analysis.setSubscriptions',",
@@ -1285,7 +1289,7 @@ public class RemoteAnalysisServerImplTest extends AbstractRemoteServerTest {
   public void test_analysis_setSubscriptions_nullMap() throws Exception {
     server.analysis_setSubscriptions(null);
     List<JsonObject> requests = requestSink.getRequests();
-    JsonElement expected = parseJson(//
+    JsonObject expected = parseJson(//
         "{",
         "  'id': '0',",
         "  'method': 'analysis.setSubscriptions',",
@@ -1306,7 +1310,7 @@ public class RemoteAnalysisServerImplTest extends AbstractRemoteServerTest {
       }
     });
     List<JsonObject> requests = requestSink.getRequests();
-    JsonElement expected = parseJson(//
+    JsonObject expected = parseJson(//
         "{",
         "  'id': '0',",
         "  'method': 'analysis.updateContent',",
@@ -1340,7 +1344,7 @@ public class RemoteAnalysisServerImplTest extends AbstractRemoteServerTest {
       }
     });
     List<JsonObject> requests = requestSink.getRequests();
-    JsonElement expected = parseJson(//
+    JsonObject expected = parseJson(//
         "{",
         "  'id': '0',",
         "  'method': 'analysis.updateContent',",
@@ -1381,7 +1385,7 @@ public class RemoteAnalysisServerImplTest extends AbstractRemoteServerTest {
       }
     });
     List<JsonObject> requests = requestSink.getRequests();
-    JsonElement expected = parseJson(//
+    JsonObject expected = parseJson(//
         "{",
         "  'id': '0',",
         "  'method': 'analysis.updateContent',",
@@ -1400,7 +1404,7 @@ public class RemoteAnalysisServerImplTest extends AbstractRemoteServerTest {
       }
     });
     List<JsonObject> requests = requestSink.getRequests();
-    JsonElement expected = parseJson(//
+    JsonObject expected = parseJson(//
         "{",
         "  'id': '0',",
         "  'method': 'analysis.updateContent',",
@@ -1422,7 +1426,7 @@ public class RemoteAnalysisServerImplTest extends AbstractRemoteServerTest {
       }
     });
     List<JsonObject> requests = requestSink.getRequests();
-    JsonElement expected = parseJson(//
+    JsonObject expected = parseJson(//
         "{",
         "  'id': '0',",
         "  'method': 'analysis.updateContent',",
@@ -1452,7 +1456,7 @@ public class RemoteAnalysisServerImplTest extends AbstractRemoteServerTest {
         false);
     server.analysis_updateOptions(options);
     List<JsonObject> requests = requestSink.getRequests();
-    JsonElement expected = parseJson(//
+    JsonObject expected = parseJson(//
         "{",
         "  'id': '0',",
         "  'method': 'analysis.updateOptions',",
@@ -1476,7 +1480,7 @@ public class RemoteAnalysisServerImplTest extends AbstractRemoteServerTest {
     AnalysisOptions options = new AnalysisOptions(true, true, true, true, true, true, true, true);
     server.analysis_updateOptions(options);
     List<JsonObject> requests = requestSink.getRequests();
-    JsonElement expected = parseJson(//
+    JsonObject expected = parseJson(//
         "{",
         "  'id': '0',",
         "  'method': 'analysis.updateOptions',",
@@ -1500,7 +1504,7 @@ public class RemoteAnalysisServerImplTest extends AbstractRemoteServerTest {
     AnalysisOptions options = new AnalysisOptions(true, null, null, null, null, null, null, null);
     server.analysis_updateOptions(options);
     List<JsonObject> requests = requestSink.getRequests();
-    JsonElement expected = parseJson(//
+    JsonObject expected = parseJson(//
         "{",
         "  'id': '0',",
         "  'method': 'analysis.updateOptions',",
@@ -1517,7 +1521,7 @@ public class RemoteAnalysisServerImplTest extends AbstractRemoteServerTest {
     AnalysisOptions options = new AnalysisOptions(false, true, null, null, null, null, null, null);
     server.analysis_updateOptions(options);
     List<JsonObject> requests = requestSink.getRequests();
-    JsonElement expected = parseJson(//
+    JsonObject expected = parseJson(//
         "{",
         "  'id': '0',",
         "  'method': 'analysis.updateOptions',",
@@ -1546,7 +1550,7 @@ public class RemoteAnalysisServerImplTest extends AbstractRemoteServerTest {
       }
     });
     List<JsonObject> requests = requestSink.getRequests();
-    JsonElement expected = parseJson(//
+    JsonObject expected = parseJson(//
         "{",
         "  'id': '0',",
         "  'method': 'completion.getSuggestions',",
@@ -1585,7 +1589,7 @@ public class RemoteAnalysisServerImplTest extends AbstractRemoteServerTest {
       }
     });
     List<JsonObject> requests = requestSink.getRequests();
-    JsonElement expected = parseJson(//
+    JsonObject expected = parseJson(//
         "{",
         "  'id': '0',",
         "  'method': 'completion.getSuggestions',",
@@ -1756,7 +1760,7 @@ public class RemoteAnalysisServerImplTest extends AbstractRemoteServerTest {
       }
     });
     List<JsonObject> requests = requestSink.getRequests();
-    JsonElement expected = parseJson(//
+    JsonObject expected = parseJson(//
         "{",
         "  'id': '0',",
         "  'method': 'edit.format',",
@@ -1819,7 +1823,7 @@ public class RemoteAnalysisServerImplTest extends AbstractRemoteServerTest {
       }
     });
     List<JsonObject> requests = requestSink.getRequests();
-    JsonElement expected = parseJson(//
+    JsonObject expected = parseJson(//
         "{",
         "  'id': '0',",
         "  'method': 'edit.format',",
@@ -1868,7 +1872,7 @@ public class RemoteAnalysisServerImplTest extends AbstractRemoteServerTest {
       }
     });
     List<JsonObject> requests = requestSink.getRequests();
-    JsonElement expected = parseJson(//
+    JsonObject expected = parseJson(//
         "{",
         "  'id': '0',",
         "  'method': 'edit.getAssists',",
@@ -1991,7 +1995,7 @@ public class RemoteAnalysisServerImplTest extends AbstractRemoteServerTest {
       }
     });
     List<JsonObject> requests = requestSink.getRequests();
-    JsonElement expected = parseJson(//
+    JsonObject expected = parseJson(//
         "{",
         "  'id': '0',",
         "  'method': 'edit.getAssists',",
@@ -2039,7 +2043,7 @@ public class RemoteAnalysisServerImplTest extends AbstractRemoteServerTest {
       }
     });
     List<JsonObject> requests = requestSink.getRequests();
-    JsonElement expected = parseJson(//
+    JsonObject expected = parseJson(//
         "{",
         "  'id': '0',",
         "  'method': 'edit.getAssists',",
@@ -2165,7 +2169,7 @@ public class RemoteAnalysisServerImplTest extends AbstractRemoteServerTest {
           }
         });
     List<JsonObject> requests = requestSink.getRequests();
-    JsonElement expected = parseJson(//
+    JsonObject expected = parseJson(//
         "{",
         "  'id': '0',",
         "  'method': 'edit.getAvailableRefactorings',",
@@ -2294,7 +2298,7 @@ public class RemoteAnalysisServerImplTest extends AbstractRemoteServerTest {
       }
     });
     List<JsonObject> requests = requestSink.getRequests();
-    JsonElement expected = parseJson(//
+    JsonObject expected = parseJson(//
         "{",
         "  'id': '0',",
         "  'method': 'edit.getFixes',",
@@ -2394,7 +2398,7 @@ public class RemoteAnalysisServerImplTest extends AbstractRemoteServerTest {
       }
     });
     List<JsonObject> requests = requestSink.getRequests();
-    JsonElement expected = parseJson(//
+    JsonObject expected = parseJson(//
         "{",
         "  'id': '0',",
         "  'method': 'edit.getFixes',",
@@ -2441,7 +2445,7 @@ public class RemoteAnalysisServerImplTest extends AbstractRemoteServerTest {
       }
     });
     List<JsonObject> requests = requestSink.getRequests();
-    JsonElement expected = parseJson(//
+    JsonObject expected = parseJson(//
         "{",
         "  'id': '0',",
         "  'method': 'edit.getFixes',",
@@ -2548,7 +2552,7 @@ public class RemoteAnalysisServerImplTest extends AbstractRemoteServerTest {
           }
         });
     List<JsonObject> requests = requestSink.getRequests();
-    JsonElement expected = parseJson(//
+    JsonObject expected = parseJson(//
         "{",
         "  'id': '0',",
         "  'method': 'edit.getRefactoring',",
@@ -2608,7 +2612,7 @@ public class RemoteAnalysisServerImplTest extends AbstractRemoteServerTest {
           }
         });
     List<JsonObject> requests = requestSink.getRequests();
-    JsonElement expected = parseJson(//
+    JsonObject expected = parseJson(//
         "{",
         "  'id': '0',",
         "  'method': 'edit.getRefactoring',",
@@ -2674,7 +2678,7 @@ public class RemoteAnalysisServerImplTest extends AbstractRemoteServerTest {
           }
         });
     List<JsonObject> requests = requestSink.getRequests();
-    JsonElement expected = parseJson(//
+    JsonObject expected = parseJson(//
         "{",
         "  'id': '0',",
         "  'method': 'edit.getRefactoring',",
@@ -2720,7 +2724,7 @@ public class RemoteAnalysisServerImplTest extends AbstractRemoteServerTest {
           }
         });
     List<JsonObject> requests = requestSink.getRequests();
-    JsonElement expected = parseJson(//
+    JsonObject expected = parseJson(//
         "{",
         "  'id': '0',",
         "  'method': 'edit.getRefactoring',",
@@ -2763,7 +2767,7 @@ public class RemoteAnalysisServerImplTest extends AbstractRemoteServerTest {
           }
         });
     List<JsonObject> requests = requestSink.getRequests();
-    JsonElement expected = parseJson(//
+    JsonObject expected = parseJson(//
         "{",
         "  'id': '0',",
         "  'method': 'edit.getRefactoring',",
@@ -3238,7 +3242,7 @@ public class RemoteAnalysisServerImplTest extends AbstractRemoteServerTest {
       }
     });
     List<JsonObject> requests = requestSink.getRequests();
-    JsonElement expected = parseJson(//
+    JsonObject expected = parseJson(//
         "{",
         "  'id': '0',",
         "  'method': 'edit.organizeDirectives',",
@@ -3306,7 +3310,7 @@ public class RemoteAnalysisServerImplTest extends AbstractRemoteServerTest {
       }
     });
     List<JsonObject> requests = requestSink.getRequests();
-    JsonElement expected = parseJson(//
+    JsonObject expected = parseJson(//
         "{",
         "  'id': '0',",
         "  'method': 'edit.organizeDirectives',",
@@ -3347,7 +3351,7 @@ public class RemoteAnalysisServerImplTest extends AbstractRemoteServerTest {
       }
     });
     List<JsonObject> requests = requestSink.getRequests();
-    JsonElement expected = parseJson(//
+    JsonObject expected = parseJson(//
         "{",
         "  'id': '0',",
         "  'method': 'edit.sortMembers',",
@@ -3415,7 +3419,7 @@ public class RemoteAnalysisServerImplTest extends AbstractRemoteServerTest {
       }
     });
     List<JsonObject> requests = requestSink.getRequests();
-    JsonElement expected = parseJson(//
+    JsonObject expected = parseJson(//
         "{",
         "  'id': '0',",
         "  'method': 'edit.sortMembers',",
@@ -3461,7 +3465,7 @@ public class RemoteAnalysisServerImplTest extends AbstractRemoteServerTest {
       }
     });
     List<JsonObject> requests = requestSink.getRequests();
-    JsonElement expected = parseJson(//
+    JsonObject expected = parseJson(//
         "{",
         "  'id': '0',",
         "  'method': 'execution.createContext',",
@@ -3499,7 +3503,7 @@ public class RemoteAnalysisServerImplTest extends AbstractRemoteServerTest {
       }
     });
     List<JsonObject> requests = requestSink.getRequests();
-    JsonElement expected = parseJson(//
+    JsonObject expected = parseJson(//
         "{",
         "  'id': '0',",
         "  'method': 'execution.createContext',",
@@ -3531,7 +3535,7 @@ public class RemoteAnalysisServerImplTest extends AbstractRemoteServerTest {
   public void test_execution_deleteContext() throws Exception {
     server.execution_deleteContext("23");
     List<JsonObject> requests = requestSink.getRequests();
-    JsonElement expected = parseJson(//
+    JsonObject expected = parseJson(//
         "{",
         "  'id': '0',",
         "  'method': 'execution.deleteContext',",
@@ -3559,7 +3563,7 @@ public class RemoteAnalysisServerImplTest extends AbstractRemoteServerTest {
       }
     });
     List<JsonObject> requests = requestSink.getRequests();
-    JsonElement expected = parseJson(//
+    JsonObject expected = parseJson(//
         "{",
         "  'id': '0',",
         "  'method': 'execution.mapUri',",
@@ -3606,7 +3610,7 @@ public class RemoteAnalysisServerImplTest extends AbstractRemoteServerTest {
       }
     });
     List<JsonObject> requests = requestSink.getRequests();
-    JsonElement expected = parseJson(//
+    JsonObject expected = parseJson(//
         "{",
         "  'id': '0',",
         "  'method': 'execution.mapUri',",
@@ -3648,7 +3652,7 @@ public class RemoteAnalysisServerImplTest extends AbstractRemoteServerTest {
       }
     });
     List<JsonObject> requests = requestSink.getRequests();
-    JsonElement expected = parseJson(//
+    JsonObject expected = parseJson(//
         "{",
         "  'id': '0',",
         "  'method': 'execution.mapUri',",
@@ -3689,7 +3693,7 @@ public class RemoteAnalysisServerImplTest extends AbstractRemoteServerTest {
   public void test_execution_setSubscriptions_emptyList() throws Exception {
     server.execution_setSubscriptions(new ArrayList<String>(0));
     List<JsonObject> requests = requestSink.getRequests();
-    JsonElement expected = parseJson(//
+    JsonObject expected = parseJson(//
         "{",
         "  'id': '0',",
         "  'method': 'execution.setSubscriptions',",
@@ -3705,7 +3709,7 @@ public class RemoteAnalysisServerImplTest extends AbstractRemoteServerTest {
     subscriptions.add(ExecutionService.LAUNCH_DATA);
     server.execution_setSubscriptions(subscriptions);
     List<JsonObject> requests = requestSink.getRequests();
-    JsonElement expected = parseJson(//
+    JsonObject expected = parseJson(//
         "{",
         "  'id': '0',",
         "  'method': 'execution.setSubscriptions',",
@@ -3719,7 +3723,7 @@ public class RemoteAnalysisServerImplTest extends AbstractRemoteServerTest {
   public void test_execution_setSubscriptions_nullList() throws Exception {
     server.execution_setSubscriptions(null);
     List<JsonObject> requests = requestSink.getRequests();
-    JsonElement expected = parseJson(//
+    JsonObject expected = parseJson(//
         "{",
         "  'id': '0',",
         "  'method': 'execution.setSubscriptions',",
@@ -3751,7 +3755,7 @@ public class RemoteAnalysisServerImplTest extends AbstractRemoteServerTest {
           }
         });
     List<JsonObject> requests = requestSink.getRequests();
-    JsonElement expected = parseJson(//
+    JsonObject expected = parseJson(//
         "{",
         "  'id': '0',",
         "  'method': 'search.findElementReferences',",
@@ -3810,7 +3814,7 @@ public class RemoteAnalysisServerImplTest extends AbstractRemoteServerTest {
           }
         });
     List<JsonObject> requests = requestSink.getRequests();
-    JsonElement expected = parseJson(//
+    JsonObject expected = parseJson(//
         "{",
         "  'id': '0',",
         "  'method': 'search.findElementReferences',",
@@ -3861,7 +3865,7 @@ public class RemoteAnalysisServerImplTest extends AbstractRemoteServerTest {
           }
         });
     List<JsonObject> requests = requestSink.getRequests();
-    JsonElement expected = parseJson(//
+    JsonObject expected = parseJson(//
         "{",
         "  'id': '0',",
         "  'method': 'search.findElementReferences',",
@@ -3900,7 +3904,7 @@ public class RemoteAnalysisServerImplTest extends AbstractRemoteServerTest {
       }
     });
     List<JsonObject> requests = requestSink.getRequests();
-    JsonElement expected = parseJson(//
+    JsonObject expected = parseJson(//
         "{",
         "  'id': '0',",
         "  'method': 'search.findMemberDeclarations',",
@@ -3938,7 +3942,7 @@ public class RemoteAnalysisServerImplTest extends AbstractRemoteServerTest {
       }
     });
     List<JsonObject> requests = requestSink.getRequests();
-    JsonElement expected = parseJson(//
+    JsonObject expected = parseJson(//
         "{",
         "  'id': '0',",
         "  'method': 'search.findMemberDeclarations',",
@@ -3980,7 +3984,7 @@ public class RemoteAnalysisServerImplTest extends AbstractRemoteServerTest {
       }
     });
     List<JsonObject> requests = requestSink.getRequests();
-    JsonElement expected = parseJson(//
+    JsonObject expected = parseJson(//
         "{",
         "  'id': '0',",
         "  'method': 'search.findMemberReferences',",
@@ -4018,7 +4022,7 @@ public class RemoteAnalysisServerImplTest extends AbstractRemoteServerTest {
       }
     });
     List<JsonObject> requests = requestSink.getRequests();
-    JsonElement expected = parseJson(//
+    JsonObject expected = parseJson(//
         "{",
         "  'id': '0',",
         "  'method': 'search.findMemberReferences',",
@@ -4060,7 +4064,7 @@ public class RemoteAnalysisServerImplTest extends AbstractRemoteServerTest {
       }
     });
     List<JsonObject> requests = requestSink.getRequests();
-    JsonElement expected = parseJson(//
+    JsonObject expected = parseJson(//
         "{",
         "  'id': '0',",
         "  'method': 'search.findTopLevelDeclarations',",
@@ -4098,7 +4102,7 @@ public class RemoteAnalysisServerImplTest extends AbstractRemoteServerTest {
       }
     });
     List<JsonObject> requests = requestSink.getRequests();
-    JsonElement expected = parseJson(//
+    JsonObject expected = parseJson(//
         "{",
         "  'id': '0',",
         "  'method': 'search.findTopLevelDeclarations',",
@@ -4140,7 +4144,7 @@ public class RemoteAnalysisServerImplTest extends AbstractRemoteServerTest {
       }
     });
     List<JsonObject> requests = requestSink.getRequests();
-    JsonElement expected = parseJson(//
+    JsonObject expected = parseJson(//
         "{",
         "  'id': '0',",
         "  'method': 'search.getTypeHierarchy',",
@@ -4212,7 +4216,7 @@ public class RemoteAnalysisServerImplTest extends AbstractRemoteServerTest {
       }
     });
     List<JsonObject> requests = requestSink.getRequests();
-    JsonElement expected = parseJson(//
+    JsonObject expected = parseJson(//
         "{",
         "  'id': '0',",
         "  'method': 'search.getTypeHierarchy',",
@@ -4347,7 +4351,7 @@ public class RemoteAnalysisServerImplTest extends AbstractRemoteServerTest {
       }
     });
     List<JsonObject> requests = requestSink.getRequests();
-    JsonElement expected = parseJson(//
+    JsonObject expected = parseJson(//
         "{",
         "  'id': '0',",
         "  'method': 'server.getVersion'",
@@ -4383,7 +4387,7 @@ public class RemoteAnalysisServerImplTest extends AbstractRemoteServerTest {
       }
     });
     List<JsonObject> requests = requestSink.getRequests();
-    JsonElement expected = parseJson(//
+    JsonObject expected = parseJson(//
         "{",
         "  'id': '0',",
         "  'method': 'server.getVersion'",
@@ -4499,7 +4503,7 @@ public class RemoteAnalysisServerImplTest extends AbstractRemoteServerTest {
   public void test_server_setSubscriptions_emptyList() throws Exception {
     server.server_setSubscriptions(new ArrayList<String>(0));
     List<JsonObject> requests = requestSink.getRequests();
-    JsonElement expected = parseJson(//
+    JsonObject expected = parseJson(//
         "{",
         "  'id': '0',",
         "  'method': 'server.setSubscriptions',",
@@ -4513,7 +4517,7 @@ public class RemoteAnalysisServerImplTest extends AbstractRemoteServerTest {
   public void test_server_setSubscriptions_nullList() throws Exception {
     server.server_setSubscriptions(null);
     List<JsonObject> requests = requestSink.getRequests();
-    JsonElement expected = parseJson(//
+    JsonObject expected = parseJson(//
         "{",
         "  'id': '0',",
         "  'method': 'server.setSubscriptions',",
@@ -4529,7 +4533,7 @@ public class RemoteAnalysisServerImplTest extends AbstractRemoteServerTest {
     subscriptions.add(ServerService.STATUS);
     server.server_setSubscriptions(subscriptions);
     List<JsonObject> requests = requestSink.getRequests();
-    JsonElement expected = parseJson(//
+    JsonObject expected = parseJson(//
         "{",
         "  'id': '0',",
         "  'method': 'server.setSubscriptions',",
@@ -4542,7 +4546,7 @@ public class RemoteAnalysisServerImplTest extends AbstractRemoteServerTest {
 
   public void test_server_shutdown() throws Exception {
     server.server_shutdown();
-    JsonElement expected = parseJson(//
+    JsonObject expected = parseJson(//
         "{",
         "  'id': '0',",
         "  'method': 'server.shutdown'",
@@ -4636,9 +4640,9 @@ public class RemoteAnalysisServerImplTest extends AbstractRemoteServerTest {
   /**
    * Builds a JSON string from the given lines.
    */
-  private JsonElement parseJson(String... lines) {
+  private JsonObject parseJson(String... lines) {
     String json = Joiner.on('\n').join(lines);
     json = json.replace('\'', '"');
-    return new JsonParser().parse(json);
+    return (JsonObject)new JsonParser().parse(json);
   }
 }

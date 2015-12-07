@@ -16,50 +16,17 @@ package com.google.dart.server.internal;
 
 import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
-import com.google.dart.engine.source.Source;
-import com.google.dart.engine.utilities.general.ArrayUtilities;
 import com.google.dart.server.AnalysisServerListener;
-import com.google.dart.server.internal.asserts.NavigationRegionsAssert;
-
 import junit.framework.Assert;
 import junit.framework.AssertionFailedError;
-
-import org.dartlang.analysis.server.protocol.AnalysisError;
-import org.dartlang.analysis.server.protocol.AnalysisStatus;
-import org.dartlang.analysis.server.protocol.CompletionSuggestion;
-import org.dartlang.analysis.server.protocol.HighlightRegion;
-import org.dartlang.analysis.server.protocol.ImplementedClass;
-import org.dartlang.analysis.server.protocol.ImplementedMember;
-import org.dartlang.analysis.server.protocol.NavigationRegion;
-import org.dartlang.analysis.server.protocol.NavigationTarget;
-import org.dartlang.analysis.server.protocol.Occurrences;
-import org.dartlang.analysis.server.protocol.Outline;
-import org.dartlang.analysis.server.protocol.OverrideMember;
-import org.dartlang.analysis.server.protocol.PubStatus;
-import org.dartlang.analysis.server.protocol.RequestError;
-import org.dartlang.analysis.server.protocol.SearchResult;
-
-import static org.fest.assertions.Assertions.assertThat;
+import org.dartlang.analysis.server.protocol.*;
 
 import java.util.List;
 import java.util.Map;
 
+import static org.fest.assertions.Assertions.assertThat;
+
 public class TestAnalysisServerListener implements AnalysisServerListener {
-
-  private final static class CompletionResult {
-    final int replacementOffset;
-    final int replacementLength;
-    final List<CompletionSuggestion> suggestions;
-    final boolean last;
-
-    public CompletionResult(int replacementOffset, int replacementLength,
-        List<CompletionSuggestion> suggestions, boolean last) {
-      this.replacementOffset = replacementOffset;
-      this.replacementLength = replacementLength;
-      this.suggestions = suggestions;
-      this.last = last;
-    }
-  }
 
   private final Map<String, CompletionResult> completionsMap = Maps.newHashMap();
   private final List<String> flushedResults = Lists.newArrayList();
@@ -84,7 +51,7 @@ public class TestAnalysisServerListener implements AnalysisServerListener {
 
   /**
    * Assert that the passed set of analyzed files equals the last set passed to the server.
-   * 
+   *
    * @param files the list of expected analyzed file paths
    * @throws AssertionFailedError if a different set of strings is passed than was expected
    */
@@ -96,14 +63,13 @@ public class TestAnalysisServerListener implements AnalysisServerListener {
    * Assert that the number of errors that have been gathered matches the number of errors that are
    * given and that they have the expected error codes. The order in which the errors were gathered
    * is ignored.
-   * 
-   * @param file the file to check errors for
+   *
+   * @param file               the file to check errors for
    * @param expectedErrorCodes the error codes of the errors that should have been gathered
    * @throws AssertionFailedError if a different number of errors have been gathered than were
-   *           expected
+   *                              expected
    */
-  public synchronized void assertErrorsWithAnalysisErrors(String file,
-      AnalysisError... expectedErrors) {
+  public synchronized void assertErrorsWithAnalysisErrors(String file, AnalysisError... expectedErrors) {
     List<AnalysisError> errors = getErrors(file);
     assertErrorsWithAnalysisErrors(errors, expectedErrors);
   }
@@ -113,13 +79,6 @@ public class TestAnalysisServerListener implements AnalysisServerListener {
    */
   public synchronized void assertFlushedResults(List<String> expectedFlushedResults) {
     assertThat(expectedFlushedResults).isEqualTo(flushedResults);
-  }
-
-  /**
-   * Returns {@link NavigationRegionsAssert} for the given file.
-   */
-  public synchronized NavigationRegionsAssert assertNavigationRegions(String file) {
-    return new NavigationRegionsAssert(getNavigationRegions(file));
   }
 
   /**
@@ -168,14 +127,13 @@ public class TestAnalysisServerListener implements AnalysisServerListener {
   }
 
   @Override
-  public synchronized void computedCompletion(String completionId, int replacementOffset,
-      int replacementLength, List<CompletionSuggestion> suggestions, boolean isLast) {
+  public synchronized void computedCompletion(String completionId,
+                                              int replacementOffset,
+                                              int replacementLength,
+                                              List<CompletionSuggestion> suggestions,
+                                              boolean isLast) {
     // computed completion results are aggregate, replacing any prior results
-    completionsMap.put(completionId, new CompletionResult(
-        replacementOffset,
-        replacementLength,
-        suggestions,
-        isLast));
+    completionsMap.put(completionId, new CompletionResult(replacementOffset, replacementLength, suggestions, isLast));
   }
 
   @Override
@@ -189,8 +147,7 @@ public class TestAnalysisServerListener implements AnalysisServerListener {
   }
 
   @Override
-  public void computedImplemented(String file, List<ImplementedClass> implementedClasses,
-      List<ImplementedMember> implementedMembers) {
+  public void computedImplemented(String file, List<ImplementedClass> implementedClasses, List<ImplementedMember> implementedMembers) {
     implementedClassesMap.put(file, implementedClasses);
     implementedMembersMap.put(file, implementedMembers);
   }
@@ -386,12 +343,11 @@ public class TestAnalysisServerListener implements AnalysisServerListener {
   /**
    * Assert that the array of actual {@link AnalysisError}s match the array of expected
    * {@link AnalysisError}s.
-   * 
-   * @param actualErrors the actual set of errors that were created for some analysis
+   *
+   * @param actualErrors   the actual set of errors that were created for some analysis
    * @param expectedErrors the expected array of errors
    */
-  private void assertErrorsWithAnalysisErrors(List<AnalysisError> actualErrors,
-      AnalysisError[] expectedErrors) {
+  private void assertErrorsWithAnalysisErrors(List<AnalysisError> actualErrors, AnalysisError[] expectedErrors) {
     if (actualErrors == null && expectedErrors == null) {
       return;
     }
@@ -404,7 +360,21 @@ public class TestAnalysisServerListener implements AnalysisServerListener {
     // assert that the actualErrors contains all of the expected errors
     for (AnalysisError expectedError : expectedErrors) {
       // individual calls to assert each error are made for better messaging when there is a failure
-      Assert.assertTrue(ArrayUtilities.contains(actualErrorsArray, expectedError));
+      assertThat(actualErrorsArray).contains(expectedError);
+    }
+  }
+
+  private final static class CompletionResult {
+    final int replacementOffset;
+    final int replacementLength;
+    final List<CompletionSuggestion> suggestions;
+    final boolean last;
+
+    public CompletionResult(int replacementOffset, int replacementLength, List<CompletionSuggestion> suggestions, boolean last) {
+      this.replacementOffset = replacementOffset;
+      this.replacementLength = replacementLength;
+      this.suggestions = suggestions;
+      this.last = last;
     }
   }
 }
